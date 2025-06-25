@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { auth } from "../firebase/firebaseConfig";
+import { sendEmailVerification, signInWithEmailAndPassword } from "firebase/auth";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/SignUp";
@@ -12,8 +14,26 @@ const SignUp = () => {
   const navigation = useNavigation();
 
   const handleSignUp = async () => {
-    if (!email || !password || !username || !confirmedPassword) {
-      Alert.alert("Missing Fields", "Please fill in all fields.");
+    if (!email) {
+      Alert.alert("Missing email field", "Please fill in all fields.");
+      return;
+    }
+
+    if (!password) {
+      Alert.alert("Missing password field", "Please fill in all fields.");
+      return;
+    }
+
+    if (!username) {
+      Alert.alert("Missing username field", "Please fill in all fields.");
+      return;
+    }
+
+    if (!confirmedPassword) {
+      Alert.alert(
+        "Missing confirmed password field",
+        "Please fill in all fields.",
+      );
       return;
     }
 
@@ -54,7 +74,17 @@ const SignUp = () => {
         throw new Error(data.message || "Signup failed");
       }
 
-      Alert.alert("Success", "Account created successfully!");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      await sendEmailVerification(userCredential.user);
+
+      Alert.alert(
+        "Success",
+        "Account created! Please check your email to verify.",
+      );
       navigation.navigate("Login");
     } catch (error) {
       Alert.alert("Error", error.message);
