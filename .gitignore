@@ -137,3 +137,8 @@ dist
 
 # Firebase Private Key
 firebaseAccountKey.json
+
+# Firebase emulator state and logs
+firebase-debug.log
+firestore-debug.log
+firebase-error.log
