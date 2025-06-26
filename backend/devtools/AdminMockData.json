@@ -1183,7 +1183,7 @@
       "userId": "5MHIRGo5LJcdRgzNwV710KrUAvo1",
       "title": "Practice deep breathing",
       "priority": "High",
-      "dueDate": "2025-07-02",
+      "dueDate": "2025-06-24",
       "creationDate": "2025-06-21"
     },
     {
@@ -1191,7 +1191,7 @@
       "userId": "5MHIRGo5LJcdRgzNwV710KrUAvo1",
       "title": "Clear photo storage",
       "priority": "Medium",
-      "dueDate": "2025-07-18",
+      "dueDate": "2025-06-26",
       "creationDate": "2025-06-07"
     },
     {
@@ -1199,8 +1199,8 @@
       "userId": "5MHIRGo5LJcdRgzNwV710KrUAvo1",
       "title": "Water the plants",
       "priority": "Medium",
-      "dueDate": "2025-07-16",
-      "creationDate": "2025-06-28"
+      "dueDate": "2025-06-25",
+      "creationDate": "2025-06-05"
     }
   ]
 }
