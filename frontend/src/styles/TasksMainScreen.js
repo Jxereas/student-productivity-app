@@ -11,7 +11,6 @@ export default StyleSheet.create({
         fontSize: 36,
         color: "#d385b3",
         fontWeight: "bold",
-        marginBottom: 10,
     },
     scrollArea: {
         flex: 1,

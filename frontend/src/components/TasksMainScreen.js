@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Icon from "react-native-vector-icons/Ionicons";
 import {
-    View,
-    Text,
-    ScrollView,
-    TouchableOpacity,
-    StatusBar,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StatusBar,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/TasksMainScreen";
@@ -16,111 +18,156 @@ import { format, isToday, isTomorrow, parseISO } from "date-fns";
 import BottomNavBar from "./BottomNavBar";
 
 const TasksMainScreen = () => {
-    const navigation = useNavigation();
-    const [groupedTasks, setGroupedTasks] = useState({});
+  const navigation = useNavigation();
+  const [groupedTasks, setGroupedTasks] = useState({});
+  const [overdueCount, setOverdueCount] = useState(0);
 
-    useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                await signInWithEmailAndPassword(
-                    auth,
-                    "admin@gmail.com",
-                    "administrator",
-                ); // This will be removed after testing
-                const user = auth.currentUser;
-                if (!user) return;
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          "admin@gmail.com",
+          "administrator",
+        ); // This will be removed after testing
+        const user = auth.currentUser;
+        if (!user) return;
 
-                const q = query(
-                    collection(db, "tasks"),
-                    where("userId", "==", user.uid),
-                );
+        const q = query(
+          collection(db, "tasks"),
+          where("userId", "==", user.uid),
+        );
 
-                const snapshot = await getDocs(q);
+        const snapshot = await getDocs(q);
 
-                const tasks = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
+        const tasks = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-                // Group tasks by date
-                const groups = {};
-                tasks.forEach((task) => {
-                    const dueDate = parseISO(task.dueDate);
-                    let label = format(dueDate, "MMM dd, yyyy");
+        // Group tasks by date
+        const groups = {};
+        tasks.forEach((task) => {
+          const dueDate = parseISO(task.dueDate);
+          let label = format(dueDate, "MMM dd, yyyy");
 
-                    if (isToday(dueDate)) label = "Today";
-                    else if (isTomorrow(dueDate)) label = "Tomorrow";
+          if (isToday(dueDate)) label = "Today";
+          else if (isTomorrow(dueDate)) label = "Tomorrow";
 
-                    if (!groups[label]) groups[label] = [];
-                    groups[label].push(task);
-                });
+          if (!groups[label]) groups[label] = [];
+          groups[label].push(task);
+        });
 
-                setGroupedTasks(groups);
-            } catch (error) {
-                console.error("Error fetching tasks:", error.code, error.message);
-            }
-        };
+        const overdue = Object.values(groupedTasks)
+          .flat()
+          .filter((task) => {
+            const dueDate = parseISO(task.dueDate);
+            return dueDate < new Date();
+          }).length;
 
-        fetchTasks();
-    }, []);
+        setOverdueCount(overdue);
+        setGroupedTasks(groups);
+      } catch (error) {
+        console.error("Error fetching tasks:", error.code, error.message);
+      }
+    };
 
-    return (
-        <>
-            <SafeAreaView
-                edges={["top"]}
-                style={{ flex: 0, backgroundColor: "#04060c" }}
+    fetchTasks();
+  }, []);
+
+  return (
+    <>
+      <SafeAreaView
+        edges={["top"]}
+        style={{ flex: 0, backgroundColor: "#04060c" }}
+      >
+        <StatusBar barStyle="light-content" backgroundColor="#04060c" />
+      </SafeAreaView>
+
+      <SafeAreaView
+        edges={["left", "right", "bottom"]}
+        style={{ flex: 1, backgroundColor: "#0e0d16" }}
+      >
+        <View style={styles.container}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 10,
+            }}
+          >
+            <Text style={styles.titleLarge}>Tasks</Text>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate("OverdueTasksScreen")}
             >
-                <StatusBar barStyle="light-content" backgroundColor="#04060c" />
-            </SafeAreaView>
+              <View style={{ padding: 6 }}>
+                <Icon name="notifications-outline" size={26} color="#fff" />
+                {overdueCount > 0 && (
+                  <View
+                    style={{
+                      position: "absolute",
+                      right: 6,
+                      top: 0,
+                      backgroundColor: "#ff6bcb",
+                      borderRadius: 8,
+                      minWidth: 16,
+                      height: 16,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingHorizontal: 3,
+                    }}
+                  >
+                    <Text style={{ color: "white", fontSize: 10 }}>
+                      {overdueCount}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
 
-            <SafeAreaView
-                edges={["left", "right", "bottom"]}
-                style={{ flex: 1, backgroundColor: "#0e0d16" }}
-            >
-                <View style={styles.container}>
-                    <Text style={styles.titleLarge}>Tasks</Text>
-
-                    <ScrollView style={styles.scrollArea}>
-                        {Object.keys(groupedTasks).map((date, index) => (
-                            <View key={index}>
-                                <Text style={styles.sectionHeading}>{date}</Text>
-                                {groupedTasks[date].map((task, taskIndex) => (
-                                    <View key={taskIndex} style={styles.taskCard}>
-                                        <View style={styles.taskRow}>
-                                            <Text style={styles.taskTitle}>{task.title}</Text>
-                                            <View style={styles.priorityPill}>
-                                                <Text style={styles.priorityPillText}>
-                                                    {task.priority}
-                                                </Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                ))}
-                            </View>
-                        ))}
-                    </ScrollView>
-
-                    <View style={styles.actionButtonsContainer}>
-                        <TouchableOpacity
-                            style={styles.secondaryButton}
-                            onPress={() => navigation.navigate("SearchTasksScreen")}
-                        >
-                            <Text style={styles.buttonText}>Search Tasks</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={styles.primaryButton}
-                            onPress={() => navigation.navigate("AddTaskScreen")}
-                        >
-                            <Text style={styles.buttonText}>Add Task</Text>
-                        </TouchableOpacity>
+          <ScrollView style={styles.scrollArea}>
+            {Object.keys(groupedTasks).map((date, index) => (
+              <View key={index}>
+                <Text style={styles.sectionHeading}>{date}</Text>
+                {groupedTasks[date].map((task, taskIndex) => (
+                  <View key={taskIndex} style={styles.taskCard}>
+                    <View style={styles.taskRow}>
+                      <Text style={styles.taskTitle}>{task.title}</Text>
+                      <View style={styles.priorityPill}>
+                        <Text style={styles.priorityPillText}>
+                          {task.priority}
+                        </Text>
+                      </View>
                     </View>
+                  </View>
+                ))}
+              </View>
+            ))}
+          </ScrollView>
 
-                    <BottomNavBar />
-                </View>
-            </SafeAreaView>
-        </>
-    );
+          <View style={styles.actionButtonsContainer}>
+            <TouchableOpacity
+              style={styles.secondaryButton}
+              onPress={() => navigation.navigate("SearchTasksScreen")}
+            >
+              <Text style={styles.buttonText}>Search Tasks</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={() => navigation.navigate("AddTaskScreen")}
+            >
+              <Text style={styles.buttonText}>Add Task</Text>
+            </TouchableOpacity>
+          </View>
+
+          <BottomNavBar />
+        </View>
+      </SafeAreaView>
+    </>
+  );
 };
 
 export default TasksMainScreen;
