@@ -72,3 +72,19 @@ You can scan the QR code with the Expo Go app on your Android or iOS device, or 
     ```
 
 The server will run at http://localhost:3001/
+
+---
+
+## Combined Running
+
+1. Navigate to the root directory.
+
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
+
+3. Start the frontend and backend concurrently:
+    ```bash
+    npm run dev
+    ```
