@@ -1,14 +1,12 @@
-process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
-process.env.FIREBASE_AUTH_EMULATOR_HOST = "localhost:9099";
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = "development";
+}
 
-const admin = require("firebase-admin");
+const {admin, auth, db } = require("../firebase")
+const path = require("path");
 const fs = require("fs");
 
-const mockData = JSON.parse(fs.readFileSync("./AdminMockData.json", "utf8"));
-
-admin.initializeApp({ projectId: "student-productivity-app-a5e28" });
-
-const db = admin.firestore();
+const mockData = JSON.parse(fs.readFileSync(path.resolve(__dirname, "./AdminMockData.json"), "utf8"));
 
 async function clearEmulatorData() {
   const goalsSnapshot = await db.collection("goals").get();

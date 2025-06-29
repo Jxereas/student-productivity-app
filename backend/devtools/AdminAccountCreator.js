@@ -1,10 +1,8 @@
-process.env.FIREBASE_AUTH_EMULATOR_HOST = "localhost:9099"; // Ensure this talks to the emulator
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = "development";
+}
 
-const admin = require("firebase-admin");
-
-admin.initializeApp({
-  projectId: "student-productivity-app-a5e28", // Match your actual Firebase project ID
-});
+const {admin, auth, db } = require("../firebase")
 
 const email = "admin@gmail.com";
 const password = "administrator";
