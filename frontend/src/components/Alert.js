@@ -22,7 +22,7 @@ export const AlertProvider = ({ children }) => {
     return (
         <>
             {children}
-            <Modal visible={visible} transparent animationType="fade">
+            <Modal visible={visible} transparent animationType="fade" statusBarTranslucent={true}>
                 <View style={styles.modalBackground}>
                     <View style={styles.alertBox}>
                         <Text style={styles.title}>{messageData.title}</Text>
