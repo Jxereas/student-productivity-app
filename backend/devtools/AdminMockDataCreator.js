@@ -2,11 +2,13 @@ if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = "development";
 }
 
-const {admin, auth, db } = require("../firebase")
+const { admin, auth, db } = require("../firebase");
 const path = require("path");
 const fs = require("fs");
 
-const mockData = JSON.parse(fs.readFileSync(path.resolve(__dirname, "./AdminMockData.json"), "utf8"));
+const mockData = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "./AdminMockData.json"), "utf8"),
+);
 
 async function clearEmulatorData() {
   const goalsSnapshot = await db.collection("goals").get();
@@ -38,6 +40,7 @@ async function importData() {
 
     for (const task of mockData.tasks) {
       task.userId = adminUID;
+      task.completed = Math.random() < 0.5;
       await db.collection("tasks").doc(task.id).set(task);
       console.log(`Added task: ${task.id}`);
     }
