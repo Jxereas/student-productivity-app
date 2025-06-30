@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import {
     signInWithEmailAndPassword,
     sendEmailVerification,
@@ -9,10 +9,10 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Alert,
     StatusBar,
     ActivityIndicator,
 } from "react-native";
+import Alert from "./Alert"
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../firebase/firebaseConfig";

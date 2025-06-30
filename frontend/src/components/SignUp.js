@@ -4,7 +4,8 @@ import {
     sendEmailVerification,
     signInWithEmailAndPassword,
 } from "firebase/auth";
-import { View, Text, TextInput, TouchableOpacity, Alert, StatusBar } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StatusBar } from "react-native";
+import Alert from "./Alert"
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/SignUp";
