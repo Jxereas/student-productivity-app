@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebase/firebaseConfig";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { getEmailFromUsername } from "../utility/FirebaseHelpers";
-import styles from "../styles/Login"; // Reuse existing styling
+import styles from "../styles/Login";
 
 const ForgotPassword = () => {
   const [identifier, setIdentifier] = useState("");
