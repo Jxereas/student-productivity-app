@@ -1,14 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, StatusBar, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  StatusBar,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
+import { auth } from "../firebase/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { getAllUserGoals, getAllUserTasks } from "../utility/FirebaseHelpers";
 import styles from "../styles/Dashboard";
 import BottomNavBar from "../components/BottomNavBar";
 
 const LandingPage = () => {
+  const [loadingData, setLoadingData] = useState(true);
+
+  const [tasks, setTasks] = useState([]);
+  const [goals, setGoals] = useState([]);
+
   const [goalCardCount, setGoalCardCount] = useState(0);
   const [taskCardCount, setTaskCardCount] = useState(0);
 
@@ -18,28 +33,35 @@ const LandingPage = () => {
   const [goalScrollHeight, setGoalScrollHeight] = useState(0);
   const [taskScrollHeight, setTaskScrollHeight] = useState(0);
 
-  // Mock data for now
-  const goals = [
-    { title: "Clean the House", tasks: [] },
-    { title: "Study for Exam", tasks: [] },
-    { title: "Grocery Shopping", tasks: [] },
-    { title: "Clean the House", tasks: [] },
-    { title: "Study for Exam", tasks: [] },
-    { title: "Grocery Shopping", tasks: [] },
-  ];
-  const tasks = [
-    { title: "Vacuum Living Room", priority: "High" },
-    { title: "Read Chapter 5", priority: "Medium" },
-    { title: "Do Laundry", priority: "Low" },
-    { title: "Vacuum Living Room", priority: "High" },
-    { title: "Read Chapter 5", priority: "Medium" },
-    { title: "Do Laundry", priority: "Low" },
-  ];
-
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      if (__DEV__) {
+        await signInWithEmailAndPassword(
+          auth,
+          "admin@gmail.com",
+          "administrator",
+        );
+      }
+
+      const userId = auth.currentUser?.uid;
+      if (!userId) return;
+
+      const [fetchedGoals, fetchedTasks] = await Promise.all([
+        getAllUserGoals(userId),
+        getAllUserTasks(userId),
+      ]);
+
+      setGoals(fetchedGoals);
+      setTasks(fetchedTasks);
+      setLoadingData(false);
+    };
+
+    fetchUserData();
+
     if (usedTopHeight === 0 || usedBottomHeight === 0) return;
+
     const screenHeight = Dimensions.get("window").height;
 
     const padding = 20 * 2; // top + bottom padding
@@ -51,7 +73,7 @@ const LandingPage = () => {
       usedBottomHeight +
       insets.top +
       insets.bottom +
-      40//100; // extra margin + spacing
+      40; //100; // extra margin + spacing
 
     const availableHeight = screenHeight - staticUsedHeight;
 
@@ -101,87 +123,86 @@ const LandingPage = () => {
               <Text style={styles.titleLarge}>Overview</Text>
             </View>
 
-            <Text style={styles.heading}>Goals</Text>
+            {!loadingData && <Text style={styles.heading}>Goals</Text>}
           </View>
-          <ScrollView
-            style={[styles.goalScrollContainer, { height: goalScrollHeight }]}
-            contentContainerStyle={styles.goalScrollContent}
-            showsVerticalScrollIndicator={false}
-          >
-            {goals.map((goal, index) => (
-              <View
-                key={index}
+          {loadingData ? (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <ActivityIndicator size="large" color="#cf59a9" />
+            </View>
+          ) : (
+            <>
+              <ScrollView
                 style={[
-                  styles.goalCard,
-                  index === goals.length - 1 && { marginBottom: 0 },
+                  styles.goalScrollContainer,
+                  { height: goalScrollHeight },
                 ]}
+                contentContainerStyle={styles.goalScrollContent}
+                showsVerticalScrollIndicator={false}
               >
-                <Text style={styles.goalTitle}>{goal.title}</Text>
-                <View style={styles.progressBarContainer}>
-                  <View style={styles.progressBarBackground}>
-                    <LinearGradient
-                      colors={["#cf59a9", "#d385b3"]}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 0 }}
-                      style={[styles.progressBarFill, { width: "80%" }]}
-                    />
+                {goals.map((goal, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.goalCard,
+                      index === goals.length - 1 && { marginBottom: 0 },
+                    ]}
+                  >
+                    <Text style={styles.goalTitle}>{goal.title}</Text>
+                    <View style={styles.progressBarContainer}>
+                      <View style={styles.progressBarBackground}>
+                        <LinearGradient
+                          colors={["#cf59a9", "#d385b3"]}
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={[styles.progressBarFill, { width: "80%" }]}
+                        />
+                      </View>
+                      <Text style={styles.progressText}>8/10</Text>
+                    </View>
                   </View>
-                  <Text style={styles.progressText}>8/10</Text>
-                </View>
-              </View>
-            ))}
-          </ScrollView>
-
-          <View
-            onLayout={(e) => {
-              setUsedBottomHeight(e.nativeEvent.layout.height);
-            }}
-          >
-            <Text style={styles.heading}>Tasks</Text>
-          </View>
-          <ScrollView
-            style={[styles.taskScrollContainer, { height: taskScrollHeight }]}
-            contentContainerStyle={styles.taskScrollContent}
-            showsVerticalScrollIndicator={false}
-          >
-            {tasks.map((task, index) => (
+                ))}
+              </ScrollView>
               <View
-                key={index}
-                style={[
-                  styles.taskCard,
-                  index === tasks.length - 1 && { marginBottom: 0 },
-                ]}
+                onLayout={(e) => {
+                  setUsedBottomHeight(e.nativeEvent.layout.height);
+                }}
               >
-                <View style={styles.taskRow}>
-                  <Text style={styles.taskTitle}>{task.title}</Text>
-                  <View style={styles.taskPriorityPill}>
-                    <Text style={styles.taskPriorityPillText}>
-                      {task.priority}
-                    </Text>
-                  </View>
-                </View>
+                <Text style={styles.heading}>Tasks</Text>
               </View>
-            ))}
-          </ScrollView>
-
+              <ScrollView
+                style={[
+                  styles.taskScrollContainer,
+                  { height: taskScrollHeight },
+                ]}
+                contentContainerStyle={styles.taskScrollContent}
+                showsVerticalScrollIndicator={false}
+              >
+                {tasks.map((task, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.taskCard,
+                      index === tasks.length - 1 && { marginBottom: 0 },
+                    ]}
+                  >
+                    <View style={styles.taskRow}>
+                      <Text style={styles.taskTitle}>{task.title}</Text>
+                      <View style={styles.taskPriorityPill}>
+                        <Text style={styles.taskPriorityPillText}>
+                          {task.priority}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                ))}
+              </ScrollView>
+            </>
+          )}
           <BottomNavBar />
         </View>
       </SafeAreaView>
     </>
   );
-};
-
-const getPriorityStyle = (priority) => {
-  switch (priority) {
-    case "High":
-      return { backgroundColor: "#ff4d4d" };
-    case "Medium":
-      return { backgroundColor: "#ffa500" };
-    case "Low":
-      return { backgroundColor: "#4caf50" };
-    default:
-      return { backgroundColor: "#ccc" };
-  }
 };
 
 export default LandingPage;

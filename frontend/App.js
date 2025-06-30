@@ -6,6 +6,8 @@ import SignUp from "./src/components/SignUp";
 import Login from "./src/components/Login";
 import ForgotPassword from "./src/components/ForgotPassword";
 import Dashboard from "./src/components/Dashboard";
+import TasksMainScreen from "./src/components/TasksMainScreen"
+import OverdueTasksScreen from "./src/components/TasksOverdueScreen"
 
 const Stack = createNativeStackNavigator();
 
