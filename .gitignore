@@ -75,6 +75,7 @@ web_modules/
 # dotenv environment variable files
 .env
 .env.development.local
+.env.development
 .env.test.local
 .env.production.local
 .env.local
@@ -137,3 +138,8 @@ dist
 
 # Firebase Private Key
 firebaseAccountKey.json
+
+# Firebase emulator state and logs
+firebase-debug.log
+firestore-debug.log
+firebase-error.log

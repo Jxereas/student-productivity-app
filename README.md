@@ -16,7 +16,18 @@ A mobile app built with **React Native**, **Firebase**, and **Node.js** to help 
     npm install
     ```
 
-3. Start the Expo development server:
+3. Create a .env.development file in the frontend/ directory and add the following (replace with actual local ip):
+    ```bash
+    EXPRESS_HOST=0.0.0.0
+    EXPRESS_PORT=3001
+
+    FIREBASE_USE_EMULATORS=true
+    FIREBASE_EMULATOR_HOST=LOCAL.IP.HERE
+    FIREBASE_EMULATOR_FIRESTORE_PORT=8080
+    FIREBASE_EMULATOR_AUTH_PORT=9099
+    ```
+
+4. Start the Expo development server:
     ```bash
     npx expo start
     ```
@@ -51,9 +62,35 @@ You can scan the QR code with the Expo Go app on your Android or iOS device, or 
 
     Make sure to name it exactly "firebaseAccountKey.json" or name it something else and add it to the .gitignore, currently it is added to the .gitignore as that existing name.
 
-4. Start the backend server:
+4. Create a .env.development file in the backend/ directory and add the following (replace with actual local ip):
     ```bash
-    node index.js
+    EXPRESS_HOST=LOCAL.IP.HERE
+    EXPRESS_PORT=3001
+
+    FIREBASE_USE_EMULATORS=true
+    LOCAL_FIRESTORE_EMULATOR_HOST=LOCAL.IP.HERE:8080
+    LOCAL_FIREBASE_AUTH_EMULATOR_HOST=LOCAL.IP.HERE:9099
+    ```
+
+5. Start the backend server:
+    ```bash
+    npm run dev
     ```
 
 The server will run at http://localhost:3001/
+
+---
+
+## Combined Running
+
+1. Navigate to the root directory.
+
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
+
+3. Start the frontend and backend concurrently:
+    ```bash
+    npm run dev
+    ```
