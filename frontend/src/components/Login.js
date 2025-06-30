@@ -93,6 +93,19 @@ const Login = () => {
             );
 
             if (!userCredential.user.emailVerified) {
+                await sendEmailVerification(auth.currentUser);
+                
+                setCooldown(30);
+                const interval = setInterval(() => {
+                    setCooldown((prev) => {
+                        if (prev <= 1) {
+                            clearInterval(interval);
+                            return 0;
+                        }
+                        return prev - 1;
+                    });
+                }, 1000);
+                
                 setShowVerifyPopup(true);
                 return;
             }
