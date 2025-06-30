@@ -4,16 +4,16 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert,
   StatusBar,
 } from "react-native";
+import Alert from "./Alert"
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../firebase/firebaseConfig";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { getEmailFromUsername } from "../utility/FirebaseHelpers";
-import styles from "../styles/Login"; // Reuse existing styling
+import styles from "../styles/Login";
 
 const ForgotPassword = () => {
   const [identifier, setIdentifier] = useState("");
