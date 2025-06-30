@@ -1,10 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const { db, auth } = require("./firebase");
-require("dotenv").config();
+
+if (process.env.NODE_ENV === "development") {
+    const path = require("path");
+
+    require("dotenv").config({
+        path: path.resolve(__dirname, ".env.development"),
+    });
+}
 
 const app = express();
-const PORT = 3001;
 
 app.use(cors());
 app.use(express.json());
@@ -87,4 +93,6 @@ app.get("/test", (req, res) => {
     res.send("Backend is reachable!");
 });
 
-app.listen(PORT, () => console.log(`🚀 Backend running on port ${PORT}`));
+app.listen(process.env.EXPRESS_PORT, process.env.EXPRESS_HOST, () =>
+    console.log(`🚀 Backend running on port ${process.env.EXPRESS_PORT}`),
+);

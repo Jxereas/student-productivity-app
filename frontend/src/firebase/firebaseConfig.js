@@ -6,6 +6,12 @@ import {
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import {
+    FIREBASE_USE_EMULATORS,
+    FIREBASE_EMULATOR_HOST,
+    FIREBASE_EMULATOR_FIRESTORE_PORT,
+    FIREBASE_EMULATOR_AUTH_PORT,
+} from "@env";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCngKXfPkno5okYknDCgN0tuYHMRdOrOWM",
@@ -30,8 +36,17 @@ try {
 const db = getFirestore(app);
 
 if (__DEV__) {
-    connectAuthEmulator(auth, "http://10.0.2.2:9099");
-    connectFirestoreEmulator(db, "10.0.2.2", 8080);
+    if (FIREBASE_USE_EMULATORS === "true") {
+        connectAuthEmulator(
+            auth,
+            `http://${FIREBASE_EMULATOR_HOST}:${FIREBASE_EMULATOR_AUTH_PORT}`,
+        );
+        connectFirestoreEmulator(
+            db,
+            FIREBASE_EMULATOR_HOST,
+            FIREBASE_EMULATOR_FIRESTORE_PORT,
+        );
+    }
 }
 
 export { auth, db };

@@ -3,16 +3,12 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#04060c",
     justifyContent: "center",
     alignItems: "center",
     padding: 24,
   },
   gradientContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 24,
   },
   title: {
     fontSize: 40,
