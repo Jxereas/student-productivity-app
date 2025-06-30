@@ -6,6 +6,7 @@ import {
   StatusBar,
   Dimensions,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import {
   SafeAreaView,
@@ -15,6 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { auth } from "../firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getAllUserGoals, getAllUserTasks } from "../utility/FirebaseHelpers";
+import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/Dashboard";
 import BottomNavBar from "../components/BottomNavBar";
 
@@ -23,6 +25,8 @@ const LandingPage = () => {
 
   const [tasks, setTasks] = useState([]);
   const [goals, setGoals] = useState([]);
+
+  const [standaloneTasks, setStandaloneTasks] = useState([]);
 
   const [goalCardCount, setGoalCardCount] = useState(0);
   const [taskCardCount, setTaskCardCount] = useState(0);
@@ -33,6 +37,7 @@ const LandingPage = () => {
   const [goalScrollHeight, setGoalScrollHeight] = useState(0);
   const [taskScrollHeight, setTaskScrollHeight] = useState(0);
 
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
@@ -55,6 +60,7 @@ const LandingPage = () => {
 
       setGoals(fetchedGoals);
       setTasks(fetchedTasks);
+      setStandaloneTasks(fetchedTasks.filter((task) => !task.goalId));
       setLoadingData(false);
     };
 
@@ -99,6 +105,16 @@ const LandingPage = () => {
     setTaskScrollHeight(maxTaskCards * 60 + 10 * (maxTaskCards - 1));
   }, [usedBottomHeight, usedTopHeight, insets]);
 
+  const getGoalProgress = (goalId) => {
+    const relatedTasks = tasks.filter((task) => task.goalId === goalId);
+    const completedCount = relatedTasks.filter((task) => task.completed).length;
+    const totalCount = relatedTasks.length;
+
+    const progressPercent =
+      totalCount === 0 ? 0 : (completedCount / totalCount) * 100;
+    return { completedCount, totalCount, progressPercent };
+  };
+
   return (
     <>
       <SafeAreaView
@@ -126,7 +142,13 @@ const LandingPage = () => {
             {!loadingData && <Text style={styles.heading}>Goals</Text>}
           </View>
           {loadingData ? (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <ActivityIndicator size="large" color="#cf59a9" />
             </View>
           ) : (
@@ -139,28 +161,44 @@ const LandingPage = () => {
                 contentContainerStyle={styles.goalScrollContent}
                 showsVerticalScrollIndicator={false}
               >
-                {goals.map((goal, index) => (
-                  <View
-                    key={index}
-                    style={[
-                      styles.goalCard,
-                      index === goals.length - 1 && { marginBottom: 0 },
-                    ]}
-                  >
-                    <Text style={styles.goalTitle}>{goal.title}</Text>
-                    <View style={styles.progressBarContainer}>
-                      <View style={styles.progressBarBackground}>
-                        <LinearGradient
-                          colors={["#cf59a9", "#d385b3"]}
-                          start={{ x: 0, y: 0 }}
-                          end={{ x: 1, y: 0 }}
-                          style={[styles.progressBarFill, { width: "80%" }]}
-                        />
+                {goals.map((goal, index) => {
+                  const { completedCount, totalCount, progressPercent } =
+                    getGoalProgress(goal.id);
+
+                  return (
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("GoalDetailsScreen", { goal })
+                      }
+                    >
+                      <View
+                        key={index}
+                        style={[
+                          styles.goalCard,
+                          index === goals.length - 1 && { marginBottom: 0 },
+                        ]}
+                      >
+                        <Text style={styles.goalTitle}>{goal.title}</Text>
+                        <View style={styles.progressBarContainer}>
+                          <View style={styles.progressBarBackground}>
+                            <LinearGradient
+                              colors={["#cf59a9", "#d385b3"]}
+                              start={{ x: 0, y: 0 }}
+                              end={{ x: 1, y: 0 }}
+                              style={[
+                                styles.progressBarFill,
+                                { width: `${progressPercent}%` },
+                              ]}
+                            />
+                          </View>
+                          <Text style={styles.progressText}>
+                            {completedCount}/{totalCount}
+                          </Text>
+                        </View>
                       </View>
-                      <Text style={styles.progressText}>8/10</Text>
-                    </View>
-                  </View>
-                ))}
+                    </TouchableOpacity>
+                  );
+                })}
               </ScrollView>
               <View
                 onLayout={(e) => {
@@ -177,7 +215,7 @@ const LandingPage = () => {
                 contentContainerStyle={styles.taskScrollContent}
                 showsVerticalScrollIndicator={false}
               >
-                {tasks.map((task, index) => (
+                {standaloneTasks.map((task, index) => (
                   <View
                     key={index}
                     style={[
