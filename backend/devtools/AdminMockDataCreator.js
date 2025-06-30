@@ -38,6 +38,7 @@ async function importData() {
 
     for (const task of mockData.tasks) {
       task.userId = adminUID;
+      task.completed = Math.random() < 0.5;
       await db.collection("tasks").doc(task.id).set(task);
       console.log(`Added task: ${task.id}`);
     }
