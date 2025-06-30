@@ -68,7 +68,6 @@ const SignUp = () => {
 
         try {
             const response = await fetch(`http://${EXPRESS_HOST}:${EXPRESS_PORT}/api/signup`, {
-                // This is the android studio emulator parent device ip
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
