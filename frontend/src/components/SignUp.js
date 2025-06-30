@@ -8,6 +8,10 @@ import { View, Text, TextInput, TouchableOpacity, Alert, StatusBar } from "react
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/SignUp";
+import {
+    EXPRESS_HOST,
+    EXPRESS_PORT
+} from "@env";
 
 const SignUp = () => {
     const [email, setEmail] = useState("");
@@ -63,8 +67,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await fetch("http://10.0.2.2:3001/api/signup", {
-                // This is the android studio emulator parent device ip
+            const response = await fetch(`http://${EXPRESS_HOST}:${EXPRESS_PORT}/api/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

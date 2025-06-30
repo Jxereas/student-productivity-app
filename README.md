@@ -18,6 +18,9 @@ A mobile app built with **React Native**, **Firebase**, and **Node.js** to help 
 
 3. Create a .env.development file in the frontend/ directory and add the following (replace with actual local ip):
     ```bash
+    EXPRESS_HOST=0.0.0.0
+    EXPRESS_PORT=3001
+
     FIREBASE_USE_EMULATORS=true
     FIREBASE_EMULATOR_HOST=LOCAL.IP.HERE
     FIREBASE_EMULATOR_FIRESTORE_PORT=8080
@@ -61,6 +64,9 @@ You can scan the QR code with the Expo Go app on your Android or iOS device, or 
 
 4. Create a .env.development file in the backend/ directory and add the following (replace with actual local ip):
     ```bash
+    EXPRESS_HOST=LOCAL.IP.HERE
+    EXPRESS_PORT=3001
+
     FIREBASE_USE_EMULATORS=true
     LOCAL_FIRESTORE_EMULATOR_HOST=LOCAL.IP.HERE:8080
     LOCAL_FIREBASE_AUTH_EMULATOR_HOST=LOCAL.IP.HERE:9099
