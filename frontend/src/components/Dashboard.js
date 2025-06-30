@@ -167,12 +167,12 @@ const LandingPage = () => {
 
                   return (
                     <TouchableOpacity
+                      key={index}
                       onPress={() =>
                         navigation.navigate("GoalDetailsScreen", { goal })
                       }
                     >
                       <View
-                        key={index}
                         style={[
                           styles.goalCard,
                           index === goals.length - 1 && { marginBottom: 0 },
