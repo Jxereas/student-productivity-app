@@ -179,7 +179,7 @@ const TasksMainScreen = () => {
 
                 <TouchableOpacity
                   style={styles.primaryButton}
-                  onPress={() => navigation.navigate("AddTaskScreen")}
+                  onPress={() => navigation.navigate("AddTask")}
                 >
                   <Text style={styles.buttonText}>Add Task</Text>
                 </TouchableOpacity>

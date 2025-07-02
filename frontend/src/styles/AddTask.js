@@ -1,0 +1,116 @@
+import { StyleSheet } from "react-native";
+
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#04060c",
+    paddingBottom: 70,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  headerTitle: {
+    fontSize: 36,
+    fontWeight: "bold",
+    color: "#d385b3",
+  },
+  fieldContainer: {
+    justifyContent: "center",
+    flex: 1,
+  },
+  input: {
+    backgroundColor: "#1e1e2d",
+    color: "#ffffff",
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 15,
+    fontSize: 16,
+  },
+  dateInput: {
+    backgroundColor: "#1e1e2d",
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 15,
+  },
+  dateText: {
+    fontSize: 16,
+    color: "#ffffff",
+  },
+  button: {
+    backgroundColor: "#cf59a9",
+    paddingVertical: 14,
+    borderRadius: 10,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  iosModalOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    zIndex: 999,
+  },
+  iosModalBackground: {
+    backgroundColor: "#1e1e2d",
+    padding: 20,
+    borderRadius: 12,
+    alignItems: "center",
+    width: "85%",
+  },
+  iosModalButtonRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "60%",
+  },
+  iosModalButton: {
+    color: "#cf59a9",
+    fontWeight: "bold",
+  },
+  notificationContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    zIndex: 1000,
+  },
+  notificationBackground: {
+    backgroundColor: "#1e1e2d",
+    padding: 25,
+    borderRadius: 12,
+    width: "85%",
+    alignItems: "center",
+  },
+  notificationTitle: {
+    fontSize: 18,
+    color: "#fff",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  notificationMessage: {
+    color: "#aaa",
+    fontSize: 14,
+    marginBottom: 5,
+    textAlign: "center",
+  },
+  notificationButton: {
+    color: "#cf59a9",
+    fontWeight: "bold",
+  },
+});
