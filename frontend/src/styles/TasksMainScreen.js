@@ -5,7 +5,7 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: "#04060c",
         padding: 20,
-        paddingBottom: 90, // make space for BottomNavBar
+        paddingBottom: 70, // make space for BottomNavBar
     },
     titleLarge: {
         fontSize: 36,
