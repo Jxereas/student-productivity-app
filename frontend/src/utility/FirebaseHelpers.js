@@ -1,9 +1,9 @@
-import { db } from "../firebase/firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { db, auth } from "../firebase/firebaseConfig";
+import { collection, query, where, getDocs, addDoc, updateDoc } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { format } from "date-fns";
 
-/**
- * Resolves an email from a given identifier (either email or username).
- */
+// Resolves an email from a given identifier (either email or username)
 export const getEmailFromUsername = async (identifier) => {
   try {
     const q = query(
@@ -32,5 +32,48 @@ export const getEmailFromUsername = async (identifier) => {
     }
 
     throw new Error("Firebase Error: Failed to look up username.");
+  }
+};
+
+// Adds a single task
+export const addTaskToFirestore = async (title, priority, dueDateTime, groupId = null) => {
+  try {
+    if (__DEV__) {
+      await signInWithEmailAndPassword(auth, "admin@gmail.com", "administrator");
+    }
+
+    const user = auth.currentUser;
+    if (!user) throw new Error("No authenticated user");
+
+    const formattedCreationDate = format(new Date(), "yyyy-MM-dd");
+    const formattedDueDate = format(dueDateTime, "yyyy-MM-dd");
+    const formattedDueTime = format(dueDateTime, "HH:mm");
+
+    const taskData = {
+      userId: user.uid,
+      title: title.trim(),
+      priority,
+      completed: false,
+      creationDate: formattedCreationDate,
+      dueDate: formattedDueDate,
+      dueTime: formattedDueTime,
+    };
+
+    if (groupId) {
+        taskData.groupId = groupId;
+    }
+
+    const newTaskRef = await addDoc(collection(db, "tasks"), taskData);
+
+    await updateDoc(newTaskRef, { id: newTaskRef.id });
+  } catch (error) {
+    throw new Error(`Failed to add task: ${error.message}`);
+  }
+};
+
+// Adds multiple tasks
+export const addMultipleTasksToFirestore = async (tasks) => {
+  for (const task of tasks) {
+    await addTaskToFirestore(task.title, task.priority, task.dueDateTime, task.groupId);
   }
 };
