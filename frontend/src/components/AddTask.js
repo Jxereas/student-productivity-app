@@ -27,6 +27,7 @@ const AddTaskScreen = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
   const [dueDate, setDueDate] = useState(new Date());
+  const [dueTemptDate, setDueTempDate] = useState(new Date());
   const [dateSelected, setDateSelected] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [timeSelected, setTimeSelected] = useState(false);
@@ -74,7 +75,7 @@ const AddTaskScreen = () => {
 
       setShowNotification(true);
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
       Alert.alert("Failure", "Failed to add task");
     }
   };
@@ -94,9 +95,7 @@ const AddTaskScreen = () => {
       >
         <View style={styles.container}>
           <View style={styles.header}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-            >
+            <TouchableOpacity onPress={() => navigation.goBack()}>
               <Icon name="arrow-back" size={26} color="#8986a7" />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>Add Task</Text>
@@ -222,24 +221,33 @@ const AddTaskScreen = () => {
               display="spinner"
               onChange={(event, selectedDate) => {
                 if (selectedDate && event.type == "set") {
-                  setDateSelected(true);
-                  setDueDate(selectedDate);
+                  setDueTempDate(selectedDate);
                 }
               }}
               themeVariant="dark"
             />
-            <TouchableOpacity
-              onPress={() => {
-                if (!dateSelected) {
-                  setDueDate(new Date());
+
+            <View style={styles.iosModalButtonRow}>
+              <TouchableOpacity
+                onPress={() => setShowPicker(false)}
+                style={{ padding: 5, alignItems: "center" }}
+              >
+                <Text style={[styles.iosModalButton, { marginRight: 60 }]}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  setDueDate(dueTemptDate);
                   setDateSelected(true);
-                }
-                setShowPicker(false);
-              }}
-              style={{ padding: 5, alignItems: "center" }}
-            >
-              <Text style={styles.iosModalButton}>Select Date</Text>
-            </TouchableOpacity>
+                  setShowPicker(false);
+                }}
+                style={{ padding: 5, alignItems: "center" }}
+              >
+                <Text style={styles.iosModalButton}>Select</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       )}
