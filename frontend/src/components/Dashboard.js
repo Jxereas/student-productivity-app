@@ -159,7 +159,7 @@ const LandingPage = () => {
                     <TouchableOpacity
                       key={index}
                       onPress={() =>
-                        navigation.navigate("GoalDetailsScreen", { goal })
+                        navigation.navigate("GoalDetails", { goal })
                       }
                     >
                       <View

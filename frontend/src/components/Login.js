@@ -110,8 +110,7 @@ const Login = () => {
                 return;
             }
 
-            // Proceed with navigation if needed
-            Alert.alert("Success", "Login successful!");
+            navigation.navigate("Dashboard");
         } catch (error) {
             let message = "Please try again.";
             if (error.code === "auth/user-not-found") {

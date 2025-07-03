@@ -15,7 +15,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { parseISO, isYesterday, format, startOfDay } from "date-fns";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getAllUserTasks } from "../utility/FirebaseHelpers";
-import styles from "../styles/TasksMainScreen";
+import styles from "../styles/Tasks";
 import BottomNavBar from "./BottomNavBar";
 
 const OverdueTasksScreen = () => {
@@ -98,7 +98,7 @@ const OverdueTasksScreen = () => {
                         }}
                     >
                         <TouchableOpacity
-                            onPress={() => navigation.navigate("TasksMainScreen")}
+                            onPress={() => navigation.goBack()}
                         >
                             <Icon name="arrow-back" size={26} color="#8986a7" />
                         </TouchableOpacity>

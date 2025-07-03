@@ -95,7 +95,7 @@ const AddTaskScreen = () => {
         <View style={styles.container}>
           <View style={styles.header}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("TasksMainScreen")}
+              onPress={() => navigation.goBack()}
             >
               <Icon name="arrow-back" size={26} color="#8986a7" />
             </TouchableOpacity>
@@ -307,7 +307,7 @@ const AddTaskScreen = () => {
             <TouchableOpacity
               onPress={() => {
                 setShowNotification(false);
-                navigation.navigate("TasksMainScreen");
+                navigation.navigate("Tasks");
               }}
             >
               <Text style={styles.notificationButton}>Continue to Tasks</Text>

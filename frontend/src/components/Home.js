@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import styles from "../styles/HomeScreen";
+import styles from "../styles/Home";
 import FrogLogo from "../../assets/frog-logo.png";
 
 export default function HomeScreen() {

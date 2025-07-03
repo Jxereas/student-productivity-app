@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import styles from "../styles/TasksMainScreen";
+import styles from "../styles/Tasks";
 import { useNavigation } from "@react-navigation/native";
 import { auth, db } from "../firebase/firebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -109,7 +109,7 @@ const TasksMainScreen = () => {
           >
             <Text style={styles.titleLarge}>Tasks</Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate("OverdueTasksScreen")}
+              onPress={() => navigation.navigate("OverdueTasks")}
             >
               <View style={{ padding: 6 }}>
                 <Icon name="notifications-outline" size={26} color="#fff" />
