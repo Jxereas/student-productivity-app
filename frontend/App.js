@@ -11,6 +11,8 @@ import ForgotPassword from "./src/components/ForgotPassword";
 import AddTask from "./src/components/AddTask";
 import Goals from "./src/components/Goals";
 import OverdueGoals from "./src/components/GoalsOverdue";
+import Dashboard from "./src/components/Dashboard";
+import GoalDetailsScreen from "./src/components/GoalDetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,13 +21,14 @@ export default function App() {
         <AlertProvider>
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName="OverdueGoals"
+                    initialRouteName="Dashboard"
                     screenOptions={{ headerShown: false }}
                 >
                     <Stack.Screen name="Home" component={HomeScreen} />
                     <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="SignUp" component={SignUp} />
                     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
                     <Stack.Screen name="TasksMainScreen" component={TasksMainScreen} />
                     <Stack.Screen
                         name="OverdueTasksScreen"
@@ -34,6 +37,7 @@ export default function App() {
                     <Stack.Screen name="AddTask" component={AddTask} />
                     <Stack.Screen name="Goals" component={Goals} />
                     <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
+        <Stack.Screen name="GoalDetailsScreen" component={GoalDetailsScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
         </AlertProvider>
