@@ -47,7 +47,7 @@ export const addTaskToFirestore = async (
     title,
     priority,
     dueDateTime,
-    groupId = null,
+    goalId = null,
 ) => {
     try {
         if (__DEV__) {
@@ -70,8 +70,8 @@ export const addTaskToFirestore = async (
             dueAt: dueDateTime,
         };
 
-        if (groupId) {
-            taskData.groupId = groupId;
+        if (goalId) {
+            taskData.goalId = goalId;
         }
 
         const newTaskRef = await addDoc(collection(db, "tasks"), taskData);
@@ -89,9 +89,46 @@ export const addMultipleTasksToFirestore = async (tasks) => {
             task.title,
             task.priority,
             task.dueDateTime,
-            task.groupId,
+            task.goalId,
         );
     }
+};
+
+// Adds a single goal
+export const addGoalToFirestore = async (title, dueDateTime) => {
+    try {
+        if (__DEV__) {
+            await signInWithEmailAndPassword(auth, "admin@gmail.com", "administrator");
+        }
+
+        const user = auth.currentUser;
+        if (!user) throw new Error("No authenticated user");
+
+        const goalData = {
+            userId: user.uid,
+            title: title.trim(),
+            createdAt: serverTimestamp(),
+            dueAt: dueDateTime,
+        };
+
+        const newGoalRef = await addDoc(collection(db, "goals"), goalData);
+
+        await updateDoc(newGoalRef, { id: newGoalRef.id });
+
+        return newGoalRef.id; // Return the ID so tasks can be grouped under it
+    } catch (error) {
+        throw new Error(`Failed to add goal: ${error.message}`);
+    }
+};
+
+// Adds multiple goals
+export const addMultipleGoalsToFirestore = async (goals) => {
+    const goalIds = [];
+    for (const goal of goals) {
+        const goalId = await addGoalToFirestore(goal.title, goal.dueDateTime);
+        goalIds.push(goalId);
+    }
+    return goalIds;
 };
 
 // Gets all tasks
