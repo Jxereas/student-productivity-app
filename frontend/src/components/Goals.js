@@ -12,7 +12,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { format, isToday, isTomorrow, parseISO, startOfDay } from "date-fns";
-import { getAllTasksFromFirestore, getAllGoalsFromFirestore } from "../utility/FirebaseHelpers";
+import {
+    getAllTasksFromFirestore,
+    getAllGoalsFromFirestore,
+} from "../utility/FirebaseHelpers";
 import styles from "../styles/Goals";
 import BottomNavBar from "./BottomNavBar";
 
@@ -27,8 +30,20 @@ const GoalsMainScreen = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                goals = await getAllGoalsFromFirestore();
-                goals.sort((a, b) => parseISO(a.dueDate) - parseISO(b.dueDate));
+                const [goals, userTasks] = await Promise.all([
+                    getAllGoalsFromFirestore(),
+                    getAllTasksFromFirestore(),
+                ]);
+
+                userTasks.forEach((task) => {
+                    task.dueAt = task.dueAt.toDate();
+                });
+
+                goals.forEach((goal) => {
+                    goal.dueAt = goal.dueAt.toDate();
+                });
+
+                goals.sort((a, b) => a.dueAt - b.dueAt);
 
                 const today = startOfDay(new Date());
                 let overdue = 0;
@@ -36,7 +51,7 @@ const GoalsMainScreen = () => {
                 // Group tasks by date
                 const groups = {};
                 goals.forEach((goal) => {
-                    const dueDate = startOfDay(parseISO(goal.dueDate));
+                    const dueDate = startOfDay(goal.dueAt);
 
                     if (dueDate < today) {
                         overdue++;
@@ -51,8 +66,6 @@ const GoalsMainScreen = () => {
                     if (!groups[label]) groups[label] = [];
                     groups[label].push(goal);
                 });
-
-                const userTasks = await getAllTasksFromFirestore();
 
                 setOverdueCount(overdue);
                 setGroupedGoals(groups);

@@ -10,11 +10,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { auth, db } from "../firebase/firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { parseISO, isYesterday, format, startOfDay } from "date-fns";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { getAllUserTasks } from "../utility/FirebaseHelpers";
+import { isYesterday, format, startOfDay } from "date-fns";
+import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
 import styles from "../styles/Tasks";
 import BottomNavBar from "./BottomNavBar";
 
@@ -26,35 +23,21 @@ const OverdueTasksScreen = () => {
     useEffect(() => {
         const fetchOverdueTasks = async () => {
             try {
-                if (__DEV__) {
-                    await signInWithEmailAndPassword(
-                        auth,
-                        "admin@gmail.com",
-                        "administrator",
-                    );
-                }
+                const allTasks = await getAllTasksFromFirestore();
 
-                const user = auth.currentUser;
-                if (!user) return;
+                allTasks.forEach((task) => {
+                    task.dueAt = task.dueAt.toDate();
+                });
 
-                const q = query(
-                    collection(db, "tasks"),
-                    where("userId", "==", user.uid),
-                );
+                const today = startOfDay(new Date());
 
-                const snapshot = await getDocs(q);
-                const now = new Date();
-
-                const tasks = snapshot.docs
-                    .map((doc) => ({ id: doc.id, ...doc.data() }))
-                    .filter(
-                        (task) => startOfDay(parseISO(task.dueDate)) < startOfDay(now),
-                    )
-                    .sort((a, b) => parseISO(b.dueDate) - parseISO(a.dueDate));
+                const overdueTasks = allTasks
+                    .filter((task) => startOfDay(task.dueAt) < today)
+                    .sort((a, b) => b.dueAt - a.dueAt);
 
                 const groups = {};
-                tasks.forEach((task) => {
-                    const dueDate = parseISO(task.dueDate);
+                overdueTasks.forEach((task) => {
+                    const dueDate = task.dueAt;
                     let label = format(dueDate, "MMM dd, yyyy");
 
                     if (isYesterday(dueDate)) {
@@ -97,9 +80,7 @@ const OverdueTasksScreen = () => {
                             marginBottom: 10,
                         }}
                     >
-                        <TouchableOpacity
-                            onPress={() => navigation.goBack()}
-                        >
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
                             <Icon name="arrow-back" size={26} color="#8986a7" />
                         </TouchableOpacity>
 

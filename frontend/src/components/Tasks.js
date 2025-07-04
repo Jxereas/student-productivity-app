@@ -1,196 +1,176 @@
 import React, { useState, useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StatusBar,
-  ActivityIndicator,
+    View,
+    Text,
+    ScrollView,
+    TouchableOpacity,
+    StatusBar,
+    ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../styles/Tasks";
 import { useNavigation } from "@react-navigation/native";
-import { auth, db } from "../firebase/firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { format, isToday, isTomorrow, parseISO, startOfDay } from "date-fns";
-import { getAllUserTasks } from "../utility/FirebaseHelpers";
+import { format, isToday, isTomorrow, startOfDay } from "date-fns";
+import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
 import BottomNavBar from "./BottomNavBar";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 const TasksMainScreen = () => {
-  const navigation = useNavigation();
-  const [groupedTasks, setGroupedTasks] = useState({});
-  const [overdueCount, setOverdueCount] = useState(0);
-  const [loadingData, setLoadingData] = useState(true);
+    const navigation = useNavigation();
+    const [groupedTasks, setGroupedTasks] = useState({});
+    const [overdueCount, setOverdueCount] = useState(0);
+    const [loadingData, setLoadingData] = useState(true);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        if (__DEV__) {
-          await signInWithEmailAndPassword(
-            auth,
-            "admin@gmail.com",
-            "administrator",
-          );
-        }
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const tasks = await getAllTasksFromFirestore();
 
-        const user = auth.currentUser;
-        if (!user) return;
+                tasks.forEach((task) => {
+                    task.dueAt = task.dueAt.toDate();
+                });
 
-        const q = query(
-          collection(db, "tasks"),
-          where("userId", "==", user.uid),
-        );
+                tasks.sort((a, b) => a.dueAt - b.dueAt);
 
-        const snapshot = await getDocs(q);
+                const today = startOfDay(new Date());
+                let overdue = 0;
 
-        const tasks = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+                // Group tasks by date
+                const groups = {};
+                tasks.forEach((task) => {
+                    const dueDate = startOfDay(task.dueAt);
 
-        tasks.sort((a, b) => parseISO(a.dueDate) - parseISO(b.dueDate));
+                    if (dueDate < today) {
+                        overdue++;
+                        return;
+                    }
 
-        const today = startOfDay(new Date());
-        let overdue = 0;
+                    let label = format(dueDate, "MMM dd, yyyy");
 
-        // Group tasks by date
-        const groups = {};
-        tasks.forEach((task) => {
-          const dueDate = startOfDay(parseISO(task.dueDate));
+                    if (isToday(dueDate)) label = "Today";
+                    else if (isTomorrow(dueDate)) label = "Tomorrow";
 
-          if (dueDate < today) {
-            overdue++;
-            return;
-          }
+                    if (!groups[label]) groups[label] = [];
+                    groups[label].push(task);
+                });
 
-          let label = format(dueDate, "MMM dd, yyyy");
+                setOverdueCount(overdue);
+                setGroupedTasks(groups);
+                setLoadingData(false);
+            } catch (error) {
+                console.error("Error fetching tasks:", error.code, error.message);
+            }
+        };
 
-          if (isToday(dueDate)) label = "Today";
-          else if (isTomorrow(dueDate)) label = "Tomorrow";
+        fetchTasks();
+    }, []);
 
-          if (!groups[label]) groups[label] = [];
-          groups[label].push(task);
-        });
-
-        setOverdueCount(overdue);
-        setGroupedTasks(groups);
-        setLoadingData(false);
-      } catch (error) {
-        console.error("Error fetching tasks:", error.code, error.message);
-      }
-    };
-
-    fetchTasks();
-  }, []);
-
-  return (
-    <>
-      <SafeAreaView
-        edges={["top"]}
-        style={{ flex: 0, backgroundColor: "#04060c" }}
-      >
-        <StatusBar barStyle="light-content" backgroundColor="#04060c" />
-      </SafeAreaView>
-
-      <SafeAreaView
-        edges={["left", "right", "bottom"]}
-        style={{ flex: 1, backgroundColor: "#0e0d16" }}
-      >
-        <View style={styles.container}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: 10,
-            }}
-          >
-            <Text style={styles.titleLarge}>Tasks</Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("OverdueTasks")}
+    return (
+        <>
+            <SafeAreaView
+                edges={["top"]}
+                style={{ flex: 0, backgroundColor: "#04060c" }}
             >
-              <View style={{ padding: 6 }}>
-                <Icon name="notifications-outline" size={26} color="#fff" />
-                {overdueCount > 0 && (
-                  <View
-                    style={{
-                      position: "absolute",
-                      right: 6,
-                      top: 0,
-                      backgroundColor: "#ff6bcb",
-                      borderRadius: 8,
-                      minWidth: 16,
-                      height: 16,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      paddingHorizontal: 3,
-                    }}
-                  >
-                    <Text style={{ color: "white", fontSize: 10 }}>
-                      {overdueCount}
-                    </Text>
-                  </View>
-                )}
-              </View>
-            </TouchableOpacity>
-          </View>
+                <StatusBar barStyle="light-content" backgroundColor="#04060c" />
+            </SafeAreaView>
 
-          {loadingData ? (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+            <SafeAreaView
+                edges={["left", "right", "bottom"]}
+                style={{ flex: 1, backgroundColor: "#0e0d16" }}
             >
-              <ActivityIndicator size="large" color="#cf59a9" />
-            </View>
-          ) : (
-            <>
-              <ScrollView style={styles.scrollArea}>
-                {Object.keys(groupedTasks).map((date, index) => (
-                  <View key={index}>
-                    <Text style={styles.sectionHeading}>{date}</Text>
-                    {groupedTasks[date].map((task, taskIndex) => (
-                      <View key={taskIndex} style={styles.taskCard}>
-                        <View style={styles.taskRow}>
-                          <Text style={styles.taskTitle}>{task.title}</Text>
-                          <View style={styles.priorityPill}>
-                            <Text style={styles.priorityPillText}>
-                              {task.priority}
-                            </Text>
-                          </View>
+                <View style={styles.container}>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginBottom: 10,
+                        }}
+                    >
+                        <Text style={styles.titleLarge}>Tasks</Text>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("OverdueTasks")}
+                        >
+                            <View style={{ padding: 6 }}>
+                                <Icon name="notifications-outline" size={26} color="#fff" />
+                                {overdueCount > 0 && (
+                                    <View
+                                        style={{
+                                            position: "absolute",
+                                            right: 6,
+                                            top: 0,
+                                            backgroundColor: "#ff6bcb",
+                                            borderRadius: 8,
+                                            minWidth: 16,
+                                            height: 16,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            paddingHorizontal: 3,
+                                        }}
+                                    >
+                                        <Text style={{ color: "white", fontSize: 10 }}>
+                                            {overdueCount}
+                                        </Text>
+                                    </View>
+                                )}
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    {loadingData ? (
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <ActivityIndicator size="large" color="#cf59a9" />
                         </View>
-                      </View>
-                    ))}
-                  </View>
-                ))}
-              </ScrollView>
+                    ) : (
+                        <>
+                            <ScrollView style={styles.scrollArea}>
+                                {Object.keys(groupedTasks).map((date, index) => (
+                                    <View key={index}>
+                                        <Text style={styles.sectionHeading}>{date}</Text>
+                                        {groupedTasks[date].map((task, taskIndex) => (
+                                            <View key={taskIndex} style={styles.taskCard}>
+                                                <View style={styles.taskRow}>
+                                                    <Text style={styles.taskTitle}>{task.title}</Text>
+                                                    <View style={styles.priorityPill}>
+                                                        <Text style={styles.priorityPillText}>
+                                                            {task.priority}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        ))}
+                                    </View>
+                                ))}
+                            </ScrollView>
 
-              <View style={styles.actionButtonsContainer}>
-                <TouchableOpacity
-                  style={styles.secondaryButton}
-                  onPress={() => navigation.navigate("SearchTasksScreen")}
-                >
-                  <Text style={styles.buttonText}>Search Tasks</Text>
-                </TouchableOpacity>
+                            <View style={styles.actionButtonsContainer}>
+                                <TouchableOpacity
+                                    style={styles.secondaryButton}
+                                    onPress={() => navigation.navigate("SearchTasksScreen")}
+                                >
+                                    <Text style={styles.buttonText}>Search Tasks</Text>
+                                </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={styles.primaryButton}
-                  onPress={() => navigation.navigate("AddTask")}
-                >
-                  <Text style={styles.buttonText}>Add Task</Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
-          <BottomNavBar />
-        </View>
-      </SafeAreaView>
-    </>
-  );
+                                <TouchableOpacity
+                                    style={styles.primaryButton}
+                                    onPress={() => navigation.navigate("AddTask")}
+                                >
+                                    <Text style={styles.buttonText}>Add Task</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </>
+                    )}
+                    <BottomNavBar />
+                </View>
+            </SafeAreaView>
+        </>
+    );
 };
 
 export default TasksMainScreen;

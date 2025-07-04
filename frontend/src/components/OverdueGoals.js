@@ -29,26 +29,35 @@ const OverdueGoalsScreen = () => {
     useEffect(() => {
         const fetchOverdueGoals = async () => {
             try {
-                const goals = await getAllGoalsFromFirestore();
+                const [goals, userTasks] = await Promise.all([
+                    getAllGoalsFromFirestore(),
+                    getAllTasksFromFirestore(),
+                ]);
 
-                const now = new Date();
+                userTasks.forEach((task) => {
+                    task.dueAt = task.dueAt.toDate();
+                });
+
+                goals.forEach((goal) => {
+                    goal.dueAt = goal.dueAt.toDate();
+                });
+
+                const today = startOfDay(new Date());
                 const overdueGoals = goals
                     .filter(
-                        (goal) => startOfDay(parseISO(goal.dueDate)) < startOfDay(now),
+                        (goal) => startOfDay(goal.dueAt) < today,
                     )
-                    .sort((a, b) => parseISO(b.dueDate) - parseISO(a.dueDate));
+                    .sort((a, b) => b.dueAt - a.dueAt);
 
                 const groups = {};
                 overdueGoals.forEach((goal) => {
-                    const dueDate = parseISO(goal.dueDate);
+                    const dueDate = goal.dueAt;
                     let label = format(dueDate, "MMM dd, yyyy");
                     if (isYesterday(dueDate)) label = "Yesterday";
 
                     if (!groups[label]) groups[label] = [];
                     groups[label].push(goal);
                 });
-
-                const userTasks = await getAllTasksFromFirestore();
 
                 setTasks(userTasks);
                 setGroupedOverdueGoals(groups);

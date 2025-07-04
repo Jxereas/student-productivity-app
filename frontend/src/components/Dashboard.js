@@ -50,14 +50,22 @@ const LandingPage = () => {
                 getAllTasksFromFirestore(),
             ]);
 
-            const today = startOfDay(new Date());
+            fetchedTasks.forEach((task) => {
+                task.dueAt = task.dueAt.toDate();
+            });
+
+            fetchedGoals.forEach((goal) => {
+                goal.dueAt = goal.dueAt.toDate();
+            });
+
+            const today = new Date(); // May be wrapped in isStartOfDay() later on, not done for performance currently since ran through isSameDay
 
             const todaysGoals = fetchedGoals.filter((goal) =>
-                isSameDay(startOfDay(parseISO(goal.dueDate)), today),
+                isSameDay(goal.dueAt, today),
             );
 
             const todaysTasks = fetchedTasks.filter((task) =>
-                isSameDay(startOfDay(parseISO(task.dueDate)), today),
+                isSameDay(task.dueAt, today),
             );
 
             setGoals(fetchedGoals);
@@ -178,7 +186,9 @@ const LandingPage = () => {
                                             <View
                                                 style={[
                                                     styles.goalCard,
-                                                    index === todaysGoals.length - 1 && { marginBottom: 0 },
+                                                    index === todaysGoals.length - 1 && {
+                                                        marginBottom: 0,
+                                                    },
                                                 ]}
                                             >
                                                 <Text style={styles.goalTitle}>{goal.title}</Text>

@@ -6,9 +6,9 @@ import {
     getDocs,
     addDoc,
     updateDoc,
+    serverTimestamp,
 } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { format } from "date-fns";
 
 // Resolves an email from a given identifier (either email or username)
 export const getEmailFromUsername = async (identifier) => {
@@ -61,18 +61,13 @@ export const addTaskToFirestore = async (
         const user = auth.currentUser;
         if (!user) throw new Error("No authenticated user");
 
-        const formattedCreationDate = format(new Date(), "yyyy-MM-dd");
-        const formattedDueDate = format(dueDateTime, "yyyy-MM-dd");
-        const formattedDueTime = format(dueDateTime, "HH:mm");
-
         const taskData = {
             userId: user.uid,
             title: title.trim(),
             priority,
             completed: false,
-            creationDate: formattedCreationDate,
-            dueDate: formattedDueDate,
-            dueTime: formattedDueTime,
+            createdAt: serverTimestamp(),
+            dueAt: dueDateTime,
         };
 
         if (groupId) {
