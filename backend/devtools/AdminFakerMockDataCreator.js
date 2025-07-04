@@ -10,16 +10,26 @@ const NUM_TASKS = 20;
 const NUM_GOALS = 10;
 const NUM_GOAL_TASKS = 5;
 
-// Generates a Date object offset by days from now and random time
-function randomFutureOrPastDate(daysRange = 10) {
-    const base = new Date();
-    const offset = Math.floor(Math.random() * daysRange * 2) - daysRange;
-    base.setDate(base.getDate() + offset);
+// Returns a due date in the past or future (±10 days), and a creation date before it
+function generateDueAndCreatedTimestamps(daysRange = 10, maxGapDays = 7) {
+    const now = new Date();
 
-    // Add random hours and minutes
-    base.setHours(Math.floor(Math.random() * 24));
-    base.setMinutes(Math.floor(Math.random() / 0.25) * 15);
-    return base;
+    // Pick a creation date within the past `daysRange`
+    const createdDate = faker.date.between({
+        from: new Date(now.getTime() - daysRange * 24 * 60 * 60 * 1000),
+        to: now,
+    });
+
+    // Pick a due date up to `maxGapDays` after the creation date
+    const dueDate = faker.date.between({
+        from: createdDate,
+        to: new Date(createdDate.getTime() + maxGapDays * 24 * 60 * 60 * 1000),
+    });
+
+    return {
+        createdAt: Timestamp.fromDate(createdDate),
+        dueAt: Timestamp.fromDate(dueDate),
+    };
 }
 
 async function clearEmulatorData() {
@@ -38,23 +48,21 @@ async function clearEmulatorData() {
 
 async function addGoals(adminUID) {
     for (let i = 0; i < NUM_GOALS; i++) {
-        const dueAt = randomFutureOrPastDate();
-        const createdAt = randomFutureOrPastDate(7);
+        const { dueAt, createdAt } = generateDueAndCreatedTimestamps();
 
         const goal = {
             id: faker.string.uuid(),
             userId: adminUID,
             title: faker.lorem.words(3),
-            dueAt: Timestamp.fromDate(dueAt),
-            createdAt: Timestamp.fromDate(createdAt),
+            dueAt,
+            createdAt,
         };
 
         await db.collection("goals").doc(goal.id).set(goal);
         console.log(`Added goal: ${goal.id}`);
 
         for (let j = 0; j < NUM_GOAL_TASKS; j++) {
-            const dueAt = randomFutureOrPastDate();
-            const createdAt = randomFutureOrPastDate(7);
+            const { dueAt, createdAt } = generateDueAndCreatedTimestamps();
 
             const task = {
                 id: faker.string.uuid(),
@@ -63,8 +71,8 @@ async function addGoals(adminUID) {
                 title: faker.lorem.words(3),
                 priority: faker.helpers.arrayElement(["High", "Medium", "Low"]),
                 completed: Math.random() < 0.5,
-                dueAt: Timestamp.fromDate(dueAt),
-                createdAt: Timestamp.fromDate(createdAt),
+                dueAt,
+                createdAt,
             };
 
             await db.collection("tasks").doc(task.id).set(task);
@@ -74,8 +82,7 @@ async function addGoals(adminUID) {
 
 async function addTasks(adminUID) {
     for (let i = 0; i < NUM_TASKS; i++) {
-        const dueAt = randomFutureOrPastDate();
-        const createdAt = randomFutureOrPastDate(7);
+        const { dueAt, createdAt } = generateDueAndCreatedTimestamps();
 
         const task = {
             id: faker.string.uuid(),
@@ -83,8 +90,8 @@ async function addTasks(adminUID) {
             title: faker.lorem.words(3),
             priority: faker.helpers.arrayElement(["High", "Medium", "Low"]),
             completed: Math.random() < 0.5,
-            dueAt: Timestamp.fromDate(dueAt),
-            createdAt: Timestamp.fromDate(createdAt),
+            dueAt,
+            createdAt,
         };
 
         await db.collection("tasks").doc(task.id).set(task);
