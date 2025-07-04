@@ -13,33 +13,32 @@ import Goals from "./src/components/Goals";
 import OverdueGoals from "./src/components/OverdueGoals";
 import Dashboard from "./src/components/Dashboard";
 import GoalDetails from "./src/components/GoalDetails";
+import AddGoal from "./src/components/AddGoal";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-    return (
-        <AlertProvider>
-            <NavigationContainer>
-                <Stack.Navigator
-                    initialRouteName="Home"
-                    screenOptions={{ headerShown: false }}
-                >
-                    <Stack.Screen name="Home" component={Home} />
-                    <Stack.Screen name="Login" component={Login} />
-                    <Stack.Screen name="SignUp" component={SignUp} />
-                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-                    <Stack.Screen name="Tasks" component={Tasks} />
-                    <Stack.Screen
-                        name="OverdueTasks"
-                        component={OverdueTasks}
-                    />
-                    <Stack.Screen name="AddTask" component={AddTask} />
-                    <Stack.Screen name="Goals" component={Goals} />
-                    <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
-        <Stack.Screen name="GoalDetails" component={GoalDetails} />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </AlertProvider>
-    );
+  return (
+    <AlertProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Tasks" component={Tasks} />
+          <Stack.Screen name="OverdueTasks" component={OverdueTasks} />
+          <Stack.Screen name="AddTask" component={AddTask} />
+          <Stack.Screen name="Goals" component={Goals} />
+          <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
+          <Stack.Screen name="GoalDetails" component={GoalDetails} />
+          <Stack.Screen name="AddGoal" component={AddGoal} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AlertProvider>
+  );
 }
