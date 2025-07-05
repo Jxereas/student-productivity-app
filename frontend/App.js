@@ -15,6 +15,7 @@ import Dashboard from "./src/components/Dashboard";
 import GoalDetails from "./src/components/GoalDetails";
 import AddGoal from "./src/components/AddGoal";
 import SearchGoals from "./src/components/SearchGoals";
+import SearchGoalsResults from "./src/components/SearchGoalsResults";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,10 @@ export default function App() {
           <Stack.Screen name="GoalDetails" component={GoalDetails} />
           <Stack.Screen name="AddGoal" component={AddGoal} />
           <Stack.Screen name="SearchGoals" component={SearchGoals} />
+          <Stack.Screen
+            name="SearchGoalsResults"
+            component={SearchGoalsResults}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AlertProvider>
