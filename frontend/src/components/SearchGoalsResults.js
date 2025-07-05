@@ -54,7 +54,6 @@ const SearchGoalsResults = () => {
         dateFields.forEach((key) => {
           if (filters[key] && typeof filters[key] === "string") {
             filters[key] = new Date(filters[key]);
-            console.log(filters[key]);
           }
         });
 
