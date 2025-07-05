@@ -5,13 +5,15 @@ import { AlertProvider } from "./src/components/Alert";
 import Home from "./src/components/Home";
 import SignUp from "./src/components/SignUp";
 import Login from "./src/components/Login";
+import ForgotPassword from "./src/components/ForgotPassword";
+import Dashboard from "./src/components/Dashboard";
 import Tasks from "./src/components/Tasks";
 import OverdueTasks from "./src/components/OverdueTasks";
-import ForgotPassword from "./src/components/ForgotPassword";
 import AddTask from "./src/components/AddTask";
+import SearchTasks from "./src/components/SearchTasks";
+import SearchTasksResults from "./src/components/SearchTasksResults";
 import Goals from "./src/components/Goals";
 import OverdueGoals from "./src/components/OverdueGoals";
-import Dashboard from "./src/components/Dashboard";
 import GoalDetails from "./src/components/GoalDetails";
 import AddGoal from "./src/components/AddGoal";
 import SearchGoals from "./src/components/SearchGoals";
@@ -24,7 +26,7 @@ export default function App() {
     <AlertProvider>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Home"
+          initialRouteName="SearchTasks"
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Home" component={Home} />
@@ -35,6 +37,8 @@ export default function App() {
           <Stack.Screen name="Tasks" component={Tasks} />
           <Stack.Screen name="OverdueTasks" component={OverdueTasks} />
           <Stack.Screen name="AddTask" component={AddTask} />
+          <Stack.Screen name="SearchTasks" component={SearchTasks} />
+          <Stack.Screen name="SearchTasksResults" component={SearchTasksResults} />
           <Stack.Screen name="Goals" component={Goals} />
           <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
           <Stack.Screen name="GoalDetails" component={GoalDetails} />

@@ -152,7 +152,7 @@ const TasksMainScreen = () => {
                             <View style={styles.actionButtonsContainer}>
                                 <TouchableOpacity
                                     style={styles.secondaryButton}
-                                    onPress={() => navigation.navigate("SearchTasksScreen")}
+                                    onPress={() => navigation.navigate("SearchTasks")}
                                 >
                                     <Text style={styles.buttonText}>Search Tasks</Text>
                                 </TouchableOpacity>

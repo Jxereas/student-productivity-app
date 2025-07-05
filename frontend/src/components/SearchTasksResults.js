@@ -12,15 +12,12 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { format, isToday, isTomorrow, isYesterday, startOfDay } from "date-fns";
 import { LinearGradient } from "expo-linear-gradient";
-import styles from "../styles/Goals";
+import styles from "../styles/SearchTasksResults";
 import BottomNavBar from "./BottomNavBar";
-import {
-  getAllGoalsFromFirestore,
-  getAllTasksFromFirestore,
-} from "../utility/FirebaseHelpers";
+import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
 
-const SearchGoalsResults = () => {
-  const [groupedGoals, setGroupedGoals] = useState({});
+const SearchTasksResults = () => {
+  const [groupedTasks, setGroupedTasks] = useState({});
   const [tasks, setTasks] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
 
@@ -29,20 +26,14 @@ const SearchGoalsResults = () => {
   const { filters } = route.params;
 
   useEffect(() => {
-    const fetchFilteredGoals = async () => {
+    const fetchFilteredTasks = async () => {
       try {
-        const [allGoals, allTasks] = await Promise.all([
-          getAllGoalsFromFirestore(),
-          getAllTasksFromFirestore(),
-        ]);
+        const allTasks = await getAllTasksFromFirestore();
 
-        // Convert timestamps
-        allGoals.forEach((goal) => {
-          goal.dueAt = goal.dueAt.toDate();
-          goal.createdAt = goal.createdAt.toDate();
+        allTasks.forEach((task) => {
+          task.dueAt = task.dueAt.toDate();
+          task.createdAt = task.createdAt.toDate();
         });
-
-        allTasks.forEach((task) => (task.dueAt = task.dueAt.toDate()));
 
         const dateFields = [
           "createdAfter",
@@ -62,8 +53,8 @@ const SearchGoalsResults = () => {
         const nextWeek = new Date(todayStart);
         nextWeek.setDate(todayStart.getDate() + 7);
 
-        const filteredGoals = allGoals.filter((goal) => {
-          const { title, createdAt, dueAt } = goal;
+        const filteredTasks = allTasks.filter((task) => {
+          const { title, createdAt, dueAt } = task;
 
           if (
             filters.title &&
@@ -88,6 +79,14 @@ const SearchGoalsResults = () => {
             return false;
           }
 
+          if (filters.hasGoal && !task.goalId) {
+            return false;
+          }
+
+          if (filters.standAloneTask && task.goalId) {
+            return false;
+          }
+
           if (filters.dueToday && !isToday(dueAt)) {
             return false;
           }
@@ -107,21 +106,21 @@ const SearchGoalsResults = () => {
         });
 
         // Sort and group goals
-        filteredGoals.sort((a, b) => a.dueAt - b.dueAt);
+        filteredTasks.sort((a, b) => a.dueAt - b.dueAt);
         const grouped = {};
-        filteredGoals.forEach((goal) => {
-          const dueDate = startOfDay(goal.dueAt);
+        filteredTasks.forEach((task) => {
+          const dueDate = startOfDay(task.dueAt);
           let label = format(dueDate, "MMM dd, yyyy");
           if (isYesterday(dueDate)) label = "Yesterday";
           else if (isToday(dueDate)) label = "Today";
           else if (isTomorrow(dueDate)) label = "Tomorrow";
 
           if (!grouped[label]) grouped[label] = [];
-          grouped[label].push(goal);
+          grouped[label].push(task);
         });
 
         setTasks(allTasks);
-        setGroupedGoals(grouped);
+        setGroupedTasks(grouped);
         setLoadingData(false);
       } catch (error) {
         console.error("Error fetching filtered goals:", error.message);
@@ -129,17 +128,8 @@ const SearchGoalsResults = () => {
       }
     };
 
-    fetchFilteredGoals();
+    fetchFilteredTasks();
   }, [filters]);
-
-  const getGoalProgress = (goalId) => {
-    const relatedTasks = tasks.filter((task) => task.goalId === goalId);
-    const completedCount = relatedTasks.filter((task) => task.completed).length;
-    const totalCount = relatedTasks.length;
-    const progressPercent =
-      totalCount === 0 ? 0 : (completedCount / totalCount) * 100;
-    return { completedCount, totalCount, progressPercent };
-  };
 
   return (
     <>
@@ -178,55 +168,23 @@ const SearchGoalsResults = () => {
               style={styles.scrollArea}
               showsVerticalScrollIndicator={false}
             >
-              {Object.keys(groupedGoals).length === 0 ? (
-                <Text style={styles.noResultsText}>No results found.</Text>
-              ) : (
-                Object.keys(groupedGoals).map((date, index) => (
-                  <View key={index}>
-                    <Text style={styles.sectionHeading}>{date}</Text>
-                    {groupedGoals[date].map((goal, goalIndex) => {
-                      const { completedCount, totalCount, progressPercent } =
-                        getGoalProgress(goal.id);
-
-                      return (
-                        <TouchableOpacity
-                          key={goalIndex}
-                          onPress={() =>
-                            navigation.navigate("GoalDetailsScreen", { goal })
-                          }
-                        >
-                          <View
-                            style={[
-                              styles.goalCard,
-                              goalIndex === groupedGoals[date].length - 1 && {
-                                marginBottom: 0,
-                              },
-                            ]}
-                          >
-                            <Text style={styles.goalTitle}>{goal.title}</Text>
-                            <View style={styles.progressBarContainer}>
-                              <View style={styles.progressBarBackground}>
-                                <LinearGradient
-                                  colors={["#cf59a9", "#d385b3"]}
-                                  start={{ x: 0, y: 0 }}
-                                  end={{ x: 1, y: 0 }}
-                                  style={[
-                                    styles.progressBarFill,
-                                    { width: `${progressPercent}%` },
-                                  ]}
-                                />
-                              </View>
-                              <Text style={styles.progressText}>
-                                {completedCount}/{totalCount}
-                              </Text>
-                            </View>
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                ))
-              )}
+              {Object.keys(groupedTasks).map((date, index) => (
+                <View key={index}>
+                  <Text style={styles.sectionHeading}>{date}</Text>
+                  {groupedTasks[date].map((task, taskIndex) => (
+                    <View key={taskIndex} style={styles.taskCard}>
+                      <View style={styles.taskRow}>
+                        <Text style={styles.taskTitle}>{task.title}</Text>
+                        <View style={styles.priorityPill}>
+                          <Text style={styles.priorityPillText}>
+                            {task.priority}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  ))}
+                </View>
+              ))}
             </ScrollView>
           )}
           <BottomNavBar />
@@ -236,4 +194,4 @@ const SearchGoalsResults = () => {
   );
 };
 
-export default SearchGoalsResults;
+export default SearchTasksResults;
