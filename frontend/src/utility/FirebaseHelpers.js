@@ -4,11 +4,114 @@ import {
     query,
     where,
     getDocs,
+    doc,
+    getDoc,
     addDoc,
     updateDoc,
     serverTimestamp,
 } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+    signInWithEmailAndPassword,
+    signOut,
+    updateEmail,
+    updatePassword,
+    reauthenticateWithCredential,
+    EmailAuthProvider,
+    sendEmailVerification,
+} from "firebase/auth";
+
+// Gets the logged in user
+export const getLoggedInUser = async () => {
+    if (__DEV__) {
+        await signInWithEmailAndPassword(auth, "admin@gmail.com", "administrator");
+    }
+
+    return auth.currentUser;
+};
+
+// Sign out the logged in user
+export const signOutLoggedInUser = async () => {
+    await signOut(auth);
+};
+
+// Reauthenticates the current user with their password
+export const reauthenticateUser = async (password) => {
+    try {
+        const user = auth.currentUser;
+        const credential = EmailAuthProvider.credential(user.email, password);
+        await reauthenticateWithCredential(user, credential);
+    } catch (error) {
+        if (error.code === "auth/wrong-password") {
+            throw new Error("Incorrect password, please try again.");
+        } else {
+            throw new Error(`Reauthentication failed.`);
+        }
+    }
+};
+
+// Changes the user's email in both Firebase Auth and Firestore
+export const changeUserEmail = async (newEmail, password) => {
+    try {
+        await reauthenticateUser(password);
+
+        const user = auth.currentUser;
+        const userDocRef = doc(db, "users", user.uid);
+
+        await updateDoc(userDocRef, { email: newEmail });
+        await updateEmail(user, newEmail);
+        await sendEmailVerification(user);
+    } catch (error) {
+        if (
+            error.message.includes("Reauthentication") ||
+            error.message.includes("Incorrect password")
+        ) {
+            throw error;
+        }
+
+        throw new Error(`Email update failed.`);
+    }
+};
+
+// Changes the user's password in Firebase Auth
+export const changeUserPassword = async (newPassword, password) => {
+    try {
+        await reauthenticateUser(password);
+        await updatePassword(auth.currentUser, newPassword);
+    } catch (error) {
+        if (
+            error.message.includes("Reauthentication") ||
+            error.message.includes("Incorrect password")
+        ) {
+            throw error;
+        }
+
+        throw new Error(`Password update failed.`);
+    }
+};
+
+// Get user document for the logged in user
+export const getUserDocumentFromFirestore = async () => {
+    if (__DEV__) {
+        await signInWithEmailAndPassword(auth, "admin@gmail.com", "administrator");
+    }
+
+    const currentUser = auth.currentUser;
+    if (!currentUser) return null;
+
+    try {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+            return userDocSnap.data();
+        } else {
+            throw new Error("Invalid User: user document does not exist.");
+        }
+    } catch (error) {
+        console.error(error.message);
+        throw new Error("Failed to fetch user document.");
+    }
+};
 
 // Resolves an email from a given identifier (either email or username)
 export const getEmailFromUsername = async (identifier) => {
@@ -98,7 +201,11 @@ export const addMultipleTasksToFirestore = async (tasks) => {
 export const addGoalToFirestore = async (title, dueDateTime) => {
     try {
         if (__DEV__) {
-            await signInWithEmailAndPassword(auth, "admin@gmail.com", "administrator");
+            await signInWithEmailAndPassword(
+                auth,
+                "admin@gmail.com",
+                "administrator",
+            );
         }
 
         const user = auth.currentUser;

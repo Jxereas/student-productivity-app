@@ -18,38 +18,43 @@ import GoalDetails from "./src/components/GoalDetails";
 import AddGoal from "./src/components/AddGoal";
 import SearchGoals from "./src/components/SearchGoals";
 import SearchGoalsResults from "./src/components/SearchGoalsResults";
+import Profile from "./src/components/Profile";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-    <AlertProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="SearchTasks"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name="Dashboard" component={Dashboard} />
-          <Stack.Screen name="Tasks" component={Tasks} />
-          <Stack.Screen name="OverdueTasks" component={OverdueTasks} />
-          <Stack.Screen name="AddTask" component={AddTask} />
-          <Stack.Screen name="SearchTasks" component={SearchTasks} />
-          <Stack.Screen name="SearchTasksResults" component={SearchTasksResults} />
-          <Stack.Screen name="Goals" component={Goals} />
-          <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
-          <Stack.Screen name="GoalDetails" component={GoalDetails} />
-          <Stack.Screen name="AddGoal" component={AddGoal} />
-          <Stack.Screen name="SearchGoals" component={SearchGoals} />
-          <Stack.Screen
-            name="SearchGoalsResults"
-            component={SearchGoalsResults}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AlertProvider>
-  );
+    return (
+        <AlertProvider>
+            <NavigationContainer>
+                <Stack.Navigator
+                    initialRouteName="Home"
+                    screenOptions={{ headerShown: false }}
+                >
+                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="SignUp" component={SignUp} />
+                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                    <Stack.Screen name="Dashboard" component={Dashboard} />
+                    <Stack.Screen name="Tasks" component={Tasks} />
+                    <Stack.Screen name="OverdueTasks" component={OverdueTasks} />
+                    <Stack.Screen name="AddTask" component={AddTask} />
+                    <Stack.Screen name="SearchTasks" component={SearchTasks} />
+                    <Stack.Screen
+                        name="SearchTasksResults"
+                        component={SearchTasksResults}
+                    />
+                    <Stack.Screen name="Goals" component={Goals} />
+                    <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
+                    <Stack.Screen name="GoalDetails" component={GoalDetails} />
+                    <Stack.Screen name="AddGoal" component={AddGoal} />
+                    <Stack.Screen name="SearchGoals" component={SearchGoals} />
+                    <Stack.Screen
+                        name="SearchGoalsResults"
+                        component={SearchGoalsResults}
+                    />
+                    <Stack.Screen name="Profile" component={Profile} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </AlertProvider>
+    );
 }
