@@ -13,6 +13,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { format, isToday, isTomorrow, isYesterday, startOfDay } from "date-fns";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/SearchTasksResults";
+import TaskCard from "../components/TaskCard";
 import BottomNavBar from "./BottomNavBar";
 import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
 
@@ -171,17 +172,25 @@ const SearchTasksResults = () => {
               {Object.keys(groupedTasks).map((date, index) => (
                 <View key={index}>
                   <Text style={styles.sectionHeading}>{date}</Text>
-                  {groupedTasks[date].map((task, taskIndex) => (
-                    <View key={taskIndex} style={styles.taskCard}>
-                      <View style={styles.taskRow}>
-                        <Text style={styles.taskTitle}>{task.title}</Text>
-                        <View style={styles.priorityPill}>
-                          <Text style={styles.priorityPillText}>
-                            {task.priority}
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
+                  {groupedTasks[date].map((task) => (
+                    <TaskCard
+                      key={task.id}
+                      task={task}
+                      onDelete={() => {
+                        setGroupedTasks((prev) => {
+                          const updated = { ...prev };
+                          updated[date] = updated[date].filter(
+                            (t) => t.id !== task.id,
+                          );
+                          if (updated[date].length === 0) delete updated[date];
+                          return updated;
+                        });
+
+                        setTasks((prev) =>
+                          prev.filter((t) => t.id !== task.id),
+                        );
+                      }}
+                    />
                   ))}
                 </View>
               ))}

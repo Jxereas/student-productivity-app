@@ -13,6 +13,7 @@ import styles from "../styles/Tasks";
 import { useNavigation } from "@react-navigation/native";
 import { format, isToday, isTomorrow, startOfDay } from "date-fns";
 import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
+import TaskCard from "./TaskCard";
 import BottomNavBar from "./BottomNavBar";
 
 const TasksMainScreen = () => {
@@ -64,6 +65,22 @@ const TasksMainScreen = () => {
 
         fetchTasks();
     }, []);
+
+    const handleRemoveTask = (taskId) => {
+        setGroupedTasks((prevGroups) => {
+            const newGroups = {};
+
+            for (const [label, tasks] of Object.entries(prevGroups)) {
+                const updatedTasks = tasks.filter((task) => task.id !== taskId);
+                if (updatedTasks.length > 0) {
+                    newGroups[label] = updatedTasks;
+                }
+                // If the group is now empty, skip adding it back (optional)
+            }
+
+            return newGroups;
+        });
+    };
 
     return (
         <>
@@ -129,21 +146,16 @@ const TasksMainScreen = () => {
                         </View>
                     ) : (
                         <>
-                            <ScrollView style={styles.scrollArea}>
+                            <ScrollView style={styles.scrollArea} showsVerticalScrollIndicator={false}>
                                 {Object.keys(groupedTasks).map((date, index) => (
                                     <View key={index}>
                                         <Text style={styles.sectionHeading}>{date}</Text>
-                                        {groupedTasks[date].map((task, taskIndex) => (
-                                            <View key={taskIndex} style={styles.taskCard}>
-                                                <View style={styles.taskRow}>
-                                                    <Text style={styles.taskTitle}>{task.title}</Text>
-                                                    <View style={styles.priorityPill}>
-                                                        <Text style={styles.priorityPillText}>
-                                                            {task.priority}
-                                                        </Text>
-                                                    </View>
-                                                </View>
-                                            </View>
+                                        {groupedTasks[date].map((task) => (
+                                            <TaskCard
+                                                key={task.id}
+                                                task={task}
+                                                onDelete={() => handleRemoveTask(task.id)}
+                                            />
                                         ))}
                                     </View>
                                 ))}
