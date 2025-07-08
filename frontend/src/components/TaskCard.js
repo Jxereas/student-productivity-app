@@ -56,6 +56,7 @@ const TaskCard = ({ task, onDelete }) => {
   };
 
   const panGesture = Gesture.Pan()
+    .minDistance(20)
     .onStart(() => {
       startX.value = translateX.value;
       hasTriggeredHapticRight.current = false;
