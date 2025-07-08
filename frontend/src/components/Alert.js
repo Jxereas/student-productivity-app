@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import styles from "../styles/Alert";
 
 let alertInstance = null;
@@ -22,19 +23,19 @@ export const AlertProvider = ({ children }) => {
     return (
         <>
             {children}
-            <Modal visible={visible} transparent animationType="fade" statusBarTranslucent={true}>
-                <View style={styles.modalBackground}>
-                    <View style={styles.alertBox}>
-                        <Text style={styles.title}>{messageData.title}</Text>
-
-                        <Text style={styles.message}>{messageData.message}</Text>
-
-                        <TouchableOpacity onPress={close}>
-                            <Text style={styles.buttonText}>OK</Text>
-                        </TouchableOpacity>
+            {visible && (
+                <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
+                    <View style={styles.modalBackground}>
+                        <View style={styles.alertBox}>
+                            <Text style={styles.title}>{messageData.title}</Text>
+                            <Text style={styles.message}>{messageData.message}</Text>
+                            <TouchableOpacity onPress={close}>
+                                <Text style={styles.buttonText}>OK</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </Modal>
+            )}
         </>
     );
 };
