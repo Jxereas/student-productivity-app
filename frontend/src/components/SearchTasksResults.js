@@ -10,8 +10,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { Shadow } from "react-native-shadow-2";
 import { format, isToday, isTomorrow, isYesterday, startOfDay } from "date-fns";
-import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/SearchTasksResults";
 import TaskCard from "../components/TaskCard";
 import BottomNavBar from "./BottomNavBar";
@@ -21,6 +21,8 @@ const SearchTasksResults = () => {
   const [groupedTasks, setGroupedTasks] = useState({});
   const [tasks, setTasks] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
+
+  const [emptyTaskContainerWidth, setEmptyTaskContainerWidth] = useState(0);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -165,36 +167,75 @@ const SearchTasksResults = () => {
               <ActivityIndicator size="large" color="#cf59a9" />
             </View>
           ) : (
-            <ScrollView
-              style={styles.scrollArea}
-              showsVerticalScrollIndicator={false}
-            >
-              {Object.keys(groupedTasks).map((date, index) => (
-                <View key={index}>
-                  <Text style={styles.sectionHeading}>{date}</Text>
-                  {groupedTasks[date].map((task) => (
-                    <TaskCard
-                      key={task.id}
-                      task={task}
-                      onDelete={() => {
-                        setGroupedTasks((prev) => {
-                          const updated = { ...prev };
-                          updated[date] = updated[date].filter(
-                            (t) => t.id !== task.id,
-                          );
-                          if (updated[date].length === 0) delete updated[date];
-                          return updated;
-                        });
-
-                        setTasks((prev) =>
-                          prev.filter((t) => t.id !== task.id),
-                        );
-                      }}
-                    />
-                  ))}
+            <>
+              {Object.keys(groupedTasks).length === 0 ? (
+                <View
+                  style={styles.emptyTaskStateContainer}
+                  onLayout={(e) =>
+                    setEmptyTaskContainerWidth(e.nativeEvent.layout.width)
+                  }
+                >
+                  <Shadow
+                    distance={10}
+                    offset={[0, 3]}
+                    startColor="rgba(207, 89, 169, 0.1)"
+                  >
+                    <View
+                      style={[
+                        styles.emptyTaskStateBackground,
+                        {
+                          height: 150,
+                          width: emptyTaskContainerWidth - 40,
+                        },
+                      ]}
+                    >
+                      <View style={styles.checkmarkCircle}>
+                        <Icon
+                          name="checkmark-done-outline"
+                          size={70}
+                          color="#d385b3"
+                        />
+                      </View>
+                      <Text style={styles.emptyStateText}>
+                        No filtered tasks found.
+                      </Text>
+                    </View>
+                  </Shadow>
                 </View>
-              ))}
-            </ScrollView>
+              ) : (
+                <ScrollView
+                  style={styles.scrollArea}
+                  showsVerticalScrollIndicator={false}
+                >
+                  {Object.keys(groupedTasks).map((date, index) => (
+                    <View key={index}>
+                      <Text style={styles.sectionHeading}>{date}</Text>
+                      {groupedTasks[date].map((task) => (
+                        <TaskCard
+                          key={task.id}
+                          task={task}
+                          onDelete={() => {
+                            setGroupedTasks((prev) => {
+                              const updated = { ...prev };
+                              updated[date] = updated[date].filter(
+                                (t) => t.id !== task.id,
+                              );
+                              if (updated[date].length === 0)
+                                delete updated[date];
+                              return updated;
+                            });
+
+                            setTasks((prev) =>
+                              prev.filter((t) => t.id !== task.id),
+                            );
+                          }}
+                        />
+                      ))}
+                    </View>
+                  ))}
+                </ScrollView>
+              )}
+            </>
           )}
           <BottomNavBar />
         </View>

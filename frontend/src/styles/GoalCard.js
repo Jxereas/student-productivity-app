@@ -52,7 +52,6 @@ export default StyleSheet.create({
         backgroundColor: "#0e0d16",
         borderRadius: 12,
         padding: 8,
-        marginBottom: 10,
         height: 75,
         flexDirection: "column",
         justifyContent: "space-between",
