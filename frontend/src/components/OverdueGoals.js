@@ -8,14 +8,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Shadow } from "react-native-shadow-2";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import { parseISO, format, startOfDay, isYesterday } from "date-fns";
+import { format, startOfDay, isYesterday } from "date-fns";
 import {
   getAllTasksFromFirestore,
   getAllGoalsFromFirestore,
 } from "../utility/FirebaseHelpers";
-import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/Goals";
 import GoalCard from "../components/GoalCard";
 import BottomNavBar from "./BottomNavBar";
@@ -24,6 +24,8 @@ const OverdueGoalsScreen = () => {
   const [groupedOverdueGoals, setGroupedOverdueGoals] = useState({});
   const [tasks, setTasks] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
+
+  const [emptyGoalContainerWidth, setEmptyGoalContainerWidth] = useState(0);
 
   const navigation = useNavigation();
 
@@ -69,15 +71,6 @@ const OverdueGoalsScreen = () => {
     fetchOverdueGoals();
   }, []);
 
-  const getGoalProgress = (goalId) => {
-    const relatedTasks = tasks.filter((task) => task.goalId === goalId);
-    const completedCount = relatedTasks.filter((task) => task.completed).length;
-    const totalCount = relatedTasks.length;
-    const progressPercent =
-      totalCount === 0 ? 0 : (completedCount / totalCount) * 100;
-    return { completedCount, totalCount, progressPercent };
-  };
-
   return (
     <>
       <SafeAreaView
@@ -111,35 +104,73 @@ const OverdueGoalsScreen = () => {
               <ActivityIndicator size="large" color="#cf59a9" />
             </View>
           ) : (
-            <ScrollView
-              style={styles.scrollArea}
-              showsVerticalScrollIndicator={false}
-            >
-              {Object.keys(groupedOverdueGoals).map((date, index) => (
-                <View key={index}>
-                  <Text style={styles.sectionHeading}>{date}</Text>
-                  {groupedOverdueGoals[date].map((goal) => (
-                    <GoalCard
-                      key={goal.id}
-                      goal={goal}
-                      tasks={tasks}
-                      onDelete={() => {
-                        setGroupedOverdueGoals((prev) => {
-                          const updated = { ...prev };
-                          updated[date] = updated[date].filter(
-                            (g) => g.id !== goal.id,
-                          );
-                          if (updated[date].length === 0) {
-                            delete updated[date];
-                          }
-                          return updated;
-                        });
-                      }}
-                    />
-                  ))}
+            <>
+              {Object.keys(groupedOverdueGoals).length === 0 ? (
+                <View
+                  style={styles.emptyGoalStateContainer}
+                  onLayout={(e) =>
+                    setEmptyGoalContainerWidth(e.nativeEvent.layout.width)
+                  }
+                >
+                  <Shadow
+                    distance={10}
+                    offset={[0, 3]}
+                    startColor="rgba(207, 89, 169, 0.1)"
+                  >
+                    <View
+                      style={[
+                        styles.emptyGoalStateBackground,
+                        {
+                          height: 150,
+                          width: emptyGoalContainerWidth - 40,
+                        },
+                      ]}
+                    >
+                      <View style={styles.checkmarkCircle}>
+                        <Icon
+                          name="checkmark-circle-outline"
+                          size={70}
+                          color="#d385b3"
+                        />
+                      </View>
+                      <Text style={styles.emptyStateText}>
+                        No overdue goals found.
+                      </Text>
+                    </View>
+                  </Shadow>
                 </View>
-              ))}
-            </ScrollView>
+              ) : (
+                <ScrollView
+                  style={styles.scrollArea}
+                  showsVerticalScrollIndicator={false}
+                >
+                  {Object.keys(groupedOverdueGoals).map((date, index) => (
+                    <View key={index}>
+                      <Text style={styles.sectionHeading}>{date}</Text>
+                      {groupedOverdueGoals[date].map((goal) => (
+                        <GoalCard
+                          key={goal.id}
+                          goal={goal}
+                          tasks={tasks}
+                          onDelete={() => {
+                            setGroupedOverdueGoals((prev) => {
+                              const updated = { ...prev };
+                              updated[date] = updated[date].filter(
+                                (g) => g.id !== goal.id,
+                              );
+                              if (updated[date].length === 0) {
+                                delete updated[date];
+                              }
+                              return updated;
+                            });
+                          }}
+                        />
+                      ))}
+                    </View>
+                  ))}
+                </ScrollView>
+              )}
+            </>
           )}
 
           <BottomNavBar />

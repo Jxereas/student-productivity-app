@@ -6,18 +6,18 @@ import {
   StatusBar,
   Dimensions,
   ActivityIndicator,
-  TouchableOpacity,
 } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { LinearGradient } from "expo-linear-gradient";
 import {
   getAllTasksFromFirestore,
   getAllGoalsFromFirestore,
 } from "../utility/FirebaseHelpers";
-import { isSameDay, parseISO, startOfDay } from "date-fns";
+import { isSameDay } from "date-fns";
+import { Shadow } from "react-native-shadow-2";
+import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/Dashboard";
 import GoalCard from "../components/GoalCard";
@@ -41,6 +41,9 @@ const LandingPage = () => {
 
   const [goalScrollHeight, setGoalScrollHeight] = useState(0);
   const [taskScrollHeight, setTaskScrollHeight] = useState(0);
+
+  const [emptyGoalContainerWidth, setEmptyGoalContainerWidth] = useState(0);
+  const [emptyTaskContainerWidth, setEmptyTaskContainerWidth] = useState(0);
 
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
@@ -84,7 +87,7 @@ const LandingPage = () => {
     const screenHeight = Dimensions.get("window").height;
 
     const padding = 20 * 2; // top + bottom padding
-    const navBarHeight = 90;
+    const navBarHeight = 70;
     const staticUsedHeight =
       padding +
       navBarHeight +
@@ -117,16 +120,6 @@ const LandingPage = () => {
     setGoalScrollHeight(maxGoalCards * 75 + 10 * (maxGoalCards - 1));
     setTaskScrollHeight(maxTaskCards * 60 + 10 * (maxTaskCards - 1));
   }, [usedBottomHeight, usedTopHeight, insets]);
-
-  const getGoalProgress = (goalId) => {
-    const relatedTasks = tasks.filter((task) => task.goalId === goalId);
-    const completedCount = relatedTasks.filter((task) => task.completed).length;
-    const totalCount = relatedTasks.length;
-
-    const progressPercent =
-      totalCount === 0 ? 0 : (completedCount / totalCount) * 100;
-    return { completedCount, totalCount, progressPercent };
-  };
 
   return (
     <>
@@ -166,28 +159,70 @@ const LandingPage = () => {
             </View>
           ) : (
             <>
-              <ScrollView
-                style={[
-                  styles.goalScrollContainer,
-                  { height: goalScrollHeight },
-                ]}
-                contentContainerStyle={styles.goalScrollContent}
-                showsVerticalScrollIndicator={false}
-              >
-                {todaysGoals.map((goal) => (
-                  <GoalCard
-                    key={goal.id}
-                    goal={goal}
-                    tasks={tasks}
-                    onDelete={() => {
-                      setGoals((prev) => prev.filter((g) => g.id !== goal.id));
-                      setTodaysGoals((prev) =>
-                        prev.filter((g) => g.id !== goal.id),
-                      );
-                    }}
-                  />
-                ))}
-              </ScrollView>
+              {todaysGoals.length === 0 ? (
+                <View
+                  style={[
+                    styles.emptyGoalStateContainer,
+                    { height: goalScrollHeight },
+                  ]}
+                  onLayout={(e) =>
+                    setEmptyGoalContainerWidth(e.nativeEvent.layout.width)
+                  }
+                >
+                  <Shadow
+                    distance={10}
+                    offset={[0, 3]}
+                    startColor="rgba(207, 89, 169, 0.1)"
+                  >
+                    <View
+                      style={[
+                        styles.emptyGoalStateBackground,
+                        {
+                          height: goalScrollHeight - 80,
+                          width: emptyGoalContainerWidth - 40,
+                        },
+                      ]}
+                    >
+                      <View style={styles.checkmarkCircle}>
+                        <Icon
+                          name="checkmark-circle-outline"
+                          size={70}
+                          color="#d385b3"
+                        />
+                      </View>
+                      <Text style={styles.emptyStateText}>
+                        No goals due today.
+                      </Text>
+                    </View>
+                  </Shadow>
+                </View>
+              ) : (
+                <ScrollView
+                  style={[
+                    styles.goalScrollContainer,
+                    { height: goalScrollHeight },
+                  ]}
+                  contentContainerStyle={styles.goalScrollContent}
+                  showsVerticalScrollIndicator={false}
+                >
+                  {todaysGoals.map((goal, index) => (
+                    <GoalCard
+                      key={goal.id}
+                      goal={goal}
+                      tasks={tasks}
+                      isLast={index === todaysGoals.length - 1}
+                      onDelete={() => {
+                        setGoals((prev) =>
+                          prev.filter((g) => g.id !== goal.id),
+                        );
+                        setTodaysGoals((prev) =>
+                          prev.filter((g) => g.id !== goal.id),
+                        );
+                      }}
+                    />
+                  ))}
+                </ScrollView>
+              )}
               <View
                 onLayout={(e) => {
                   setUsedBottomHeight(e.nativeEvent.layout.height);
@@ -195,27 +230,69 @@ const LandingPage = () => {
               >
                 <Text style={styles.heading}>Tasks</Text>
               </View>
-              <ScrollView
-                style={[
-                  styles.taskScrollContainer,
-                  { height: taskScrollHeight },
-                ]}
-                contentContainerStyle={styles.taskScrollContent}
-                showsVerticalScrollIndicator={false}
-              >
-                {todaysTasks.map((task) => (
-                  <TaskCard
-                    key={task.id}
-                    task={task}
-                    onDelete={() => {
-                      setTodaysTasks((prev) =>
-                        prev.filter((t) => t.id !== task.id),
-                      );
-                      setTasks((prev) => prev.filter((t) => t.id !== task.id));
-                    }}
-                  />
-                ))}
-              </ScrollView>
+              {todaysTasks.length === 0 ? (
+                <View
+                  style={[
+                    styles.emptyTaskStateContainer,
+                    { height: taskScrollHeight },
+                  ]}
+                  onLayout={(e) =>
+                    setEmptyTaskContainerWidth(e.nativeEvent.layout.width)
+                  }
+                >
+                  <Shadow
+                    distance={10}
+                    offset={[0, 3]}
+                    startColor="rgba(207, 89, 169, 0.1)"
+                  >
+                    <View
+                      style={[
+                        styles.emptyTaskStateBackground,
+                        {
+                          height: taskScrollHeight,
+                          width: emptyTaskContainerWidth - 40,
+                        },
+                      ]}
+                    >
+                      <View style={styles.checkmarkCircle}>
+                        <Icon
+                          name="checkmark-done-outline"
+                          size={70}
+                          color="#d385b3"
+                        />
+                      </View>
+                      <Text style={styles.emptyStateText}>
+                        No tasks due today.
+                      </Text>
+                    </View>
+                  </Shadow>
+                </View>
+              ) : (
+                <ScrollView
+                  style={[
+                    styles.taskScrollContainer,
+                    { height: taskScrollHeight },
+                  ]}
+                  contentContainerStyle={styles.taskScrollContent}
+                  showsVerticalScrollIndicator={false}
+                >
+                  {todaysTasks.map((task, index) => (
+                    <TaskCard
+                      key={task.id}
+                      task={task}
+                      isLast={index === todaysTasks.length - 1}
+                      onDelete={() => {
+                        setTodaysTasks((prev) =>
+                          prev.filter((t) => t.id !== task.id),
+                        );
+                        setTasks((prev) =>
+                          prev.filter((t) => t.id !== task.id),
+                        );
+                      }}
+                    />
+                  ))}
+                </ScrollView>
+              )}
             </>
           )}
           <BottomNavBar />

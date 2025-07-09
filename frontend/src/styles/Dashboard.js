@@ -5,7 +5,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "#04060c",
     padding: 20,
-    paddingBottom: 90, // Padding for nav bar
+    paddingBottom: 70, // Padding for nav bar
   },
   titleContainer: {
     marginTop: 10,
@@ -27,11 +27,58 @@ export default StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
   },
+  emptyGoalStateContainer: {
+    width: "100%",
+    height: 50, // this is dynamically set fallback height
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  emptyGoalStateBackground: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#0e0d16",
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1.5,
+    borderColor: "#2c2b3e", // soft accent
+  },
+  emptyTaskStateContainer: {
+    width: "100%",
+    height: 50, // this is dynamically set fallback height
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  emptyTaskStateBackground: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#0e0d16",
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1.5,
+    borderColor: "#2c2b3e", // soft accent
+  },
+  checkmarkCircle: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  emptyStateText: {
+    fontSize: 16,
+    color: "#8986a7",
+  },
+
   goalScrollContainer: {
     marginBottom: 20,
     flexGrow: 0,
   },
   goalScrollContent: {
+    flexGrow: 1,
     overflow: "hidden",
   },
   goalCard: {
@@ -76,6 +123,7 @@ export default StyleSheet.create({
     flexGrow: 0,
   },
   taskScrollContent: {
+    flexGrow: 1,
     overflow: "hidden",
   },
   taskCard: {
