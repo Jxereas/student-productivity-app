@@ -16,7 +16,7 @@ import Alert from "./Alert";
 import styles from "../styles/TaskCard";
 import { setTaskCompleted, deleteTask } from "../utility/FirebaseHelpers";
 
-const TaskCard = ({ task, onDelete }) => {
+const TaskCard = ({ task, onDelete, isLast }) => {
   const translateX = useSharedValue(0);
   const startX = useSharedValue(0);
   const [cardWidth, setCardWidth] = useState(0);
@@ -291,7 +291,7 @@ const TaskCard = ({ task, onDelete }) => {
 
   return (
     <View
-      style={{ marginVertical: 4 }}
+      style={[styles.cardContainer, isLast && { marginBottom: 0 }]}
       onLayout={(e) => setCardWidth(e.nativeEvent.layout.width)}
     >
       <Animated.View style={[styles.rightActionContainer, animatedRightStyle]}>

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import { Shadow } from "react-native-shadow-2";
 import Icon from "react-native-vector-icons/Ionicons";
 import { isYesterday, format, startOfDay } from "date-fns";
 import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
@@ -20,6 +21,8 @@ const OverdueTasksScreen = () => {
   const navigation = useNavigation();
   const [groupedOverdueTasks, setGroupedOverdueTasks] = useState({});
   const [loadingData, setLoadingData] = useState(true);
+
+  const [emptyTaskContainerWidth, setEmptyTaskContainerWidth] = useState(0);
 
   useEffect(() => {
     const fetchOverdueTasks = async () => {
@@ -102,36 +105,76 @@ const OverdueTasksScreen = () => {
               <ActivityIndicator size="large" color="#cf59a9" />
             </View>
           ) : (
-            <ScrollView style={styles.scrollArea}>
+            <>
               {Object.keys(groupedOverdueTasks).length === 0 ? (
-                <Text style={{ color: "#8986a7", marginTop: 20, fontSize: 20 }}>
-                  No overdue tasks
-                </Text>
+                <View
+                  style={styles.emptyTaskStateContainer}
+                  onLayout={(e) =>
+                    setEmptyTaskContainerWidth(e.nativeEvent.layout.width)
+                  }
+                >
+                  <Shadow
+                    distance={10}
+                    offset={[0, 3]}
+                    startColor="rgba(207, 89, 169, 0.1)"
+                  >
+                    <View
+                      style={[
+                        styles.emptyTaskStateBackground,
+                        {
+                          height: 150,
+                          width: emptyTaskContainerWidth - 40,
+                        },
+                      ]}
+                    >
+                      <View style={styles.checkmarkCircle}>
+                        <Icon
+                          name="checkmark-done-outline"
+                          size={70}
+                          color="#d385b3"
+                        />
+                      </View>
+                      <Text style={styles.emptyStateText}>
+                        No overdue task found.
+                      </Text>
+                    </View>
+                  </Shadow>
+                </View>
               ) : (
-                Object.keys(groupedOverdueTasks).map((date, index) => (
-                  <View key={index}>
-                    <Text style={styles.sectionHeading}>{date}</Text>
-                    {groupedOverdueTasks[date].map((task) => (
-                      <TaskCard
-                        key={task.id}
-                        task={task}
-                        onDelete={() => {
-                          setGroupedOverdueTasks((prev) => {
-                            const updated = { ...prev };
-                            updated[date] = updated[date].filter(
-                              (t) => t.id !== task.id,
-                            );
-                            if (updated[date].length === 0)
-                              delete updated[date];
-                            return updated;
-                          });
-                        }}
-                      />
-                    ))}
-                  </View>
-                ))
+                <ScrollView style={styles.scrollArea}>
+                  {Object.keys(groupedOverdueTasks).length === 0 ? (
+                    <Text
+                      style={{ color: "#8986a7", marginTop: 20, fontSize: 20 }}
+                    >
+                      No overdue tasks
+                    </Text>
+                  ) : (
+                    Object.keys(groupedOverdueTasks).map((date, index) => (
+                      <View key={index}>
+                        <Text style={styles.sectionHeading}>{date}</Text>
+                        {groupedOverdueTasks[date].map((task) => (
+                          <TaskCard
+                            key={task.id}
+                            task={task}
+                            onDelete={() => {
+                              setGroupedOverdueTasks((prev) => {
+                                const updated = { ...prev };
+                                updated[date] = updated[date].filter(
+                                  (t) => t.id !== task.id,
+                                );
+                                if (updated[date].length === 0)
+                                  delete updated[date];
+                                return updated;
+                              });
+                            }}
+                          />
+                        ))}
+                      </View>
+                    ))
+                  )}
+                </ScrollView>
               )}
-            </ScrollView>
+            </>
           )}
           <BottomNavBar />
         </View>

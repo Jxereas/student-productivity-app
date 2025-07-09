@@ -18,6 +18,32 @@ export default StyleSheet.create({
     color: "#d385b3",
     fontWeight: "bold",
   },
+  emptyTaskStateContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    marginBottom: 15,
+  },
+  emptyTaskStateBackground: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#0e0d16",
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1.5,
+    borderColor: "#2c2b3e", // soft accent
+  },
+  checkmarkCircle: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  emptyStateText: {
+    fontSize: 16,
+    color: "#8986a7",
+  },
   scrollArea: {
     flex: 1,
     marginBottom: 15,

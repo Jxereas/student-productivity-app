@@ -132,8 +132,6 @@ const TaskSearchScreen = () => {
       standAloneTask,
     };
 
-    console.log(filters);
-
     navigation.navigate("SearchTasksResults", { filters });
   };
 
