@@ -20,6 +20,7 @@ import Goals from "./src/components/Goals";
 import OverdueGoals from "./src/components/OverdueGoals";
 import GoalDetails from "./src/components/GoalDetails";
 import AddGoal from "./src/components/AddGoal";
+import EditGoal from "./src/components/EditGoal";
 import SearchGoals from "./src/components/SearchGoals";
 import SearchGoalsResults from "./src/components/SearchGoalsResults";
 import Profile from "./src/components/Profile";
@@ -53,6 +54,7 @@ export default function App() {
                         <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
                         <Stack.Screen name="GoalDetails" component={GoalDetails} />
                         <Stack.Screen name="AddGoal" component={AddGoal} />
+                        <Stack.Screen name="EditGoal" component={EditGoal} />
                         <Stack.Screen name="SearchGoals" component={SearchGoals} />
                         <Stack.Screen
                             name="SearchGoalsResults"

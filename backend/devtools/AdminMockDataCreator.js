@@ -47,6 +47,7 @@ async function importData() {
 
         for (const goal of mockData.goals) {
             goal.userId = adminUID;
+            goal.completed = Math.random() < 0.5;
             goal.dueAt = Timestamp.fromDate(giveDateRandomTime(goal.dueDate));
             goal.createdAt = Timestamp.fromDate(
                 giveDateRandomTime(goal.creationDate),

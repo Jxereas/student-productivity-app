@@ -20,6 +20,7 @@ import {
 import { isSameDay, parseISO, startOfDay } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/Dashboard";
+import GoalCard from "../components/GoalCard";
 import TaskCard from "../components/TaskCard";
 import BottomNavBar from "../components/BottomNavBar";
 
@@ -173,46 +174,19 @@ const LandingPage = () => {
                 contentContainerStyle={styles.goalScrollContent}
                 showsVerticalScrollIndicator={false}
               >
-                {todaysGoals.map((goal, index) => {
-                  const { completedCount, totalCount, progressPercent } =
-                    getGoalProgress(goal.id);
-
-                  return (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() =>
-                        navigation.navigate("GoalDetails", { goal })
-                      }
-                    >
-                      <View
-                        style={[
-                          styles.goalCard,
-                          index === todaysGoals.length - 1 && {
-                            marginBottom: 0,
-                          },
-                        ]}
-                      >
-                        <Text style={styles.goalTitle}>{goal.title}</Text>
-                        <View style={styles.progressBarContainer}>
-                          <View style={styles.progressBarBackground}>
-                            <LinearGradient
-                              colors={["#cf59a9", "#d385b3"]}
-                              start={{ x: 0, y: 0 }}
-                              end={{ x: 1, y: 0 }}
-                              style={[
-                                styles.progressBarFill,
-                                { width: `${progressPercent}%` },
-                              ]}
-                            />
-                          </View>
-                          <Text style={styles.progressText}>
-                            {completedCount}/{totalCount}
-                          </Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
+                {todaysGoals.map((goal) => (
+                  <GoalCard
+                    key={goal.id}
+                    goal={goal}
+                    tasks={tasks}
+                    onDelete={() => {
+                      setGoals((prev) => prev.filter((g) => g.id !== goal.id));
+                      setTodaysGoals((prev) =>
+                        prev.filter((g) => g.id !== goal.id),
+                      );
+                    }}
+                  />
+                ))}
               </ScrollView>
               <View
                 onLayout={(e) => {

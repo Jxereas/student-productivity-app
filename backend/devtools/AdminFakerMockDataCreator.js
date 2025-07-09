@@ -54,6 +54,7 @@ async function addGoals(adminUID) {
             id: faker.string.uuid(),
             userId: adminUID,
             title: faker.lorem.words(3),
+            completed: Math.random() < 0.5,
             dueAt,
             createdAt,
         };

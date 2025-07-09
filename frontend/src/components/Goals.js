@@ -17,6 +17,7 @@ import {
     getAllGoalsFromFirestore,
 } from "../utility/FirebaseHelpers";
 import styles from "../styles/Goals";
+import GoalCard from "./GoalCard";
 import BottomNavBar from "./BottomNavBar";
 
 const GoalsMainScreen = () => {
@@ -79,14 +80,19 @@ const GoalsMainScreen = () => {
         fetchTasks();
     }, []);
 
-    const getGoalProgress = (goalId) => {
-        const relatedTasks = tasks.filter((task) => task.goalId === goalId);
-        const completedCount = relatedTasks.filter((task) => task.completed).length;
-        const totalCount = relatedTasks.length;
+    const handleRemoveGoal = (goalId) => {
+        setGroupedGoals((prevGroups) => {
+            const newGroups = {};
 
-        const progressPercent =
-            totalCount === 0 ? 0 : (completedCount / totalCount) * 100;
-        return { completedCount, totalCount, progressPercent };
+            for (const [label, goals] of Object.entries(prevGroups)) {
+                const updatedGoals = goals.filter((goal) => goal.id !== goalId);
+                if (updatedGoals.length > 0) {
+                    newGroups[label] = updatedGoals;
+                }
+            }
+
+            return newGroups;
+        });
     };
 
     return (
@@ -141,46 +147,14 @@ const GoalsMainScreen = () => {
                                 {Object.keys(groupedGoals).map((date, index) => (
                                     <View key={index}>
                                         <Text style={styles.sectionHeading}>{date}</Text>
-                                        {groupedGoals[date].map((goal, goalIndex) => {
-                                            const { completedCount, totalCount, progressPercent } =
-                                                getGoalProgress(goal.id);
-
-                                            return (
-                                                <TouchableOpacity
-                                                    key={goalIndex}
-                                                    onPress={() =>
-                                                        navigation.navigate("GoalDetailsScreen", { goal })
-                                                    }
-                                                >
-                                                    <View
-                                                        style={[
-                                                            styles.goalCard,
-                                                            index === groupedGoals[date].length - 1 && {
-                                                                marginBottom: 0,
-                                                            },
-                                                        ]}
-                                                    >
-                                                        <Text style={styles.goalTitle}>{goal.title}</Text>
-                                                        <View style={styles.progressBarContainer}>
-                                                            <View style={styles.progressBarBackground}>
-                                                                <LinearGradient
-                                                                    colors={["#cf59a9", "#d385b3"]}
-                                                                    start={{ x: 0, y: 0 }}
-                                                                    end={{ x: 1, y: 0 }}
-                                                                    style={[
-                                                                        styles.progressBarFill,
-                                                                        { width: `${progressPercent}%` },
-                                                                    ]}
-                                                                />
-                                                            </View>
-                                                            <Text style={styles.progressText}>
-                                                                {completedCount}/{totalCount}
-                                                            </Text>
-                                                        </View>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            );
-                                        })}
+                                        {groupedGoals[date].map((goal) => (
+                                            <GoalCard
+                                                key={goal.id}
+                                                goal={goal}
+                                                tasks={tasks}
+                                                onDelete={() => handleRemoveGoal(goal.id)}
+                                            />
+                                        ))}
                                     </View>
                                 ))}
                             </ScrollView>

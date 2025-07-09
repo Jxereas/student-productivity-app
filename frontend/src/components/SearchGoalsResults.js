@@ -13,6 +13,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { format, isToday, isTomorrow, isYesterday, startOfDay } from "date-fns";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/Goals";
+import GoalCard from "../components/GoalCard";
 import BottomNavBar from "./BottomNavBar";
 import {
   getAllGoalsFromFirestore,
@@ -184,46 +185,25 @@ const SearchGoalsResults = () => {
                 Object.keys(groupedGoals).map((date, index) => (
                   <View key={index}>
                     <Text style={styles.sectionHeading}>{date}</Text>
-                    {groupedGoals[date].map((goal, goalIndex) => {
-                      const { completedCount, totalCount, progressPercent } =
-                        getGoalProgress(goal.id);
-
-                      return (
-                        <TouchableOpacity
-                          key={goalIndex}
-                          onPress={() =>
-                            navigation.navigate("GoalDetailsScreen", { goal })
-                          }
-                        >
-                          <View
-                            style={[
-                              styles.goalCard,
-                              goalIndex === groupedGoals[date].length - 1 && {
-                                marginBottom: 0,
-                              },
-                            ]}
-                          >
-                            <Text style={styles.goalTitle}>{goal.title}</Text>
-                            <View style={styles.progressBarContainer}>
-                              <View style={styles.progressBarBackground}>
-                                <LinearGradient
-                                  colors={["#cf59a9", "#d385b3"]}
-                                  start={{ x: 0, y: 0 }}
-                                  end={{ x: 1, y: 0 }}
-                                  style={[
-                                    styles.progressBarFill,
-                                    { width: `${progressPercent}%` },
-                                  ]}
-                                />
-                              </View>
-                              <Text style={styles.progressText}>
-                                {completedCount}/{totalCount}
-                              </Text>
-                            </View>
-                          </View>
-                        </TouchableOpacity>
-                      );
-                    })}
+                    {groupedGoals[date].map((goal) => (
+                      <GoalCard
+                        key={goal.id}
+                        goal={goal}
+                        tasks={tasks}
+                        onDelete={() => {
+                          setGroupedGoals((prev) => {
+                            const updated = { ...prev };
+                            updated[date] = updated[date].filter(
+                              (g) => g.id !== goal.id,
+                            );
+                            if (updated[date].length === 0) {
+                              delete updated[date];
+                            }
+                            return updated;
+                          });
+                        }}
+                      />
+                    ))}
                   </View>
                 ))
               )}
