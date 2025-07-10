@@ -1,11 +1,12 @@
 const admin = require("firebase-admin");
+const fs = require("fs");
 
 const serviceAccountPath =
     process.env.NODE_ENV === "production"
         ? "/etc/secrets/firebaseAccountKey"
         : "./firebaseAccountKey.json";
 
-const serviceAccount = require(serviceAccountPath);
+const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
 
 if (process.env.NODE_ENV === "development") {
     const path = require("path");
