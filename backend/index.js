@@ -8,6 +8,12 @@ if (process.env.NODE_ENV === "development") {
     require("dotenv").config({
         path: path.resolve(__dirname, ".env.development"),
     });
+} else if (process.env.NODE_ENV === "production") {
+    const path = require("path");
+
+    require("dotenv").config({
+        path: path.resolve(__dirname, ".env.production"),
+    });
 }
 
 const app = express();
@@ -93,6 +99,17 @@ app.get("/test", (req, res) => {
     res.send("Backend is reachable!");
 });
 
-app.listen(process.env.EXPRESS_PORT, process.env.EXPRESS_HOST, () =>
-    console.log(`🚀 Backend running on port ${process.env.EXPRESS_PORT}`),
-);
+const PORT =
+    process.env.NODE_ENV === "development"
+        ? process.env.EXPRESS_PORT || 3001
+        : process.env.PORT || 3001;
+
+const HOST =
+    process.env.NODE_ENV === "development"
+        ? process.env.EXPRESS_HOST || "0.0.0.0"
+        : undefined; // Don't specify host in production
+
+// Start the server
+app.listen(PORT, HOST, () => {
+    console.log(`🚀 Backend running on port ${PORT}`);
+});
