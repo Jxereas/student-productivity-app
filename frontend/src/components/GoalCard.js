@@ -37,17 +37,8 @@ const GoalCard = ({ goal, tasks, onDelete, isLast }) => {
   const navigation = useNavigation();
 
   const handleGoalPressed = () => {
-    const serializeDate = (date) => (date ? date.toISOString() : null);
-
-    const relatedTasks = tasks
-      .filter((task) => task.goalId === goal.id)
-      .map((task) => ({
-        ...task,
-        dueAt: serializeDate(task.dueAt),
-      }));
-
     navigation.navigate("GoalDetails", {
-      tasks: relatedTasks,
+      goalId: goal.id,
     });
   };
 

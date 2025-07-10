@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -8,9 +8,10 @@ import {
     ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { format, isToday, isTomorrow, isYesterday } from "date-fns";
+import { getSubtasksByGoalId } from "../utility/FirebaseHelpers";
 import styles from "../styles/Tasks";
 import TaskCard from "../components/TaskCard";
 import BottomNavBar from "./BottomNavBar";
@@ -20,36 +21,40 @@ const GoalDetailsScreen = ({ route }) => {
     const [loadingData, setLoadingData] = useState(true);
 
     const navigation = useNavigation();
-    const { tasks } = route.params;
+    const { goalId } = route.params;
 
-    useEffect(() => {
-        const processTasks = () => {
-            const sortedTasks = [...tasks]
-                .map((task) => ({
-                    ...task,
-                    dueAt: new Date(task.dueAt),
-                }))
-                .sort((a, b) => a.dueAt - b.dueAt);
-            const groups = {};
+    useFocusEffect(
+        useCallback(() => {
+            const fetchTasks = async () => {
+                const tasks = await getSubtasksByGoalId(goalId);
 
-            sortedTasks.forEach((task) => {
-                task.dueAt = new Date(task.dueAt);
-                let label = format(task.dueAt, "MMM dd, yyyy");
+                const sortedTasks = [...tasks]
+                    .map((task) => ({
+                        ...task,
+                        dueAt: new Date(task.dueAt.toDate()),
+                    }))
+                    .sort((a, b) => a.dueAt - b.dueAt);
+                const groups = {};
 
-                if (isYesterday(task.dueAt)) label = "Yesterday";
-                else if (isToday(task.dueAt)) label = "Today";
-                else if (isTomorrow(task.dueAt)) label = "Tomorrow";
+                sortedTasks.forEach((task) => {
+                    let label = format(task.dueAt, "MMM dd, yyyy");
 
-                if (!groups[label]) groups[label] = [];
-                groups[label].push(task);
-            });
+                    if (isYesterday(task.dueAt)) label = "Yesterday";
+                    else if (isToday(task.dueAt)) label = "Today";
+                    else if (isTomorrow(task.dueAt)) label = "Tomorrow";
 
-            setGroupedTasks(groups);
-            setLoadingData(false);
-        };
+                    if (!groups[label]) groups[label] = [];
+                    groups[label].push(task);
+                });
 
-        processTasks();
-    }, [tasks]);
+                setGroupedTasks(groups);
+                setLoadingData(false);
+            };
+
+            setLoadingData(true);
+            fetchTasks();
+        }, [goalId]),
+    );
 
     return (
         <>
