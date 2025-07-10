@@ -9,10 +9,7 @@ import Alert from "./Alert"
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/SignUp";
-import {
-    EXPRESS_HOST,
-    EXPRESS_PORT
-} from "@env";
+import { API_BASE_URL } from "@env";
 
 const SignUp = () => {
     const [email, setEmail] = useState("");
@@ -68,7 +65,7 @@ const SignUp = () => {
         }
 
         try {
-            const response = await fetch(`http://${EXPRESS_HOST}:${EXPRESS_PORT}/api/signup`, {
+            const response = await fetch(`${API_BASE_URL}/api/signup`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
