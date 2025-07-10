@@ -35,18 +35,19 @@ try {
 
 const db = getFirestore(app);
 
-// if (__DEV__) {
-//     if (FIREBASE_USE_EMULATORS === "true") {
-//         connectAuthEmulator(
-//             auth,
-//             `http://${FIREBASE_EMULATOR_HOST}:${FIREBASE_EMULATOR_AUTH_PORT}`,
-//         );
-//         connectFirestoreEmulator(
-//             db,
-//             FIREBASE_EMULATOR_HOST,
-//             FIREBASE_EMULATOR_FIRESTORE_PORT,
-//         );
-//     }
-// }
+if (__DEV__) {
+    console.log("Dev");
+    if (FIREBASE_USE_EMULATORS === "true") {
+        connectAuthEmulator(
+            auth,
+            `http://${FIREBASE_EMULATOR_HOST}:${FIREBASE_EMULATOR_AUTH_PORT}`,
+        );
+        connectFirestoreEmulator(
+            db,
+            FIREBASE_EMULATOR_HOST,
+            FIREBASE_EMULATOR_FIRESTORE_PORT,
+        );
+    }
+}
 
 export { auth, db };

@@ -116,7 +116,6 @@ export const getUserDocumentFromFirestore = async () => {
 
 // Resolves an email from a given identifier (either email or username)
 export const getEmailFromUsername = async (identifier) => {
-    console.log("Firebase started");
     try {
         const q = query(
             collection(db, "users"),
