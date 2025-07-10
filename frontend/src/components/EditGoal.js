@@ -272,6 +272,9 @@ const EditGoalScreen = ({ route }) => {
                         placeholderTextColor="#8986a7"
                         value={item.title}
                         onChangeText={(text) => updateSubTask(item.id, "title", text)}
+                        autoCorrect={true}
+                        autoCapitalize="sentences"
+                        keyboardAppearance="dark"
                     />
 
                     <TouchableOpacity
@@ -409,6 +412,9 @@ const EditGoalScreen = ({ route }) => {
                                         placeholderTextColor="#8986a7"
                                         value={goalTitle}
                                         onChangeText={setGoalTitle}
+                                        autoCorrect={true}
+                                        autoCapitalize="sentences"
+                                        keyboardAppearance="dark"
                                     />
 
                                     <TouchableOpacity

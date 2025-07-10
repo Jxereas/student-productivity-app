@@ -62,10 +62,20 @@ export default StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
     },
+    taskTextContainer: {
+        flexShrink: 1,
+        flexGrow: 1,
+        marginRight: 10,
+    },
     taskTitle: {
         color: "#8986a7",
         fontSize: 18,
         fontWeight: "bold",
+    },
+    dueTimeText: {
+        fontSize: 12,
+        color: "#666",
+        marginTop: 2,
     },
     priorityPill: {
         backgroundColor: "#cf59a9",

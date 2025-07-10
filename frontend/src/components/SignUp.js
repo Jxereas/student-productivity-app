@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { auth } from "../firebase/firebaseConfig";
 import {
     sendEmailVerification,
     signInWithEmailAndPassword,
 } from "firebase/auth";
-import { View, Text, TextInput, TouchableOpacity, StatusBar } from "react-native";
-import Alert from "./Alert"
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StatusBar,
+    KeyboardAvoidingView,
+    ScrollView,
+    Platform,
+} from "react-native";
+import Alert from "./Alert";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/SignUp";
@@ -16,6 +25,10 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const [username, setUsername] = useState("");
+
+    const usernameInputRef = useRef(null);
+    const passwordInputRef = useRef(null);
+    const confirmPasswordInputRef = useRef(null);
 
     const navigation = useNavigation();
 
@@ -109,57 +122,99 @@ const SignUp = () => {
                 edges={["left", "right", "bottom"]}
                 style={{ flex: 1, backgroundColor: "#04060c" }}
             >
-                <View style={styles.container}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Signup</Text>
-                    </View>
+                <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    keyboardVerticalOffset={80}
+                >
+                    <ScrollView
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        keyboardShouldPersistTaps="handled"
+                    >
+                        <View style={styles.container}>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>Signup</Text>
+                            </View>
 
-                    <View style={styles.formContainer}>
-                        <TextInput
-                            placeholder="Email Address"
-                            style={styles.input}
-                            value={email}
-                            onChangeText={setEmail}
-                            placeholderTextColor="#8986a7"
-                        />
+                            <View style={styles.formContainer}>
+                                <TextInput
+                                    placeholder="Email Address"
+                                    style={styles.input}
+                                    value={email}
+                                    onChangeText={setEmail}
+                                    placeholderTextColor="#8986a7"
+                                    keyboardAppearance="dark"
+                                    keyboardType="email-address"
+                                    autoCapitalize="none"
+                                    textContentType="emailAddress"
+                                    autoCorrect={true}
+                                    returnKeyType="next"
+                                    onSubmitEditing={() => usernameInputRef.current?.focus()}
+                                />
 
-                        <TextInput
-                            placeholder="Username"
-                            style={styles.input}
-                            value={username}
-                            onChangeText={setUsername}
-                            placeholderTextColor="#8986a7"
-                        />
+                                <TextInput
+                                    placeholder="Username"
+                                    style={styles.input}
+                                    value={username}
+                                    onChangeText={setUsername}
+                                    placeholderTextColor="#8986a7"
+                                    ref={usernameInputRef}
+                                    keyboardAppearance="dark"
+                                    returnKeyType="next"
+                                    textContentType="username"
+                                    autoCorrect={false}
+                                    autoCapitalize="none"
+                                    onSubmitEditing={() => passwordInputRef.current?.focus()}
+                                />
 
-                        <TextInput
-                            placeholder="Password"
-                            style={styles.input}
-                            secureTextEntry
-                            value={password}
-                            onChangeText={setPassword}
-                            placeholderTextColor="#8986a7"
-                        />
+                                <TextInput
+                                    placeholder="Password"
+                                    style={styles.input}
+                                    secureTextEntry
+                                    keyboardAppearance="dark"
+                                    autoCapitalize="none"
+                                    textContentType="password"
+                                    autoCorrect={false}
+                                    returnKeyType="next"
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    placeholderTextColor="#8986a7"
+                                    ref={passwordInputRef}
+                                    onSubmitEditing={() =>
+                                        confirmPasswordInputRef.current?.focus()
+                                    }
+                                />
 
-                        <TextInput
-                            placeholder="Confirm Password"
-                            style={styles.input}
-                            secureTextEntry
-                            value={confirmedPassword}
-                            onChangeText={setConfirmedPassword}
-                            placeholderTextColor="#8986a7"
-                        />
+                                <TextInput
+                                    placeholder="Confirm Password"
+                                    style={styles.input}
+                                    secureTextEntry
+                                    keyboardAppearance="dark"
+                                    autoCapitalize="none"
+                                    textContentType="password"
+                                    autoCorrect={false}
+                                    returnKeyType="done"
+                                    value={confirmedPassword}
+                                    onChangeText={setConfirmedPassword}
+                                    placeholderTextColor="#8986a7"
+                                    ref={confirmPasswordInputRef}
+                                    onSubmitEditing={handleSignUp}
+                                />
 
-                        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-                            <Text style={styles.buttonText}>Sign Up</Text>
-                        </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+                                    <Text style={styles.buttonText}>Sign Up</Text>
+                                </TouchableOpacity>
 
-                        <Text style={styles.subtitle}>Already have an account?</Text>
+                                <Text style={styles.subtitle}>Already have an account?</Text>
 
-                        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                            <Text style={styles.link}>Login</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                                    <Text style={styles.link}>Login</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </KeyboardAvoidingView>
             </SafeAreaView>
         </>
     );

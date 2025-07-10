@@ -56,11 +56,25 @@ export default StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-between",
     },
+    goalRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 5,
+    },
+    goalTitleWrapper: {
+        flexShrink: 1,
+        marginRight: 10, // spacing between title and time
+    },
     goalTitle: {
         color: "#8986a7",
         fontSize: 20,
         fontWeight: "bold",
-        marginBottom: 5,
+    },
+    dueTimeText: {
+        color: "#666",
+        fontSize: 14,
+        flexShrink: 0,
     },
     progressBarContainer: {
         flexDirection: "row",

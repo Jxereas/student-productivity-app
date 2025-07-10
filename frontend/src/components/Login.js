@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react";
 import {
     signInWithEmailAndPassword,
     sendEmailVerification,
@@ -11,14 +11,15 @@ import {
     TouchableOpacity,
     StatusBar,
     ActivityIndicator,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
 } from "react-native";
-import Alert from "./Alert"
+import Alert from "./Alert";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { useNavigation } from "@react-navigation/native";
-import { db } from "../firebase/firebaseConfig";
-import { collection, query, where, getDocs } from "firebase/firestore";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getEmailFromUsername } from "../utility/FirebaseHelpers"
+import { getEmailFromUsername } from "../utility/FirebaseHelpers";
 import styles from "../styles/Login"; // Reuse the same styles
 
 const Login = () => {
@@ -27,6 +28,8 @@ const Login = () => {
     const [showVerifyPopup, setShowVerifyPopup] = useState(false);
     const [cooldown, setCooldown] = useState(0);
     const [verificationSuccess, setVerificationSuccess] = useState(false);
+
+    const passwordInputRef = useRef(null);
 
     const navigation = useNavigation();
 
@@ -72,6 +75,7 @@ const Login = () => {
 
         if (!password) {
             Alert.alert("Missing Field", "Please enter a password.");
+            return;
         }
 
         let emailToUse = identifier;
@@ -94,7 +98,7 @@ const Login = () => {
 
             if (!userCredential.user.emailVerified) {
                 await sendEmailVerification(auth.currentUser);
-                
+
                 setCooldown(30);
                 const interval = setInterval(() => {
                     setCooldown((prev) => {
@@ -105,7 +109,7 @@ const Login = () => {
                         return prev - 1;
                     });
                 }, 1000);
-                
+
                 setShowVerifyPopup(true);
                 return;
             }
@@ -138,47 +142,74 @@ const Login = () => {
                 edges={["left", "right", "bottom"]}
                 style={{ flex: 1, backgroundColor: "#04060c" }}
             >
-                <View style={styles.container}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Login</Text>
-                    </View>
+                <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    keyboardVerticalOffset={80}
+                >
+                    <ScrollView
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        keyboardShouldPersistTaps="handled"
+                    >
+                        <View style={styles.container}>
+                            <View style={styles.titleContainer}>
+                                <Text style={styles.title}>Login</Text>
+                            </View>
 
-                    <View style={styles.formContainer}>
-                        <TextInput
-                            placeholder="Email or Username"
-                            style={styles.input}
-                            value={identifier}
-                            onChangeText={setIdentifier}
-                            placeholderTextColor="#8986a7"
-                        />
+                            <View style={styles.formContainer}>
+                                <TextInput
+                                    placeholder="Email or Username"
+                                    style={styles.input}
+                                    value={identifier}
+                                    onChangeText={setIdentifier}
+                                    placeholderTextColor="#8986a7"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    keyboardType="default"
+                                    keyboardAppearance="dark"
+                                    returnKeyType="next"
+                                    onSubmitEditing={() => passwordInputRef.current?.focus()}
+                                />
 
-                        <TextInput
-                            placeholder="Password"
-                            style={[styles.input, { marginBottom: 2 }]}
-                            secureTextEntry
-                            value={password}
-                            onChangeText={setPassword}
-                            placeholderTextColor="#8986a7"
-                        />
+                                <TextInput
+                                    placeholder="Password"
+                                    style={[styles.input, { marginBottom: 2 }]}
+                                    secureTextEntry
+                                    keyboardAppearance="dark"
+                                    autoCapitalize="none"
+                                    textContentType="password"
+                                    autoCorrect={false}
+                                    returnKeyType="done"
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    placeholderTextColor="#8986a7"
+                                    ref={passwordInputRef}
+                                    onSubmitEditing={handleLogin}
+                                />
 
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate("ForgotPassword")}
-                            style={{ alignSelf: "flex-end", marginBottom: 15 }}
-                        >
-                            <Text style={[styles.link, { fontSize: 13 }]}>Forgot password?</Text>
-                        </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate("ForgotPassword")}
+                                    style={{ alignSelf: "flex-end", marginBottom: 15 }}
+                                >
+                                    <Text style={[styles.link, { fontSize: 13 }]}>
+                                        Forgot password?
+                                    </Text>
+                                </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                            <Text style={styles.buttonText}>Login</Text>
-                        </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                                    <Text style={styles.buttonText}>Login</Text>
+                                </TouchableOpacity>
 
-                        <Text style={styles.subtitle}>Don't have an account?</Text>
+                                <Text style={styles.subtitle}>Don't have an account?</Text>
 
-                        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-                            <Text style={styles.link}>Sign Up</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                                <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                                    <Text style={styles.link}>Sign Up</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </KeyboardAvoidingView>
             </SafeAreaView>
 
             {showVerifyPopup && (

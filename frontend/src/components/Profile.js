@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Modal,
     View,
@@ -37,6 +37,11 @@ const ProfileScreen = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [currentPassword, setCurrentPassword] = useState("");
+
+    const emailModalNewEmailInputRef = useRef(null);
+
+    const passwordModalNewPasswordInputRef = useRef(null);
+    const passwordModalConfirmPasswordInputRef = useRef(null);
 
     const navigation = useNavigation();
 
@@ -228,18 +233,33 @@ const ProfileScreen = () => {
                         <TextInput
                             placeholder="Current Password"
                             placeholderTextColor="#8986a7"
+                            keyboardAppearance="dark"
+                            autoCapitalize="none"
+                            textContentType="password"
+                            autoCorrect={false}
+                            returnKeyType="next"
                             value={currentPassword}
                             onChangeText={setCurrentPassword}
                             secureTextEntry
                             style={styles.modalInput}
+                            onSubmitEditing={() =>
+                                emailModalNewEmailInputRef.current?.focus()
+                            }
                         />
 
                         <TextInput
                             placeholder="New Email"
                             placeholderTextColor="#8986a7"
+                            keyboardAppearance="dark"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            textContentType="emailAddress"
+                            autoCorrect={true}
+                            returnKeyType="done"
                             value={newEmail}
                             onChangeText={setNewEmail}
                             style={styles.modalInput}
+                            ref={emailModalNewEmailInputRef}
                         />
 
                         <View style={styles.modalButtonRow}>
@@ -270,28 +290,48 @@ const ProfileScreen = () => {
                         <TextInput
                             placeholder="Current Password"
                             placeholderTextColor="#8986a7"
+                            keyboardAppearance="dark"
+                            autoCapitalize="none"
+                            textContentType="password"
+                            autoCorrect={false}
                             value={currentPassword}
                             onChangeText={setCurrentPassword}
                             secureTextEntry
                             style={styles.modalInput}
+                            returnKeyType="next"
+                            onSubmitEditing={() =>
+                                passwordModalNewPasswordInputRef.current?.focus()
+                            }
                         />
 
                         <TextInput
                             placeholder="New Password"
                             placeholderTextColor="#8986a7"
+                            keyboardAppearance="dark"
                             value={newPassword}
                             onChangeText={setNewPassword}
                             secureTextEntry
                             style={styles.modalInput}
+                            returnKeyType="next"
+                            ref={passwordModalNewPasswordInputRef}
+                            onSubmitEditing={() =>
+                                passwordModalConfirmPasswordInputRef.current?.focus()
+                            }
                         />
 
                         <TextInput
                             placeholder="Confirm New Password"
                             placeholderTextColor="#8986a7"
+                            autoCapitalize="none"
+                            textContentType="password"
+                            autoCorrect={false}
+                            keyboardAppearance="dark"
                             value={confirmNewPassword}
                             onChangeText={setConfirmNewPassword}
                             secureTextEntry
                             style={styles.modalInput}
+                            ref={passwordModalConfirmPasswordInputRef}
+                            returnKeyType="done"
                         />
 
                         <View style={styles.modalButtonRow}>

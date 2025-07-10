@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-  StatusBar,
+    View,
+    Text,
+    ScrollView,
+    TouchableOpacity,
+    ActivityIndicator,
+    StatusBar,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
+    useFocusEffect,
+    useNavigation,
+    useRoute,
 } from "@react-navigation/native";
 import { Shadow } from "react-native-shadow-2";
 import { format, isToday, isTomorrow, isYesterday, startOfDay } from "date-fns";
@@ -22,232 +22,236 @@ import BottomNavBar from "./BottomNavBar";
 import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
 
 const SearchTasksResults = () => {
-  const [groupedTasks, setGroupedTasks] = useState({});
-  const [tasks, setTasks] = useState([]);
-  const [loadingData, setLoadingData] = useState(true);
+    const [groupedTasks, setGroupedTasks] = useState({});
+    const [tasks, setTasks] = useState([]);
+    const [loadingData, setLoadingData] = useState(true);
 
-  const [emptyTaskContainerWidth, setEmptyTaskContainerWidth] = useState(0);
+    const [emptyTaskContainerWidth, setEmptyTaskContainerWidth] = useState(0);
 
-  const navigation = useNavigation();
-  const route = useRoute();
-  const { filters } = route.params;
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { filters } = route.params;
 
-  useFocusEffect(
-    useCallback(() => {
-      const fetchFilteredTasks = async () => {
-        try {
-          const allTasks = await getAllTasksFromFirestore();
+    useFocusEffect(
+        useCallback(() => {
+            const fetchFilteredTasks = async () => {
+                try {
+                    const allTasks = await getAllTasksFromFirestore();
 
-          allTasks.forEach((task) => {
-            task.dueAt = task.dueAt.toDate();
-            task.createdAt = task.createdAt.toDate();
-          });
+                    allTasks.forEach((task) => {
+                        task.dueAt = task.dueAt.toDate();
+                        task.createdAt = task.createdAt.toDate();
+                    });
 
-          const dateFields = [
-            "createdAfter",
-            "createdBefore",
-            "dueAfter",
-            "dueBefore",
-          ];
+                    const dateFields = [
+                        "createdAfter",
+                        "createdBefore",
+                        "dueAfter",
+                        "dueBefore",
+                    ];
 
-          dateFields.forEach((key) => {
-            if (filters[key] && typeof filters[key] === "string") {
-              filters[key] = new Date(filters[key]);
-            }
-          });
+                    dateFields.forEach((key) => {
+                        if (filters[key] && typeof filters[key] === "string") {
+                            filters[key] = new Date(filters[key]);
+                        }
+                    });
 
-          const now = new Date();
-          const todayStart = startOfDay(now);
-          const nextWeek = new Date(todayStart);
-          nextWeek.setDate(todayStart.getDate() + 7);
+                    const now = new Date();
+                    const todayStart = startOfDay(now);
+                    const nextWeek = new Date(todayStart);
+                    nextWeek.setDate(todayStart.getDate() + 7);
 
-          const filteredTasks = allTasks.filter((task) => {
-            const { title, createdAt, dueAt } = task;
+                    const filteredTasks = allTasks.filter((task) => {
+                        const { title, createdAt, dueAt } = task;
 
-            if (
-              filters.title &&
-              !title.toLowerCase().includes(filters.title.toLowerCase())
-            ) {
-              return false;
-            }
+                        if (
+                            filters.title &&
+                            !title.toLowerCase().includes(filters.title.toLowerCase())
+                        ) {
+                            return false;
+                        }
 
-            if (filters.createdAfter && createdAt < filters.createdAfter) {
-              return false;
-            }
+                        if (filters.createdAfter && createdAt < filters.createdAfter) {
+                            return false;
+                        }
 
-            if (filters.createdBefore && createdAt > filters.createdBefore) {
-              return false;
-            }
+                        if (filters.createdBefore && createdAt > filters.createdBefore) {
+                            return false;
+                        }
 
-            if (filters.dueAfter && dueAt < filters.dueAfter) {
-              return false;
-            }
+                        if (filters.dueAfter && dueAt < filters.dueAfter) {
+                            return false;
+                        }
 
-            if (filters.dueBefore && dueAt > filters.dueBefore) {
-              return false;
-            }
+                        if (filters.dueBefore && dueAt > filters.dueBefore) {
+                            return false;
+                        }
 
-            if (filters.hasGoal && !task.goalId) {
-              return false;
-            }
+                        if (filters.hasGoal && !task.goalId) {
+                            return false;
+                        }
 
-            if (filters.standAloneTask && task.goalId) {
-              return false;
-            }
+                        if (filters.standAloneTask && task.goalId) {
+                            return false;
+                        }
 
-            if (filters.dueToday && !isToday(dueAt)) {
-              return false;
-            }
+                        if (filters.dueToday && !isToday(dueAt)) {
+                            return false;
+                        }
 
-            if (
-              filters.dueThisWeek &&
-              !(dueAt >= todayStart && dueAt <= nextWeek)
-            ) {
-              return false;
-            }
+                        if (
+                            filters.dueThisWeek &&
+                            !(dueAt >= todayStart && dueAt <= nextWeek)
+                        ) {
+                            return false;
+                        }
 
-            if (filters.overdue && dueAt >= now) {
-              return false;
-            }
+                        if (filters.overdue && dueAt >= now) {
+                            return false;
+                        }
 
-            return true;
-          });
+                        return true;
+                    });
 
-          // Sort and group goals
-          filteredTasks.sort((a, b) => a.dueAt - b.dueAt);
-          const grouped = {};
-          filteredTasks.forEach((task) => {
-            const dueDate = startOfDay(task.dueAt);
-            let label = format(dueDate, "MMM dd, yyyy");
-            if (isYesterday(dueDate)) label = "Yesterday";
-            else if (isToday(dueDate)) label = "Today";
-            else if (isTomorrow(dueDate)) label = "Tomorrow";
+                    // Sort and group goals
+                    filteredTasks.sort((a, b) => a.dueAt - b.dueAt);
+                    const grouped = {};
+                    filteredTasks.forEach((task) => {
+                        const dueDate = startOfDay(task.dueAt);
+                        let label = format(dueDate, "MMM dd, yyyy");
+                        if (isYesterday(dueDate)) label = "Yesterday";
+                        else if (isToday(dueDate)) label = "Today";
+                        else if (isTomorrow(dueDate)) label = "Tomorrow";
 
-            if (!grouped[label]) grouped[label] = [];
-            grouped[label].push(task);
-          });
+                        if (!grouped[label]) grouped[label] = [];
+                        grouped[label].push(task);
+                    });
 
-          setTasks(allTasks);
-          setGroupedTasks(grouped);
-          setLoadingData(false);
-        } catch (error) {
-          console.error("Error fetching filtered goals:", error.message);
-          setLoadingData(false);
-        }
-      };
+                    Object.keys(grouped).forEach((label) => {
+                        grouped[label].sort((a, b) => a.dueAt - b.dueAt);
+                    });
 
-      fetchFilteredTasks();
-    }, [filters]),
-  );
+                    setTasks(allTasks);
+                    setGroupedTasks(grouped);
+                    setLoadingData(false);
+                } catch (error) {
+                    console.error("Error fetching filtered goals:", error.message);
+                    setLoadingData(false);
+                }
+            };
 
-  return (
-    <>
-      <SafeAreaView
-        edges={["top"]}
-        style={{ flex: 0, backgroundColor: "#04060c" }}
-      >
-        <StatusBar barStyle="light-content" backgroundColor="#04060c" />
-      </SafeAreaView>
+            fetchFilteredTasks();
+        }, [filters]),
+    );
 
-      <SafeAreaView
-        edges={["left", "right", "bottom"]}
-        style={{ flex: 1, backgroundColor: "#0e0d16" }}
-      >
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Icon name="arrow-back" size={26} color="#8986a7" />
-            </TouchableOpacity>
-            <Text style={styles.title}>Search Results</Text>
-            <View style={{ width: 26 }} />
-          </View>
-
-          {loadingData ? (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+    return (
+        <>
+            <SafeAreaView
+                edges={["top"]}
+                style={{ flex: 0, backgroundColor: "#04060c" }}
             >
-              <ActivityIndicator size="large" color="#cf59a9" />
-            </View>
-          ) : (
-            <>
-              {Object.keys(groupedTasks).length === 0 ? (
-                <View
-                  style={styles.emptyTaskStateContainer}
-                  onLayout={(e) =>
-                    setEmptyTaskContainerWidth(e.nativeEvent.layout.width)
-                  }
-                >
-                  <Shadow
-                    distance={10}
-                    offset={[0, 3]}
-                    startColor="rgba(207, 89, 169, 0.1)"
-                  >
-                    <View
-                      style={[
-                        styles.emptyTaskStateBackground,
-                        {
-                          height: 150,
-                          width: emptyTaskContainerWidth - 40,
-                        },
-                      ]}
-                    >
-                      <View style={styles.checkmarkCircle}>
-                        <Icon
-                          name="checkmark-done-outline"
-                          size={70}
-                          color="#d385b3"
-                        />
-                      </View>
-                      <Text style={styles.emptyStateText}>
-                        No filtered tasks found.
-                      </Text>
-                    </View>
-                  </Shadow>
-                </View>
-              ) : (
-                <ScrollView
-                  style={styles.scrollArea}
-                  showsVerticalScrollIndicator={false}
-                >
-                  {Object.keys(groupedTasks).map((date, index) => (
-                    <View key={index}>
-                      <Text style={styles.sectionHeading}>{date}</Text>
-                      {groupedTasks[date].map((task) => (
-                        <TaskCard
-                          key={task.id}
-                          task={task}
-                          onDelete={() => {
-                            setGroupedTasks((prev) => {
-                              const updated = { ...prev };
-                              updated[date] = updated[date].filter(
-                                (t) => t.id !== task.id,
-                              );
-                              if (updated[date].length === 0)
-                                delete updated[date];
-                              return updated;
-                            });
+                <StatusBar barStyle="light-content" backgroundColor="#04060c" />
+            </SafeAreaView>
 
-                            setTasks((prev) =>
-                              prev.filter((t) => t.id !== task.id),
-                            );
-                          }}
-                        />
-                      ))}
+            <SafeAreaView
+                edges={["left", "right", "bottom"]}
+                style={{ flex: 1, backgroundColor: "#0e0d16" }}
+            >
+                <View style={styles.container}>
+                    <View style={styles.titleContainer}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Icon name="arrow-back" size={26} color="#8986a7" />
+                        </TouchableOpacity>
+                        <Text style={styles.title}>Search Results</Text>
+                        <View style={{ width: 26 }} />
                     </View>
-                  ))}
-                </ScrollView>
-              )}
-            </>
-          )}
-          <BottomNavBar />
-        </View>
-      </SafeAreaView>
-    </>
-  );
+
+                    {loadingData ? (
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <ActivityIndicator size="large" color="#cf59a9" />
+                        </View>
+                    ) : (
+                        <>
+                            {Object.keys(groupedTasks).length === 0 ? (
+                                <View
+                                    style={styles.emptyTaskStateContainer}
+                                    onLayout={(e) =>
+                                        setEmptyTaskContainerWidth(e.nativeEvent.layout.width)
+                                    }
+                                >
+                                    <Shadow
+                                        distance={10}
+                                        offset={[0, 3]}
+                                        startColor="rgba(207, 89, 169, 0.1)"
+                                    >
+                                        <View
+                                            style={[
+                                                styles.emptyTaskStateBackground,
+                                                {
+                                                    height: 150,
+                                                    width: emptyTaskContainerWidth - 40,
+                                                },
+                                            ]}
+                                        >
+                                            <View style={styles.checkmarkCircle}>
+                                                <Icon
+                                                    name="checkmark-done-outline"
+                                                    size={70}
+                                                    color="#d385b3"
+                                                />
+                                            </View>
+                                            <Text style={styles.emptyStateText}>
+                                                No filtered tasks found.
+                                            </Text>
+                                        </View>
+                                    </Shadow>
+                                </View>
+                            ) : (
+                                <ScrollView
+                                    style={styles.scrollArea}
+                                    showsVerticalScrollIndicator={false}
+                                >
+                                    {Object.keys(groupedTasks).map((date, index) => (
+                                        <View key={index}>
+                                            <Text style={styles.sectionHeading}>{date}</Text>
+                                            {groupedTasks[date].map((task) => (
+                                                <TaskCard
+                                                    key={task.id}
+                                                    task={task}
+                                                    onDelete={() => {
+                                                        setGroupedTasks((prev) => {
+                                                            const updated = { ...prev };
+                                                            updated[date] = updated[date].filter(
+                                                                (t) => t.id !== task.id,
+                                                            );
+                                                            if (updated[date].length === 0)
+                                                                delete updated[date];
+                                                            return updated;
+                                                        });
+
+                                                        setTasks((prev) =>
+                                                            prev.filter((t) => t.id !== task.id),
+                                                        );
+                                                    }}
+                                                />
+                                            ))}
+                                        </View>
+                                    ))}
+                                </ScrollView>
+                            )}
+                        </>
+                    )}
+                    <BottomNavBar />
+                </View>
+            </SafeAreaView>
+        </>
+    );
 };
 
 export default SearchTasksResults;

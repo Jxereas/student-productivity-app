@@ -12,7 +12,7 @@ export default StyleSheet.create({
     marginTop: 90,
   },
   formContainer: {
-    flex: 2,
+    flex: 1,
     justifyContent: "center",
   },
   title: {
