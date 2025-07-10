@@ -149,7 +149,7 @@ const GoalSearchScreen = () => {
             style={{ flex: 1 }}
           >
             <View style={styles.titleContainer}>
-              <TouchableOpacity onPress={() => navigation.navigate("Goals")}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Icon name="arrow-back" size={26} color="#8986a7" />
               </TouchableOpacity>
               <Text style={styles.title}>Search Goals</Text>

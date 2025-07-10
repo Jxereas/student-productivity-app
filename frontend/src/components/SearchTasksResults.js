@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,11 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { Shadow } from "react-native-shadow-2";
 import { format, isToday, isTomorrow, isYesterday, startOfDay } from "date-fns";
 import styles from "../styles/SearchTasksResults";
@@ -28,111 +32,113 @@ const SearchTasksResults = () => {
   const route = useRoute();
   const { filters } = route.params;
 
-  useEffect(() => {
-    const fetchFilteredTasks = async () => {
-      try {
-        const allTasks = await getAllTasksFromFirestore();
+  useFocusEffect(
+    useCallback(() => {
+      const fetchFilteredTasks = async () => {
+        try {
+          const allTasks = await getAllTasksFromFirestore();
 
-        allTasks.forEach((task) => {
-          task.dueAt = task.dueAt.toDate();
-          task.createdAt = task.createdAt.toDate();
-        });
+          allTasks.forEach((task) => {
+            task.dueAt = task.dueAt.toDate();
+            task.createdAt = task.createdAt.toDate();
+          });
 
-        const dateFields = [
-          "createdAfter",
-          "createdBefore",
-          "dueAfter",
-          "dueBefore",
-        ];
+          const dateFields = [
+            "createdAfter",
+            "createdBefore",
+            "dueAfter",
+            "dueBefore",
+          ];
 
-        dateFields.forEach((key) => {
-          if (filters[key] && typeof filters[key] === "string") {
-            filters[key] = new Date(filters[key]);
-          }
-        });
+          dateFields.forEach((key) => {
+            if (filters[key] && typeof filters[key] === "string") {
+              filters[key] = new Date(filters[key]);
+            }
+          });
 
-        const now = new Date();
-        const todayStart = startOfDay(now);
-        const nextWeek = new Date(todayStart);
-        nextWeek.setDate(todayStart.getDate() + 7);
+          const now = new Date();
+          const todayStart = startOfDay(now);
+          const nextWeek = new Date(todayStart);
+          nextWeek.setDate(todayStart.getDate() + 7);
 
-        const filteredTasks = allTasks.filter((task) => {
-          const { title, createdAt, dueAt } = task;
+          const filteredTasks = allTasks.filter((task) => {
+            const { title, createdAt, dueAt } = task;
 
-          if (
-            filters.title &&
-            !title.toLowerCase().includes(filters.title.toLowerCase())
-          ) {
-            return false;
-          }
+            if (
+              filters.title &&
+              !title.toLowerCase().includes(filters.title.toLowerCase())
+            ) {
+              return false;
+            }
 
-          if (filters.createdAfter && createdAt < filters.createdAfter) {
-            return false;
-          }
+            if (filters.createdAfter && createdAt < filters.createdAfter) {
+              return false;
+            }
 
-          if (filters.createdBefore && createdAt > filters.createdBefore) {
-            return false;
-          }
+            if (filters.createdBefore && createdAt > filters.createdBefore) {
+              return false;
+            }
 
-          if (filters.dueAfter && dueAt < filters.dueAfter) {
-            return false;
-          }
+            if (filters.dueAfter && dueAt < filters.dueAfter) {
+              return false;
+            }
 
-          if (filters.dueBefore && dueAt > filters.dueBefore) {
-            return false;
-          }
+            if (filters.dueBefore && dueAt > filters.dueBefore) {
+              return false;
+            }
 
-          if (filters.hasGoal && !task.goalId) {
-            return false;
-          }
+            if (filters.hasGoal && !task.goalId) {
+              return false;
+            }
 
-          if (filters.standAloneTask && task.goalId) {
-            return false;
-          }
+            if (filters.standAloneTask && task.goalId) {
+              return false;
+            }
 
-          if (filters.dueToday && !isToday(dueAt)) {
-            return false;
-          }
+            if (filters.dueToday && !isToday(dueAt)) {
+              return false;
+            }
 
-          if (
-            filters.dueThisWeek &&
-            !(dueAt >= todayStart && dueAt <= nextWeek)
-          ) {
-            return false;
-          }
+            if (
+              filters.dueThisWeek &&
+              !(dueAt >= todayStart && dueAt <= nextWeek)
+            ) {
+              return false;
+            }
 
-          if (filters.overdue && dueAt >= now) {
-            return false;
-          }
+            if (filters.overdue && dueAt >= now) {
+              return false;
+            }
 
-          return true;
-        });
+            return true;
+          });
 
-        // Sort and group goals
-        filteredTasks.sort((a, b) => a.dueAt - b.dueAt);
-        const grouped = {};
-        filteredTasks.forEach((task) => {
-          const dueDate = startOfDay(task.dueAt);
-          let label = format(dueDate, "MMM dd, yyyy");
-          if (isYesterday(dueDate)) label = "Yesterday";
-          else if (isToday(dueDate)) label = "Today";
-          else if (isTomorrow(dueDate)) label = "Tomorrow";
+          // Sort and group goals
+          filteredTasks.sort((a, b) => a.dueAt - b.dueAt);
+          const grouped = {};
+          filteredTasks.forEach((task) => {
+            const dueDate = startOfDay(task.dueAt);
+            let label = format(dueDate, "MMM dd, yyyy");
+            if (isYesterday(dueDate)) label = "Yesterday";
+            else if (isToday(dueDate)) label = "Today";
+            else if (isTomorrow(dueDate)) label = "Tomorrow";
 
-          if (!grouped[label]) grouped[label] = [];
-          grouped[label].push(task);
-        });
+            if (!grouped[label]) grouped[label] = [];
+            grouped[label].push(task);
+          });
 
-        setTasks(allTasks);
-        setGroupedTasks(grouped);
-        setLoadingData(false);
-      } catch (error) {
-        console.error("Error fetching filtered goals:", error.message);
-        setLoadingData(false);
-      }
-    };
+          setTasks(allTasks);
+          setGroupedTasks(grouped);
+          setLoadingData(false);
+        } catch (error) {
+          console.error("Error fetching filtered goals:", error.message);
+          setLoadingData(false);
+        }
+      };
 
-    fetchFilteredTasks();
-  }, [filters]);
+      fetchFilteredTasks();
+    }, [filters]),
+  );
 
   return (
     <>

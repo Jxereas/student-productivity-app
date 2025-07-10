@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Shadow } from "react-native-shadow-2";
 import Icon from "react-native-vector-icons/Ionicons";
 import { isYesterday, format, startOfDay } from "date-fns";
@@ -24,43 +24,46 @@ const OverdueTasksScreen = () => {
 
   const [emptyTaskContainerWidth, setEmptyTaskContainerWidth] = useState(0);
 
-  useEffect(() => {
-    const fetchOverdueTasks = async () => {
-      try {
-        const allTasks = await getAllTasksFromFirestore();
+  useFocusEffect(
+    useCallback(() => {
+      const fetchOverdueTasks = async () => {
+        try {
+          const allTasks = await getAllTasksFromFirestore();
 
-        allTasks.forEach((task) => {
-          task.dueAt = task.dueAt.toDate();
-        });
+          allTasks.forEach((task) => {
+            task.dueAt = task.dueAt.toDate();
+          });
 
-        const today = startOfDay(new Date());
+          const today = startOfDay(new Date());
 
-        const overdueTasks = allTasks
-          .filter((task) => startOfDay(task.dueAt) < today)
-          .sort((a, b) => b.dueAt - a.dueAt);
+          const overdueTasks = allTasks
+            .filter((task) => startOfDay(task.dueAt) < today)
+            .sort((a, b) => b.dueAt - a.dueAt);
 
-        const groups = {};
-        overdueTasks.forEach((task) => {
-          const dueDate = task.dueAt;
-          let label = format(dueDate, "MMM dd, yyyy");
+          const groups = {};
+          overdueTasks.forEach((task) => {
+            const dueDate = task.dueAt;
+            let label = format(dueDate, "MMM dd, yyyy");
 
-          if (isYesterday(dueDate)) {
-            label = "Yesterday";
-          }
+            if (isYesterday(dueDate)) {
+              label = "Yesterday";
+            }
 
-          if (!groups[label]) groups[label] = [];
-          groups[label].push(task);
-        });
+            if (!groups[label]) groups[label] = [];
+            groups[label].push(task);
+          });
 
-        setGroupedOverdueTasks(groups);
-        setLoadingData(false);
-      } catch (error) {
-        console.error("Error fetching overdue tasks:", error.message);
-      }
-    };
+          setGroupedOverdueTasks(groups);
+          setLoadingData(false);
+        } catch (error) {
+          console.error("Error fetching overdue tasks:", error.message);
+        }
+      };
 
-    fetchOverdueTasks();
-  }, []);
+      setLoadingData(true);
+      fetchOverdueTasks();
+    }, []),
+  );
 
   return (
     <>
@@ -142,36 +145,28 @@ const OverdueTasksScreen = () => {
                 </View>
               ) : (
                 <ScrollView style={styles.scrollArea}>
-                  {Object.keys(groupedOverdueTasks).length === 0 ? (
-                    <Text
-                      style={{ color: "#8986a7", marginTop: 20, fontSize: 20 }}
-                    >
-                      No overdue tasks
-                    </Text>
-                  ) : (
-                    Object.keys(groupedOverdueTasks).map((date, index) => (
-                      <View key={index}>
-                        <Text style={styles.sectionHeading}>{date}</Text>
-                        {groupedOverdueTasks[date].map((task) => (
-                          <TaskCard
-                            key={task.id}
-                            task={task}
-                            onDelete={() => {
-                              setGroupedOverdueTasks((prev) => {
-                                const updated = { ...prev };
-                                updated[date] = updated[date].filter(
-                                  (t) => t.id !== task.id,
-                                );
-                                if (updated[date].length === 0)
-                                  delete updated[date];
-                                return updated;
-                              });
-                            }}
-                          />
-                        ))}
-                      </View>
-                    ))
-                  )}
+                  {Object.keys(groupedOverdueTasks).map((date, index) => (
+                    <View key={index}>
+                      <Text style={styles.sectionHeading}>{date}</Text>
+                      {groupedOverdueTasks[date].map((task) => (
+                        <TaskCard
+                          key={task.id}
+                          task={task}
+                          onDelete={() => {
+                            setGroupedOverdueTasks((prev) => {
+                              const updated = { ...prev };
+                              updated[date] = updated[date].filter(
+                                (t) => t.id !== task.id,
+                              );
+                              if (updated[date].length === 0)
+                                delete updated[date];
+                              return updated;
+                            });
+                          }}
+                        />
+                      ))}
+                    </View>
+                  ))}
                 </ScrollView>
               )}
             </>

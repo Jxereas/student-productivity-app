@@ -383,7 +383,7 @@ const EditGoalScreen = ({ route }) => {
                         style={{ flex: 1 }}
                     >
                         <View style={styles.header}>
-                            <TouchableOpacity onPress={() => navigation.navigate("Goals")}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
                                 <Icon name="arrow-back" size={26} color="#8986a7" />
                             </TouchableOpacity>
                             <Text style={styles.headerTitle}>Edit Goal</Text>
@@ -735,7 +735,7 @@ const EditGoalScreen = ({ route }) => {
                         <TouchableOpacity
                             onPress={() => {
                                 setShowSuccessNotification(false);
-                                navigation.navigate("Goals");
+                                navigation.goBack();
                             }}
                         >
                             <Text style={styles.notificationButton}>Continue to Goals</Text>

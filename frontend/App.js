@@ -1,7 +1,7 @@
 import "react-native-reanimated";
 import "react-native-gesture-handler";
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AlertProvider } from "./src/components/Alert";
@@ -27,43 +27,51 @@ import Profile from "./src/components/Profile";
 
 const Stack = createNativeStackNavigator();
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: "#000000",
+  },
+};
+
 export default function App() {
-    return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <AlertProvider>
-                <NavigationContainer>
-                    <Stack.Navigator
-                        initialRouteName="Home"
-                        screenOptions={{ headerShown: false }}
-                    >
-                        <Stack.Screen name="Home" component={Home} />
-                        <Stack.Screen name="Login" component={Login} />
-                        <Stack.Screen name="SignUp" component={SignUp} />
-                        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-                        <Stack.Screen name="Dashboard" component={Dashboard} />
-                        <Stack.Screen name="Tasks" component={Tasks} />
-                        <Stack.Screen name="OverdueTasks" component={OverdueTasks} />
-                        <Stack.Screen name="AddTask" component={AddTask} />
-                        <Stack.Screen name="EditTask" component={EditTask} />
-                        <Stack.Screen name="SearchTasks" component={SearchTasks} />
-                        <Stack.Screen
-                            name="SearchTasksResults"
-                            component={SearchTasksResults}
-                        />
-                        <Stack.Screen name="Goals" component={Goals} />
-                        <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
-                        <Stack.Screen name="GoalDetails" component={GoalDetails} />
-                        <Stack.Screen name="AddGoal" component={AddGoal} />
-                        <Stack.Screen name="EditGoal" component={EditGoal} />
-                        <Stack.Screen name="SearchGoals" component={SearchGoals} />
-                        <Stack.Screen
-                            name="SearchGoalsResults"
-                            component={SearchGoalsResults}
-                        />
-                        <Stack.Screen name="Profile" component={Profile} />
-                    </Stack.Navigator>
-                </NavigationContainer>
-            </AlertProvider>
-        </GestureHandlerRootView>
-    );
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AlertProvider>
+        <NavigationContainer theme={MyTheme}>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+            <Stack.Screen name="Dashboard" component={Dashboard} />
+            <Stack.Screen name="Tasks" component={Tasks} />
+            <Stack.Screen name="OverdueTasks" component={OverdueTasks} />
+            <Stack.Screen name="AddTask" component={AddTask} />
+            <Stack.Screen name="EditTask" component={EditTask} />
+            <Stack.Screen name="SearchTasks" component={SearchTasks} />
+            <Stack.Screen
+              name="SearchTasksResults"
+              component={SearchTasksResults}
+            />
+            <Stack.Screen name="Goals" component={Goals} />
+            <Stack.Screen name="OverdueGoals" component={OverdueGoals} />
+            <Stack.Screen name="GoalDetails" component={GoalDetails} />
+            <Stack.Screen name="AddGoal" component={AddGoal} />
+            <Stack.Screen name="EditGoal" component={EditGoal} />
+            <Stack.Screen name="SearchGoals" component={SearchGoals} />
+            <Stack.Screen
+              name="SearchGoalsResults"
+              component={SearchGoalsResults}
+            />
+            <Stack.Screen name="Profile" component={Profile} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AlertProvider>
+    </GestureHandlerRootView>
+  );
 }

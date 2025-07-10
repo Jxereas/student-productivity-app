@@ -671,7 +671,7 @@ const AddGoalScreen = () => {
             <TouchableOpacity
               onPress={() => {
                 setShowSuccessNotification(false);
-                navigation.navigate("Goals");
+                navigation.goBack();
               }}
             >
               <Text style={styles.notificationButton}>Continue to Goals</Text>

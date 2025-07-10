@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
   View,
@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Shadow } from "react-native-shadow-2";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { format, isToday, isTomorrow, startOfDay } from "date-fns";
 import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
 import styles from "../styles/Tasks";
@@ -25,49 +25,52 @@ const TasksMainScreen = () => {
 
   const [emptyTaskContainerWidth, setEmptyTaskContainerWidth] = useState(0);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const tasks = await getAllTasksFromFirestore();
+  useFocusEffect(
+    useCallback(() => {
+      const fetchTasks = async () => {
+        try {
+          const tasks = await getAllTasksFromFirestore();
 
-        tasks.forEach((task) => {
-          task.dueAt = task.dueAt.toDate();
-        });
+          tasks.forEach((task) => {
+            task.dueAt = task.dueAt.toDate();
+          });
 
-        tasks.sort((a, b) => a.dueAt - b.dueAt);
+          tasks.sort((a, b) => a.dueAt - b.dueAt);
 
-        const today = startOfDay(new Date());
-        let overdue = 0;
+          const today = startOfDay(new Date());
+          let overdue = 0;
 
-        // Group tasks by date
-        const groups = {};
-        tasks.forEach((task) => {
-          const dueDate = startOfDay(task.dueAt);
+          // Group tasks by date
+          const groups = {};
+          tasks.forEach((task) => {
+            const dueDate = startOfDay(task.dueAt);
 
-          if (dueDate < today) {
-            overdue++;
-            return;
-          }
+            if (dueDate < today) {
+              overdue++;
+              return;
+            }
 
-          let label = format(dueDate, "MMM dd, yyyy");
+            let label = format(dueDate, "MMM dd, yyyy");
 
-          if (isToday(dueDate)) label = "Today";
-          else if (isTomorrow(dueDate)) label = "Tomorrow";
+            if (isToday(dueDate)) label = "Today";
+            else if (isTomorrow(dueDate)) label = "Tomorrow";
 
-          if (!groups[label]) groups[label] = [];
-          groups[label].push(task);
-        });
+            if (!groups[label]) groups[label] = [];
+            groups[label].push(task);
+          });
 
-        setOverdueCount(overdue);
-        setGroupedTasks(groups);
-        setLoadingData(false);
-      } catch (error) {
-        console.error("Error fetching tasks:", error.code, error.message);
-      }
-    };
+          setOverdueCount(overdue);
+          setGroupedTasks(groups);
+          setLoadingData(false);
+        } catch (error) {
+          console.error("Error fetching tasks:", error.code, error.message);
+        }
+      };
 
-    fetchTasks();
-  }, []);
+      setLoadingData(true);
+      fetchTasks();
+    }, []),
+  );
 
   const handleRemoveTask = (taskId) => {
     setGroupedTasks((prevGroups) => {

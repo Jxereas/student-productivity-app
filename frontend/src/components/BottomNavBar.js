@@ -22,7 +22,9 @@ const BottomNavBar = () => {
         <TouchableOpacity
           key={index}
           style={styles.navItem}
-          onPress={() => navigation.navigate(tab.name)}
+          onPress={() => {
+            if (currentRoute !== tab.name) navigation.navigate(tab.name);
+          }}
         >
           <Icon
             name={tab.icon}

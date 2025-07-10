@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -18,7 +18,7 @@ import {
 import { isSameDay } from "date-fns";
 import { Shadow } from "react-native-shadow-2";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import styles from "../styles/Dashboard";
 import GoalCard from "../components/GoalCard";
 import TaskCard from "../components/TaskCard";
@@ -49,39 +49,6 @@ const LandingPage = () => {
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const [fetchedGoals, fetchedTasks] = await Promise.all([
-        getAllGoalsFromFirestore(),
-        getAllTasksFromFirestore(),
-      ]);
-
-      fetchedTasks.forEach((task) => {
-        task.dueAt = task.dueAt.toDate();
-      });
-
-      fetchedGoals.forEach((goal) => {
-        goal.dueAt = goal.dueAt.toDate();
-      });
-
-      const today = new Date(); // May be wrapped in isStartOfDay() later on, not done for performance currently since ran through isSameDay
-
-      const todaysGoals = fetchedGoals.filter((goal) =>
-        isSameDay(goal.dueAt, today),
-      );
-
-      const todaysTasks = fetchedTasks.filter((task) =>
-        isSameDay(task.dueAt, today),
-      );
-
-      setGoals(fetchedGoals);
-      setTasks(fetchedTasks);
-      setTodaysGoals(todaysGoals);
-      setTodaysTasks(todaysTasks);
-      setLoadingData(false);
-    };
-
-    fetchUserData();
-
     if (usedTopHeight === 0 || usedBottomHeight === 0) return;
 
     const screenHeight = Dimensions.get("window").height;
@@ -120,6 +87,44 @@ const LandingPage = () => {
     setGoalScrollHeight(maxGoalCards * 75 + 10 * (maxGoalCards - 1));
     setTaskScrollHeight(maxTaskCards * 60 + 10 * (maxTaskCards - 1));
   }, [usedBottomHeight, usedTopHeight, insets]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const fetchUserData = async () => {
+        const [fetchedGoals, fetchedTasks] = await Promise.all([
+          getAllGoalsFromFirestore(),
+          getAllTasksFromFirestore(),
+        ]);
+
+        fetchedTasks.forEach((task) => {
+          task.dueAt = task.dueAt.toDate();
+        });
+
+        fetchedGoals.forEach((goal) => {
+          goal.dueAt = goal.dueAt.toDate();
+        });
+
+        const today = new Date(); // May be wrapped in isStartOfDay() later on, not done for performance currently since ran through isSameDay
+
+        const todaysGoals = fetchedGoals.filter((goal) =>
+          isSameDay(goal.dueAt, today),
+        );
+
+        const todaysTasks = fetchedTasks.filter((task) =>
+          isSameDay(task.dueAt, today),
+        );
+
+        setGoals(fetchedGoals);
+        setTasks(fetchedTasks);
+        setTodaysGoals(todaysGoals);
+        setTodaysTasks(todaysTasks);
+        setLoadingData(false);
+      };
+
+      setLoadingData(true);
+      fetchUserData();
+    }, []),
+  );
 
   return (
     <>

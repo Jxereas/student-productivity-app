@@ -315,7 +315,7 @@ const AddTaskScreen = () => {
             <TouchableOpacity
               onPress={() => {
                 setShowNotification(false);
-                navigation.navigate("Tasks");
+                navigation.goBack();
               }}
             >
               <Text style={styles.notificationButton}>Continue to Tasks</Text>

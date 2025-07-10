@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Shadow } from "react-native-shadow-2";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { format, isToday, isTomorrow, parseISO, startOfDay } from "date-fns";
 import {
   getAllTasksFromFirestore,
@@ -30,57 +30,60 @@ const GoalsMainScreen = () => {
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const [goals, userTasks] = await Promise.all([
-          getAllGoalsFromFirestore(),
-          getAllTasksFromFirestore(),
-        ]);
+  useFocusEffect(
+    useCallback(() => {
+      const fetchTasks = async () => {
+        try {
+          const [goals, userTasks] = await Promise.all([
+            getAllGoalsFromFirestore(),
+            getAllTasksFromFirestore(),
+          ]);
 
-        userTasks.forEach((task) => {
-          task.dueAt = task.dueAt.toDate();
-        });
+          userTasks.forEach((task) => {
+            task.dueAt = task.dueAt.toDate();
+          });
 
-        goals.forEach((goal) => {
-          goal.dueAt = goal.dueAt.toDate();
-        });
+          goals.forEach((goal) => {
+            goal.dueAt = goal.dueAt.toDate();
+          });
 
-        goals.sort((a, b) => a.dueAt - b.dueAt);
+          goals.sort((a, b) => a.dueAt - b.dueAt);
 
-        const today = startOfDay(new Date());
-        let overdue = 0;
+          const today = startOfDay(new Date());
+          let overdue = 0;
 
-        // Group tasks by date
-        const groups = {};
-        goals.forEach((goal) => {
-          const dueDate = startOfDay(goal.dueAt);
+          // Group tasks by date
+          const groups = {};
+          goals.forEach((goal) => {
+            const dueDate = startOfDay(goal.dueAt);
 
-          if (dueDate < today) {
-            overdue++;
-            return;
-          }
+            if (dueDate < today) {
+              overdue++;
+              return;
+            }
 
-          let label = format(dueDate, "MMM dd, yyyy");
+            let label = format(dueDate, "MMM dd, yyyy");
 
-          if (isToday(dueDate)) label = "Today";
-          else if (isTomorrow(dueDate)) label = "Tomorrow";
+            if (isToday(dueDate)) label = "Today";
+            else if (isTomorrow(dueDate)) label = "Tomorrow";
 
-          if (!groups[label]) groups[label] = [];
-          groups[label].push(goal);
-        });
+            if (!groups[label]) groups[label] = [];
+            groups[label].push(goal);
+          });
 
-        setOverdueCount(overdue);
-        setGroupedGoals(groups);
-        setTasks(userTasks);
-        setLoadingData(false);
-      } catch (error) {
-        console.error("Error fetching tasks:", error.code, error.message);
-      }
-    };
+          setOverdueCount(overdue);
+          setGroupedGoals(groups);
+          setTasks(userTasks);
+          setLoadingData(false);
+        } catch (error) {
+          console.error("Error fetching tasks:", error.code, error.message);
+        }
+      };
 
-    fetchTasks();
-  }, []);
+      setLoadingData(true);
+      fetchTasks();
+    }, []),
+  );
 
   const handleRemoveGoal = (goalId) => {
     setGroupedGoals((prevGroups) => {
