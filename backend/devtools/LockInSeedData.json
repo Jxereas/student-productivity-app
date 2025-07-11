@@ -1,0 +1,1739 @@
+{
+  "goals": [
+    {
+      "createdAt": "2025-07-16T07:23:47.891452",
+      "dueAt": "2025-07-24T02:23:47.891478",
+      "Title": "Start a Blog",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-29T08:23:47.891586",
+      "dueAt": "2025-08-04T15:23:47.891596",
+      "Title": "Fitness Challenge",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-19T05:23:47.891842",
+      "dueAt": "2025-08-02T05:23:47.891866",
+      "Title": "Learn Guitar",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-20T16:23:47.891996",
+      "dueAt": "2025-08-08T09:23:47.892005",
+      "Title": "Plan Vacation",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-21T22:23:47.892190",
+      "dueAt": "2025-07-10T12:23:47.892200",
+      "Title": "Study Python",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-22T08:23:47.892559",
+      "dueAt": "2025-08-10T13:23:47.892569",
+      "Title": "Organize Workspace",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-23T14:23:47.892767",
+      "dueAt": "2025-07-30T05:23:47.892776",
+      "Title": "Meal Prep Routine",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-13T13:23:47.892990",
+      "dueAt": "2025-07-28T04:23:47.892999",
+      "Title": "Read Books",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-26T12:23:47.893170",
+      "dueAt": "2025-07-17T16:23:47.893180",
+      "Title": "Launch Side Project",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-17T18:23:47.893383",
+      "dueAt": "2025-07-20T03:23:47.893391",
+      "Title": "Job Applications",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-26T07:23:47.893601",
+      "dueAt": "2025-08-02T05:23:47.893611",
+      "Title": "Improve Sleep",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-24T05:23:47.893775",
+      "dueAt": "2025-08-07T12:23:47.893783",
+      "Title": "Run a 5K",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-22T01:23:47.894003",
+      "dueAt": "2025-08-09T23:23:47.894012",
+      "Title": "Declutter Home",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-22T10:23:47.894225",
+      "dueAt": "2025-07-14T18:23:47.894234",
+      "Title": "Garden Setup",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-18T09:23:47.894445",
+      "dueAt": "2025-07-25T16:23:47.894454",
+      "Title": "Financial Budgeting",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-19T22:23:47.894659",
+      "dueAt": "2025-07-26T23:23:47.894667",
+      "Title": "Volunteer Weekly",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-18T12:23:47.894832",
+      "dueAt": "2025-08-10T18:23:47.894841",
+      "Title": "Daily Journaling",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-06T20:23:47.895008",
+      "dueAt": "2025-07-11T00:23:47.895017",
+      "Title": "Social Media Detox",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-07-16T14:23:47.895147",
+      "dueAt": "2025-08-10T16:23:47.895152",
+      "Title": "Online Course",
+      "userId": "",
+      "id": ""
+    },
+    {
+      "createdAt": "2025-06-22T11:23:47.895259",
+      "dueAt": "2025-07-23T08:23:47.895264",
+      "Title": "Networking Challenge",
+      "userId": "",
+      "id": ""
+    }
+  ],
+  "tasks": [
+    {
+      "createdAt": "2025-07-01T16:23:47.891490",
+      "dueAt": "2025-07-11T09:23:47.891496",
+      "priority": "Low",
+      "Title": "Start a Blog - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "856369d4-50db-459d-a77d-934ac1a9d3a3"
+    },
+    {
+      "createdAt": "2025-07-07T01:23:47.891510",
+      "dueAt": "2025-08-17T06:23:47.891515",
+      "priority": "Medium",
+      "Title": "Start a Blog - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "856369d4-50db-459d-a77d-934ac1a9d3a3"
+    },
+    {
+      "createdAt": "2025-06-21T23:23:47.891521",
+      "dueAt": "2025-08-02T00:23:47.891527",
+      "priority": "Low",
+      "Title": "Start a Blog - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "856369d4-50db-459d-a77d-934ac1a9d3a3"
+    },
+    {
+      "createdAt": "2025-07-06T01:23:47.891535",
+      "dueAt": "2025-07-19T20:23:47.891540",
+      "priority": "Medium",
+      "Title": "Start a Blog - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "856369d4-50db-459d-a77d-934ac1a9d3a3"
+    },
+    {
+      "createdAt": "2025-07-11T12:23:47.891546",
+      "dueAt": "2025-07-31T19:23:47.891550",
+      "priority": "Medium",
+      "Title": "Start a Blog - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "856369d4-50db-459d-a77d-934ac1a9d3a3"
+    },
+    {
+      "createdAt": "2025-06-13T04:23:47.891605",
+      "dueAt": "2025-08-20T12:23:47.891610",
+      "priority": "High",
+      "Title": "Fitness Challenge - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "2125350f-9aa7-4ce4-8447-6bbacb65dbb5"
+    },
+    {
+      "createdAt": "2025-07-11T20:23:47.891617",
+      "dueAt": "2025-07-22T19:23:47.891621",
+      "priority": "Low",
+      "Title": "Fitness Challenge - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "2125350f-9aa7-4ce4-8447-6bbacb65dbb5"
+    },
+    {
+      "createdAt": "2025-06-27T03:23:47.891636",
+      "dueAt": "2025-07-21T18:23:47.891643",
+      "priority": "Low",
+      "Title": "Fitness Challenge - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "2125350f-9aa7-4ce4-8447-6bbacb65dbb5"
+    },
+    {
+      "createdAt": "2025-06-24T05:23:47.891652",
+      "dueAt": "2025-07-25T18:23:47.891659",
+      "priority": "Medium",
+      "Title": "Fitness Challenge - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "2125350f-9aa7-4ce4-8447-6bbacb65dbb5"
+    },
+    {
+      "createdAt": "2025-06-30T14:23:47.891665",
+      "dueAt": "2025-07-20T07:23:47.891669",
+      "priority": "Low",
+      "Title": "Fitness Challenge - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "2125350f-9aa7-4ce4-8447-6bbacb65dbb5"
+    },
+    {
+      "createdAt": "2025-06-22T06:23:47.891689",
+      "dueAt": "2025-08-10T01:23:47.891694",
+      "priority": "High",
+      "Title": "Fitness Challenge - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "2125350f-9aa7-4ce4-8447-6bbacb65dbb5"
+    },
+    {
+      "createdAt": "2025-06-16T12:23:47.891877",
+      "dueAt": "2025-07-29T18:23:47.891883",
+      "priority": "Low",
+      "Title": "Learn Guitar - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "14ad3f6d-d19a-4029-b193-ac43aeb9e149"
+    },
+    {
+      "createdAt": "2025-06-28T06:23:47.891891",
+      "dueAt": "2025-08-11T15:23:47.891895",
+      "priority": "Low",
+      "Title": "Learn Guitar - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "14ad3f6d-d19a-4029-b193-ac43aeb9e149"
+    },
+    {
+      "createdAt": "2025-06-23T06:23:47.891900",
+      "dueAt": "2025-07-13T15:23:47.891906",
+      "priority": "Medium",
+      "Title": "Learn Guitar - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "14ad3f6d-d19a-4029-b193-ac43aeb9e149"
+    },
+    {
+      "createdAt": "2025-07-04T10:23:47.891916",
+      "dueAt": "2025-07-12T17:23:47.891924",
+      "priority": "Medium",
+      "Title": "Learn Guitar - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "14ad3f6d-d19a-4029-b193-ac43aeb9e149"
+    },
+    {
+      "createdAt": "2025-06-14T16:23:47.891932",
+      "dueAt": "2025-08-04T22:23:47.891939",
+      "priority": "Low",
+      "Title": "Learn Guitar - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "14ad3f6d-d19a-4029-b193-ac43aeb9e149"
+    },
+    {
+      "createdAt": "2025-07-09T06:23:47.891947",
+      "dueAt": "2025-08-18T00:23:47.891954",
+      "priority": "Medium",
+      "Title": "Learn Guitar - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "14ad3f6d-d19a-4029-b193-ac43aeb9e149"
+    },
+    {
+      "createdAt": "2025-06-27T19:23:47.892015",
+      "dueAt": "2025-08-02T23:23:47.892023",
+      "priority": "Low",
+      "Title": "Plan Vacation - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "0fc4a5d2-f646-4665-a2dc-2367b36848a7"
+    },
+    {
+      "createdAt": "2025-07-11T04:23:47.892032",
+      "dueAt": "2025-07-19T18:23:47.892040",
+      "priority": "Low",
+      "Title": "Plan Vacation - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "0fc4a5d2-f646-4665-a2dc-2367b36848a7"
+    },
+    {
+      "createdAt": "2025-07-01T18:23:47.892060",
+      "dueAt": "2025-07-13T00:23:47.892069",
+      "priority": "Medium",
+      "Title": "Plan Vacation - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "0fc4a5d2-f646-4665-a2dc-2367b36848a7"
+    },
+    {
+      "createdAt": "2025-07-07T05:23:47.892079",
+      "dueAt": "2025-07-23T15:23:47.892087",
+      "priority": "High",
+      "Title": "Plan Vacation - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "0fc4a5d2-f646-4665-a2dc-2367b36848a7"
+    },
+    {
+      "createdAt": "2025-07-03T02:23:47.892096",
+      "dueAt": "2025-08-09T19:23:47.892105",
+      "priority": "High",
+      "Title": "Plan Vacation - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "0fc4a5d2-f646-4665-a2dc-2367b36848a7"
+    },
+    {
+      "createdAt": "2025-06-20T18:23:47.892115",
+      "dueAt": "2025-07-12T18:23:47.892123",
+      "priority": "High",
+      "Title": "Plan Vacation - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "0fc4a5d2-f646-4665-a2dc-2367b36848a7"
+    },
+    {
+      "createdAt": "2025-07-16T16:23:47.892135",
+      "dueAt": "2025-08-02T20:23:47.892142",
+      "priority": "Medium",
+      "Title": "Plan Vacation - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "0fc4a5d2-f646-4665-a2dc-2367b36848a7"
+    },
+    {
+      "createdAt": "2025-07-10T23:23:47.892211",
+      "dueAt": "2025-08-19T15:23:47.892219",
+      "priority": "High",
+      "Title": "Study Python - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-18T09:23:47.892230",
+      "dueAt": "2025-07-21T22:23:47.892237",
+      "priority": "High",
+      "Title": "Study Python - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-13T10:23:47.892247",
+      "dueAt": "2025-08-18T12:23:47.892256",
+      "priority": "Medium",
+      "Title": "Study Python - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-17T10:23:47.892266",
+      "dueAt": "2025-07-27T20:23:47.892274",
+      "priority": "Low",
+      "Title": "Study Python - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-30T13:23:47.892284",
+      "dueAt": "2025-08-16T19:23:47.892421",
+      "priority": "Medium",
+      "Title": "Study Python - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-21T03:23:47.892435",
+      "dueAt": "2025-08-18T18:23:47.892444",
+      "priority": "Medium",
+      "Title": "Study Python - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-29T09:23:47.892453",
+      "dueAt": "2025-08-19T07:23:47.892460",
+      "priority": "High",
+      "Title": "Study Python - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-26T20:23:47.892471",
+      "dueAt": "2025-07-23T13:23:47.892479",
+      "priority": "Low",
+      "Title": "Study Python - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-13T03:23:47.892489",
+      "dueAt": "2025-08-03T12:23:47.892497",
+      "priority": "Low",
+      "Title": "Study Python - Subtask 9",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-07-16T21:23:47.892507",
+      "dueAt": "2025-08-12T01:23:47.892515",
+      "priority": "Medium",
+      "Title": "Study Python - Subtask 10",
+      "userId": "",
+      "id": "",
+      "goalId": "925c9ddc-1434-491c-959d-da9e3af3f430"
+    },
+    {
+      "createdAt": "2025-06-19T11:23:47.892581",
+      "dueAt": "2025-07-15T03:23:47.892589",
+      "priority": "High",
+      "Title": "Organize Workspace - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "c047bf56-378c-433f-a50c-3cd408eea57d"
+    },
+    {
+      "createdAt": "2025-06-11T21:23:47.892599",
+      "dueAt": "2025-08-14T00:23:47.892607",
+      "priority": "Medium",
+      "Title": "Organize Workspace - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "c047bf56-378c-433f-a50c-3cd408eea57d"
+    },
+    {
+      "createdAt": "2025-06-13T19:23:47.892617",
+      "dueAt": "2025-07-23T07:23:47.892624",
+      "priority": "High",
+      "Title": "Organize Workspace - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "c047bf56-378c-433f-a50c-3cd408eea57d"
+    },
+    {
+      "createdAt": "2025-06-20T09:23:47.892642",
+      "dueAt": "2025-07-29T22:23:47.892651",
+      "priority": "Medium",
+      "Title": "Organize Workspace - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "c047bf56-378c-433f-a50c-3cd408eea57d"
+    },
+    {
+      "createdAt": "2025-06-18T23:23:47.892661",
+      "dueAt": "2025-07-12T01:23:47.892669",
+      "priority": "Medium",
+      "Title": "Organize Workspace - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "c047bf56-378c-433f-a50c-3cd408eea57d"
+    },
+    {
+      "createdAt": "2025-06-20T05:23:47.892679",
+      "dueAt": "2025-08-15T23:23:47.892687",
+      "priority": "Low",
+      "Title": "Organize Workspace - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "c047bf56-378c-433f-a50c-3cd408eea57d"
+    },
+    {
+      "createdAt": "2025-06-20T23:23:47.892697",
+      "dueAt": "2025-07-23T22:23:47.892705",
+      "priority": "Medium",
+      "Title": "Organize Workspace - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "c047bf56-378c-433f-a50c-3cd408eea57d"
+    },
+    {
+      "createdAt": "2025-06-15T06:23:47.892715",
+      "dueAt": "2025-07-16T19:23:47.892723",
+      "priority": "Low",
+      "Title": "Organize Workspace - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "c047bf56-378c-433f-a50c-3cd408eea57d"
+    },
+    {
+      "createdAt": "2025-06-11T08:23:47.892787",
+      "dueAt": "2025-07-23T17:23:47.892795",
+      "priority": "Medium",
+      "Title": "Meal Prep Routine - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-07-03T15:23:47.892805",
+      "dueAt": "2025-08-08T11:23:47.892813",
+      "priority": "Medium",
+      "Title": "Meal Prep Routine - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-07-10T10:23:47.892823",
+      "dueAt": "2025-08-17T21:23:47.892831",
+      "priority": "High",
+      "Title": "Meal Prep Routine - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-07-16T18:23:47.892841",
+      "dueAt": "2025-08-14T07:23:47.892849",
+      "priority": "Medium",
+      "Title": "Meal Prep Routine - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-06-29T16:23:47.892859",
+      "dueAt": "2025-08-14T05:23:47.892867",
+      "priority": "High",
+      "Title": "Meal Prep Routine - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-07-12T12:23:47.892878",
+      "dueAt": "2025-07-18T06:23:47.892885",
+      "priority": "Medium",
+      "Title": "Meal Prep Routine - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-06-18T18:23:47.892893",
+      "dueAt": "2025-08-11T12:23:47.892902",
+      "priority": "Low",
+      "Title": "Meal Prep Routine - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-07-06T20:23:47.892912",
+      "dueAt": "2025-07-20T14:23:47.892920",
+      "priority": "Medium",
+      "Title": "Meal Prep Routine - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-06-21T06:23:47.892929",
+      "dueAt": "2025-07-22T12:23:47.892937",
+      "priority": "High",
+      "Title": "Meal Prep Routine - Subtask 9",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-07-02T07:23:47.892947",
+      "dueAt": "2025-08-14T15:23:47.892955",
+      "priority": "High",
+      "Title": "Meal Prep Routine - Subtask 10",
+      "userId": "",
+      "id": "",
+      "goalId": "23e1e5b9-86d4-4454-93de-fe827df405a7"
+    },
+    {
+      "createdAt": "2025-06-22T04:23:47.893010",
+      "dueAt": "2025-08-17T17:23:47.893019",
+      "priority": "High",
+      "Title": "Read Books - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "3750d0aa-49e5-4efd-809f-48f31c070ac1"
+    },
+    {
+      "createdAt": "2025-06-19T11:23:47.893029",
+      "dueAt": "2025-08-05T00:23:47.893037",
+      "priority": "High",
+      "Title": "Read Books - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "3750d0aa-49e5-4efd-809f-48f31c070ac1"
+    },
+    {
+      "createdAt": "2025-06-27T18:23:47.893047",
+      "dueAt": "2025-07-18T09:23:47.893055",
+      "priority": "High",
+      "Title": "Read Books - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "3750d0aa-49e5-4efd-809f-48f31c070ac1"
+    },
+    {
+      "createdAt": "2025-06-14T07:23:47.893065",
+      "dueAt": "2025-07-31T19:23:47.893074",
+      "priority": "Medium",
+      "Title": "Read Books - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "3750d0aa-49e5-4efd-809f-48f31c070ac1"
+    },
+    {
+      "createdAt": "2025-06-15T20:23:47.893090",
+      "dueAt": "2025-07-16T13:23:47.893099",
+      "priority": "Medium",
+      "Title": "Read Books - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "3750d0aa-49e5-4efd-809f-48f31c070ac1"
+    },
+    {
+      "createdAt": "2025-06-22T06:23:47.893109",
+      "dueAt": "2025-08-21T01:23:47.893117",
+      "priority": "Medium",
+      "Title": "Read Books - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "3750d0aa-49e5-4efd-809f-48f31c070ac1"
+    },
+    {
+      "createdAt": "2025-07-15T04:23:47.893127",
+      "dueAt": "2025-07-19T05:23:47.893135",
+      "priority": "Medium",
+      "Title": "Read Books - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "3750d0aa-49e5-4efd-809f-48f31c070ac1"
+    },
+    {
+      "createdAt": "2025-06-27T03:23:47.893191",
+      "dueAt": "2025-07-26T00:23:47.893199",
+      "priority": "Medium",
+      "Title": "Launch Side Project - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-06-14T13:23:47.893209",
+      "dueAt": "2025-07-11T22:23:47.893217",
+      "priority": "Low",
+      "Title": "Launch Side Project - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-07-03T16:23:47.893227",
+      "dueAt": "2025-07-17T21:23:47.893235",
+      "priority": "High",
+      "Title": "Launch Side Project - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-06-17T10:23:47.893244",
+      "dueAt": "2025-08-07T14:23:47.893252",
+      "priority": "Low",
+      "Title": "Launch Side Project - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-06-14T20:23:47.893262",
+      "dueAt": "2025-07-26T20:23:47.893271",
+      "priority": "High",
+      "Title": "Launch Side Project - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-07-15T06:23:47.893281",
+      "dueAt": "2025-07-31T00:23:47.893289",
+      "priority": "Medium",
+      "Title": "Launch Side Project - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-06-17T04:23:47.893299",
+      "dueAt": "2025-07-25T03:23:47.893307",
+      "priority": "Medium",
+      "Title": "Launch Side Project - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-06-28T14:23:47.893317",
+      "dueAt": "2025-08-17T05:23:47.893325",
+      "priority": "Low",
+      "Title": "Launch Side Project - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-07-15T03:23:47.893335",
+      "dueAt": "2025-07-29T10:23:47.893342",
+      "priority": "Low",
+      "Title": "Launch Side Project - Subtask 9",
+      "userId": "",
+      "id": "",
+      "goalId": "6eb8ed4c-6221-4eef-94d3-2994375d1289"
+    },
+    {
+      "createdAt": "2025-06-13T17:23:47.893402",
+      "dueAt": "2025-08-18T21:23:47.893410",
+      "priority": "Medium",
+      "Title": "Job Applications - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-06-30T08:23:47.893420",
+      "dueAt": "2025-08-14T20:23:47.893429",
+      "priority": "Medium",
+      "Title": "Job Applications - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-06-28T03:23:47.893439",
+      "dueAt": "2025-07-20T22:23:47.893447",
+      "priority": "Low",
+      "Title": "Job Applications - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-06-22T14:23:47.893457",
+      "dueAt": "2025-08-02T20:23:47.893465",
+      "priority": "Medium",
+      "Title": "Job Applications - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-06-29T03:23:47.893475",
+      "dueAt": "2025-08-11T12:23:47.893483",
+      "priority": "Medium",
+      "Title": "Job Applications - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-06-29T06:23:47.893492",
+      "dueAt": "2025-07-11T16:23:47.893501",
+      "priority": "Low",
+      "Title": "Job Applications - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-07-16T11:23:47.893519",
+      "dueAt": "2025-07-27T23:23:47.893527",
+      "priority": "Low",
+      "Title": "Job Applications - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-06-16T22:23:47.893537",
+      "dueAt": "2025-07-16T08:23:47.893546",
+      "priority": "Medium",
+      "Title": "Job Applications - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-07-02T13:23:47.893556",
+      "dueAt": "2025-07-12T18:23:47.893564",
+      "priority": "Medium",
+      "Title": "Job Applications - Subtask 9",
+      "userId": "",
+      "id": "",
+      "goalId": "953419a8-7a27-42c8-a9b6-46e38df11833"
+    },
+    {
+      "createdAt": "2025-06-16T05:23:47.893622",
+      "dueAt": "2025-07-28T04:23:47.893630",
+      "priority": "Medium",
+      "Title": "Improve Sleep - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "0d515be5-c122-422d-b92e-ba0d6d88ac46"
+    },
+    {
+      "createdAt": "2025-06-15T00:23:47.893640",
+      "dueAt": "2025-08-13T04:23:47.893648",
+      "priority": "Low",
+      "Title": "Improve Sleep - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "0d515be5-c122-422d-b92e-ba0d6d88ac46"
+    },
+    {
+      "createdAt": "2025-06-27T22:23:47.893658",
+      "dueAt": "2025-08-18T09:23:47.893667",
+      "priority": "High",
+      "Title": "Improve Sleep - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "0d515be5-c122-422d-b92e-ba0d6d88ac46"
+    },
+    {
+      "createdAt": "2025-07-12T11:23:47.893677",
+      "dueAt": "2025-07-16T06:23:47.893684",
+      "priority": "High",
+      "Title": "Improve Sleep - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "0d515be5-c122-422d-b92e-ba0d6d88ac46"
+    },
+    {
+      "createdAt": "2025-06-24T07:23:47.893694",
+      "dueAt": "2025-08-02T10:23:47.893702",
+      "priority": "High",
+      "Title": "Improve Sleep - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "0d515be5-c122-422d-b92e-ba0d6d88ac46"
+    },
+    {
+      "createdAt": "2025-06-29T09:23:47.893712",
+      "dueAt": "2025-08-02T14:23:47.893720",
+      "priority": "High",
+      "Title": "Improve Sleep - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "0d515be5-c122-422d-b92e-ba0d6d88ac46"
+    },
+    {
+      "createdAt": "2025-07-07T04:23:47.893730",
+      "dueAt": "2025-07-14T20:23:47.893738",
+      "priority": "High",
+      "Title": "Improve Sleep - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "0d515be5-c122-422d-b92e-ba0d6d88ac46"
+    },
+    {
+      "createdAt": "2025-06-13T22:23:47.893794",
+      "dueAt": "2025-08-06T18:23:47.893802",
+      "priority": "Medium",
+      "Title": "Run a 5K - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-07-01T22:23:47.893812",
+      "dueAt": "2025-07-25T18:23:47.893820",
+      "priority": "Low",
+      "Title": "Run a 5K - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-07-11T09:23:47.893830",
+      "dueAt": "2025-07-13T01:23:47.893839",
+      "priority": "Low",
+      "Title": "Run a 5K - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-06-21T12:23:47.893849",
+      "dueAt": "2025-07-17T04:23:47.893857",
+      "priority": "Low",
+      "Title": "Run a 5K - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-06-17T16:23:47.893867",
+      "dueAt": "2025-08-14T18:23:47.893875",
+      "priority": "Medium",
+      "Title": "Run a 5K - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-06-20T14:23:47.893885",
+      "dueAt": "2025-07-23T23:23:47.893893",
+      "priority": "High",
+      "Title": "Run a 5K - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-07-07T22:23:47.893903",
+      "dueAt": "2025-08-10T18:23:47.893911",
+      "priority": "High",
+      "Title": "Run a 5K - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-07-04T03:23:47.893920",
+      "dueAt": "2025-07-22T01:23:47.893928",
+      "priority": "High",
+      "Title": "Run a 5K - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-06-13T23:23:47.893941",
+      "dueAt": "2025-08-20T17:23:47.893949",
+      "priority": "High",
+      "Title": "Run a 5K - Subtask 9",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-06-13T10:23:47.893959",
+      "dueAt": "2025-07-15T18:23:47.893966",
+      "priority": "High",
+      "Title": "Run a 5K - Subtask 10",
+      "userId": "",
+      "id": "",
+      "goalId": "2a589260-96d5-4c53-9e04-e9eb70e93d34"
+    },
+    {
+      "createdAt": "2025-07-14T00:23:47.894023",
+      "dueAt": "2025-08-07T08:23:47.894031",
+      "priority": "Medium",
+      "Title": "Declutter Home - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-06-25T13:23:47.894040",
+      "dueAt": "2025-08-02T02:23:47.894048",
+      "priority": "Medium",
+      "Title": "Declutter Home - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-06-30T15:23:47.894058",
+      "dueAt": "2025-07-12T19:23:47.894065",
+      "priority": "Low",
+      "Title": "Declutter Home - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-06-30T02:23:47.894075",
+      "dueAt": "2025-07-17T23:23:47.894083",
+      "priority": "Low",
+      "Title": "Declutter Home - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-07-10T04:23:47.894093",
+      "dueAt": "2025-07-14T15:23:47.894100",
+      "priority": "High",
+      "Title": "Declutter Home - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-06-16T02:23:47.894110",
+      "dueAt": "2025-08-17T15:23:47.894118",
+      "priority": "Low",
+      "Title": "Declutter Home - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-06-16T06:23:47.894127",
+      "dueAt": "2025-07-20T21:23:47.894135",
+      "priority": "High",
+      "Title": "Declutter Home - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-07-10T23:23:47.894147",
+      "dueAt": "2025-07-25T23:23:47.894155",
+      "priority": "High",
+      "Title": "Declutter Home - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-06-16T08:23:47.894165",
+      "dueAt": "2025-08-07T16:23:47.894173",
+      "priority": "Low",
+      "Title": "Declutter Home - Subtask 9",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-07-01T15:23:47.894183",
+      "dueAt": "2025-07-12T09:23:47.894192",
+      "priority": "Low",
+      "Title": "Declutter Home - Subtask 10",
+      "userId": "",
+      "id": "",
+      "goalId": "8bfd0ef5-3fbd-4a81-ba6d-3f040f13dcd6"
+    },
+    {
+      "createdAt": "2025-06-28T15:23:47.894244",
+      "dueAt": "2025-07-20T00:23:47.894253",
+      "priority": "Medium",
+      "Title": "Garden Setup - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-07-01T19:23:47.894263",
+      "dueAt": "2025-07-21T14:23:47.894271",
+      "priority": "Low",
+      "Title": "Garden Setup - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-07-06T00:23:47.894280",
+      "dueAt": "2025-08-19T15:23:47.894288",
+      "priority": "Low",
+      "Title": "Garden Setup - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-07-15T05:23:47.894297",
+      "dueAt": "2025-08-12T00:23:47.894304",
+      "priority": "High",
+      "Title": "Garden Setup - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-07-16T05:23:47.894314",
+      "dueAt": "2025-07-20T18:23:47.894323",
+      "priority": "Low",
+      "Title": "Garden Setup - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-06-21T02:23:47.894333",
+      "dueAt": "2025-07-31T05:23:47.894341",
+      "priority": "Medium",
+      "Title": "Garden Setup - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-06-30T16:23:47.894351",
+      "dueAt": "2025-08-18T05:23:47.894359",
+      "priority": "Medium",
+      "Title": "Garden Setup - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-07-01T01:23:47.894368",
+      "dueAt": "2025-08-11T18:23:47.894375",
+      "priority": "High",
+      "Title": "Garden Setup - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-07-11T20:23:47.894384",
+      "dueAt": "2025-08-13T18:23:47.894392",
+      "priority": "Medium",
+      "Title": "Garden Setup - Subtask 9",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-07-01T19:23:47.894401",
+      "dueAt": "2025-07-12T14:23:47.894409",
+      "priority": "High",
+      "Title": "Garden Setup - Subtask 10",
+      "userId": "",
+      "id": "",
+      "goalId": "99439c63-7c38-4842-850d-0bf0680a8aea"
+    },
+    {
+      "createdAt": "2025-07-04T06:23:47.894466",
+      "dueAt": "2025-07-21T04:23:47.894474",
+      "priority": "Medium",
+      "Title": "Financial Budgeting - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "185708a4-903e-48fc-a42a-c859f1ab504c"
+    },
+    {
+      "createdAt": "2025-06-18T05:23:47.894484",
+      "dueAt": "2025-08-13T09:23:47.894492",
+      "priority": "High",
+      "Title": "Financial Budgeting - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "185708a4-903e-48fc-a42a-c859f1ab504c"
+    },
+    {
+      "createdAt": "2025-07-11T02:23:47.894503",
+      "dueAt": "2025-08-20T22:23:47.894511",
+      "priority": "High",
+      "Title": "Financial Budgeting - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "185708a4-903e-48fc-a42a-c859f1ab504c"
+    },
+    {
+      "createdAt": "2025-06-16T03:23:47.894521",
+      "dueAt": "2025-08-16T18:23:47.894528",
+      "priority": "Low",
+      "Title": "Financial Budgeting - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "185708a4-903e-48fc-a42a-c859f1ab504c"
+    },
+    {
+      "createdAt": "2025-07-08T22:23:47.894545",
+      "dueAt": "2025-07-18T00:23:47.894554",
+      "priority": "Low",
+      "Title": "Financial Budgeting - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "185708a4-903e-48fc-a42a-c859f1ab504c"
+    },
+    {
+      "createdAt": "2025-07-03T17:23:47.894563",
+      "dueAt": "2025-07-31T19:23:47.894571",
+      "priority": "High",
+      "Title": "Financial Budgeting - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "185708a4-903e-48fc-a42a-c859f1ab504c"
+    },
+    {
+      "createdAt": "2025-06-14T16:23:47.894580",
+      "dueAt": "2025-07-18T00:23:47.894587",
+      "priority": "High",
+      "Title": "Financial Budgeting - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "185708a4-903e-48fc-a42a-c859f1ab504c"
+    },
+    {
+      "createdAt": "2025-06-12T17:23:47.894597",
+      "dueAt": "2025-08-08T02:23:47.894604",
+      "priority": "Medium",
+      "Title": "Financial Budgeting - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "185708a4-903e-48fc-a42a-c859f1ab504c"
+    },
+    {
+      "createdAt": "2025-06-16T15:23:47.894678",
+      "dueAt": "2025-07-27T15:23:47.894686",
+      "priority": "Low",
+      "Title": "Volunteer Weekly - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "0666358f-6a2b-4fec-b635-d6b14b668668"
+    },
+    {
+      "createdAt": "2025-07-06T18:23:47.894696",
+      "dueAt": "2025-07-24T05:23:47.894704",
+      "priority": "High",
+      "Title": "Volunteer Weekly - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "0666358f-6a2b-4fec-b635-d6b14b668668"
+    },
+    {
+      "createdAt": "2025-07-05T02:23:47.894714",
+      "dueAt": "2025-07-20T08:23:47.894722",
+      "priority": "High",
+      "Title": "Volunteer Weekly - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "0666358f-6a2b-4fec-b635-d6b14b668668"
+    },
+    {
+      "createdAt": "2025-07-07T06:23:47.894731",
+      "dueAt": "2025-07-29T11:23:47.894739",
+      "priority": "High",
+      "Title": "Volunteer Weekly - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "0666358f-6a2b-4fec-b635-d6b14b668668"
+    },
+    {
+      "createdAt": "2025-06-30T22:23:47.894748",
+      "dueAt": "2025-07-27T08:23:47.894757",
+      "priority": "High",
+      "Title": "Volunteer Weekly - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "0666358f-6a2b-4fec-b635-d6b14b668668"
+    },
+    {
+      "createdAt": "2025-07-13T02:23:47.894767",
+      "dueAt": "2025-08-15T00:23:47.894775",
+      "priority": "Medium",
+      "Title": "Volunteer Weekly - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "0666358f-6a2b-4fec-b635-d6b14b668668"
+    },
+    {
+      "createdAt": "2025-07-13T22:23:47.894785",
+      "dueAt": "2025-07-18T19:23:47.894792",
+      "priority": "Medium",
+      "Title": "Volunteer Weekly - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "0666358f-6a2b-4fec-b635-d6b14b668668"
+    },
+    {
+      "createdAt": "2025-06-27T03:23:47.894852",
+      "dueAt": "2025-07-19T20:23:47.894860",
+      "priority": "Low",
+      "Title": "Daily Journaling - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "8a236731-bfd4-42a1-81b9-92da7bf10f3c"
+    },
+    {
+      "createdAt": "2025-07-09T20:23:47.894870",
+      "dueAt": "2025-08-05T20:23:47.894877",
+      "priority": "High",
+      "Title": "Daily Journaling - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "8a236731-bfd4-42a1-81b9-92da7bf10f3c"
+    },
+    {
+      "createdAt": "2025-06-12T18:23:47.894887",
+      "dueAt": "2025-08-05T00:23:47.894894",
+      "priority": "Low",
+      "Title": "Daily Journaling - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "8a236731-bfd4-42a1-81b9-92da7bf10f3c"
+    },
+    {
+      "createdAt": "2025-06-11T10:23:47.894904",
+      "dueAt": "2025-07-25T01:23:47.894911",
+      "priority": "High",
+      "Title": "Daily Journaling - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "8a236731-bfd4-42a1-81b9-92da7bf10f3c"
+    },
+    {
+      "createdAt": "2025-06-11T04:23:47.894921",
+      "dueAt": "2025-08-21T01:23:47.894929",
+      "priority": "Medium",
+      "Title": "Daily Journaling - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "8a236731-bfd4-42a1-81b9-92da7bf10f3c"
+    },
+    {
+      "createdAt": "2025-07-13T05:23:47.894948",
+      "dueAt": "2025-07-20T00:23:47.894956",
+      "priority": "Low",
+      "Title": "Daily Journaling - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "8a236731-bfd4-42a1-81b9-92da7bf10f3c"
+    },
+    {
+      "createdAt": "2025-07-11T11:23:47.894966",
+      "dueAt": "2025-08-04T05:23:47.894972",
+      "priority": "High",
+      "Title": "Daily Journaling - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "8a236731-bfd4-42a1-81b9-92da7bf10f3c"
+    },
+    {
+      "createdAt": "2025-06-25T01:23:47.895027",
+      "dueAt": "2025-08-08T05:23:47.895035",
+      "priority": "Low",
+      "Title": "Social Media Detox - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "5f058502-1265-42ea-a67c-eac6a4384a68"
+    },
+    {
+      "createdAt": "2025-06-28T12:23:47.895044",
+      "dueAt": "2025-07-27T06:23:47.895051",
+      "priority": "Low",
+      "Title": "Social Media Detox - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "5f058502-1265-42ea-a67c-eac6a4384a68"
+    },
+    {
+      "createdAt": "2025-07-12T14:23:47.895060",
+      "dueAt": "2025-08-18T02:23:47.895067",
+      "priority": "Medium",
+      "Title": "Social Media Detox - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "5f058502-1265-42ea-a67c-eac6a4384a68"
+    },
+    {
+      "createdAt": "2025-07-06T20:23:47.895077",
+      "dueAt": "2025-08-02T03:23:47.895084",
+      "priority": "Low",
+      "Title": "Social Media Detox - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "5f058502-1265-42ea-a67c-eac6a4384a68"
+    },
+    {
+      "createdAt": "2025-06-15T15:23:47.895092",
+      "dueAt": "2025-08-18T04:23:47.895099",
+      "priority": "Low",
+      "Title": "Social Media Detox - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "5f058502-1265-42ea-a67c-eac6a4384a68"
+    },
+    {
+      "createdAt": "2025-06-11T08:23:47.895108",
+      "dueAt": "2025-07-14T10:23:47.895112",
+      "priority": "Medium",
+      "Title": "Social Media Detox - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "5f058502-1265-42ea-a67c-eac6a4384a68"
+    },
+    {
+      "createdAt": "2025-06-29T02:23:47.895117",
+      "dueAt": "2025-07-24T19:23:47.895121",
+      "priority": "High",
+      "Title": "Social Media Detox - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "5f058502-1265-42ea-a67c-eac6a4384a68"
+    },
+    {
+      "createdAt": "2025-07-04T22:23:47.895158",
+      "dueAt": "2025-08-06T05:23:47.895162",
+      "priority": "Medium",
+      "Title": "Online Course - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "01d87c94-355a-4e9f-8263-b49148ec7261"
+    },
+    {
+      "createdAt": "2025-07-15T00:23:47.895167",
+      "dueAt": "2025-07-15T07:23:47.895171",
+      "priority": "Low",
+      "Title": "Online Course - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "01d87c94-355a-4e9f-8263-b49148ec7261"
+    },
+    {
+      "createdAt": "2025-06-29T18:23:47.895177",
+      "dueAt": "2025-08-12T01:23:47.895181",
+      "priority": "Low",
+      "Title": "Online Course - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "01d87c94-355a-4e9f-8263-b49148ec7261"
+    },
+    {
+      "createdAt": "2025-06-22T21:23:47.895186",
+      "dueAt": "2025-07-13T10:23:47.895190",
+      "priority": "Low",
+      "Title": "Online Course - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "01d87c94-355a-4e9f-8263-b49148ec7261"
+    },
+    {
+      "createdAt": "2025-06-25T16:23:47.895195",
+      "dueAt": "2025-07-24T00:23:47.895199",
+      "priority": "Medium",
+      "Title": "Online Course - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "01d87c94-355a-4e9f-8263-b49148ec7261"
+    },
+    {
+      "createdAt": "2025-07-14T14:23:47.895204",
+      "dueAt": "2025-07-19T23:23:47.895208",
+      "priority": "High",
+      "Title": "Online Course - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "01d87c94-355a-4e9f-8263-b49148ec7261"
+    },
+    {
+      "createdAt": "2025-06-25T09:23:47.895214",
+      "dueAt": "2025-07-29T19:23:47.895220",
+      "priority": "High",
+      "Title": "Online Course - Subtask 7",
+      "userId": "",
+      "id": "",
+      "goalId": "01d87c94-355a-4e9f-8263-b49148ec7261"
+    },
+    {
+      "createdAt": "2025-07-03T17:23:47.895225",
+      "dueAt": "2025-08-12T19:23:47.895229",
+      "priority": "High",
+      "Title": "Online Course - Subtask 8",
+      "userId": "",
+      "id": "",
+      "goalId": "01d87c94-355a-4e9f-8263-b49148ec7261"
+    },
+    {
+      "createdAt": "2025-06-11T10:23:47.895270",
+      "dueAt": "2025-07-19T18:23:47.895274",
+      "priority": "Medium",
+      "Title": "Networking Challenge - Subtask 1",
+      "userId": "",
+      "id": "",
+      "goalId": "caae3b5e-de3d-44d7-b77a-c1c91e3f4895"
+    },
+    {
+      "createdAt": "2025-06-15T02:23:47.895279",
+      "dueAt": "2025-07-20T13:23:47.895284",
+      "priority": "Low",
+      "Title": "Networking Challenge - Subtask 2",
+      "userId": "",
+      "id": "",
+      "goalId": "caae3b5e-de3d-44d7-b77a-c1c91e3f4895"
+    },
+    {
+      "createdAt": "2025-06-12T17:23:47.895289",
+      "dueAt": "2025-08-17T02:23:47.895293",
+      "priority": "High",
+      "Title": "Networking Challenge - Subtask 3",
+      "userId": "",
+      "id": "",
+      "goalId": "caae3b5e-de3d-44d7-b77a-c1c91e3f4895"
+    },
+    {
+      "createdAt": "2025-06-23T15:23:47.895298",
+      "dueAt": "2025-08-17T04:23:47.895302",
+      "priority": "High",
+      "Title": "Networking Challenge - Subtask 4",
+      "userId": "",
+      "id": "",
+      "goalId": "caae3b5e-de3d-44d7-b77a-c1c91e3f4895"
+    },
+    {
+      "createdAt": "2025-07-05T09:23:47.895307",
+      "dueAt": "2025-07-11T16:23:47.895311",
+      "priority": "High",
+      "Title": "Networking Challenge - Subtask 5",
+      "userId": "",
+      "id": "",
+      "goalId": "caae3b5e-de3d-44d7-b77a-c1c91e3f4895"
+    },
+    {
+      "createdAt": "2025-06-14T23:23:47.895317",
+      "dueAt": "2025-07-24T21:23:47.895321",
+      "priority": "High",
+      "Title": "Networking Challenge - Subtask 6",
+      "userId": "",
+      "id": "",
+      "goalId": "caae3b5e-de3d-44d7-b77a-c1c91e3f4895"
+    },
+    {
+      "createdAt": "2025-07-04T18:23:47.895488",
+      "dueAt": "2025-07-16T17:23:47.895497",
+      "priority": "Low",
+      "Title": "Email Tax Advisor",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-09T06:23:47.895504",
+      "dueAt": "2025-07-17T03:23:47.895508",
+      "priority": "Medium",
+      "Title": "Car Service Appointment",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-12T06:23:47.895513",
+      "dueAt": "2025-07-19T09:23:47.895517",
+      "priority": "High",
+      "Title": "Buy Groceries",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-16T03:23:47.895522",
+      "dueAt": "2025-07-20T23:23:47.895526",
+      "priority": "Low",
+      "Title": "Water Plants",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-13T04:23:47.895531",
+      "dueAt": "2025-07-23T10:23:47.895535",
+      "priority": "High",
+      "Title": "Submit Assignment",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-07T17:23:47.895540",
+      "dueAt": "2025-07-21T09:23:47.895544",
+      "priority": "High",
+      "Title": "Call Grandma",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-10T17:23:47.895549",
+      "dueAt": "2025-07-29T18:23:47.895553",
+      "priority": "Medium",
+      "Title": "Renew Gym Membership",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-02T13:23:47.895559",
+      "dueAt": "2025-07-19T15:23:47.895563",
+      "priority": "Medium",
+      "Title": "Clean Fridge",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-08T01:23:47.895569",
+      "dueAt": "2025-07-21T22:23:47.895573",
+      "priority": "Low",
+      "Title": "Pay Utility Bills",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-13T15:23:47.895578",
+      "dueAt": "2025-08-01T00:23:47.895582",
+      "priority": "Low",
+      "Title": "Backup Laptop",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-12T09:23:47.895587",
+      "dueAt": "2025-07-21T17:23:47.895591",
+      "priority": "Low",
+      "Title": "Meditation Session",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-15T05:23:47.895599",
+      "dueAt": "2025-07-29T02:23:47.895606",
+      "priority": "Medium",
+      "Title": "Clean Garage",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-06-30T21:23:47.895615",
+      "dueAt": "2025-07-30T03:23:47.895622",
+      "priority": "Low",
+      "Title": "Order Supplements",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-13T04:23:47.895631",
+      "dueAt": "2025-07-28T20:23:47.895639",
+      "priority": "Medium",
+      "Title": "Review Budget",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-06-27T16:23:47.895644",
+      "dueAt": "2025-07-29T22:23:47.895648",
+      "priority": "Medium",
+      "Title": "Vacuum House",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-15T20:23:47.895653",
+      "dueAt": "2025-07-29T20:23:47.895657",
+      "priority": "Medium",
+      "Title": "Fix Shower Leak",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-16T09:23:47.895662",
+      "dueAt": "2025-07-10T15:23:47.895666",
+      "priority": "Medium",
+      "Title": "Dog Grooming",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-16T06:23:47.895672",
+      "dueAt": "2025-07-20T04:23:47.895757",
+      "priority": "Low",
+      "Title": "Schedule Eye Exam",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-11T06:23:47.895763",
+      "dueAt": "2025-07-23T14:23:47.895767",
+      "priority": "Low",
+      "Title": "Print Resume",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    },
+    {
+      "createdAt": "2025-07-12T02:23:47.895771",
+      "dueAt": "2025-07-16T14:23:47.895775",
+      "priority": "Medium",
+      "Title": "Sort Photos",
+      "userId": "",
+      "id": "",
+      "goalId": null
+    }
+  ]
+}
