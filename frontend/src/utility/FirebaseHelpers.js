@@ -20,12 +20,18 @@ import {
   EmailAuthProvider,
   sendEmailVerification,
 } from "firebase/auth";
+import { FIRESTORE_USE_ADMIN_ACCOUNT } from "@env";
+
+const signIntoAdminAccount = async () => {
+  if (__DEV__ && FIRESTORE_USE_ADMIN_ACCOUNT === "true") {
+    console.log("Signing into admin account");
+    await signInWithEmailAndPassword(auth, "admin@gmail.com", "administrator");
+  }
+};
 
 // Gets the logged in user
 export const getLoggedInUser = async () => {
-  if (__DEV__) {
-    await signInWithEmailAndPassword(auth, "admin@gmail.com", "administrator");
-  }
+  await signIntoAdminAccount();
 
   return auth.currentUser;
 };
@@ -99,9 +105,7 @@ export const changeUserPassword = async (newPassword, password) => {
 
 // Get user document for the logged in user
 export const getUserDocumentFromFirestore = async () => {
-  if (__DEV__) {
-    await signInWithEmailAndPassword(auth, "admin@gmail.com", "administrator");
-  }
+  await signIntoAdminAccount();
 
   const currentUser = auth.currentUser;
   if (!currentUser) return null;
@@ -161,13 +165,7 @@ export const addTaskToFirestore = async (
   goalId = null,
 ) => {
   try {
-    if (__DEV__) {
-      await signInWithEmailAndPassword(
-        auth,
-        "admin@gmail.com",
-        "administrator",
-      );
-    }
+    await signIntoAdminAccount();
 
     const user = auth.currentUser;
     if (!user) throw new Error("No authenticated user");
@@ -208,13 +206,7 @@ export const addMultipleTasksToFirestore = async (tasks) => {
 // Updates a single task
 export const updateTaskInFirestore = async (taskId, updates) => {
   try {
-    if (__DEV__) {
-      await signInWithEmailAndPassword(
-        auth,
-        "admin@gmail.com",
-        "administrator",
-      );
-    }
+    await signIntoAdminAccount();
 
     const user = auth.currentUser;
     if (!user) throw new Error("No authenticated user");
@@ -241,13 +233,7 @@ export const updateMultipleTasksInFirestore = async (tasksToUpdate) => {
 // Updates a single goal
 export const updateGoalInFirestore = async (goalId, updates) => {
   try {
-    if (__DEV__) {
-      await signInWithEmailAndPassword(
-        auth,
-        "admin@gmail.com",
-        "administrator",
-      );
-    }
+    await signIntoAdminAccount();
 
     const user = auth.currentUser;
     if (!user) throw new Error("No authenticated user");
@@ -275,13 +261,7 @@ export const updateMultipleGoalsInFirestore = async (goalsToUpdate) => {
 // Adds a single goal
 export const addGoalToFirestore = async (title, dueDateTime) => {
   try {
-    if (__DEV__) {
-      await signInWithEmailAndPassword(
-        auth,
-        "admin@gmail.com",
-        "administrator",
-      );
-    }
+    await signIntoAdminAccount();
 
     const user = auth.currentUser;
     if (!user) throw new Error("No authenticated user");
@@ -316,13 +296,7 @@ export const addMultipleGoalsToFirestore = async (goals) => {
 // Gets all tasks
 export const getAllTasksFromFirestore = async () => {
   try {
-    if (__DEV__) {
-      await signInWithEmailAndPassword(
-        auth,
-        "admin@gmail.com",
-        "administrator",
-      );
-    }
+    await signIntoAdminAccount();
 
     const user = auth.currentUser;
     if (!user) throw new Error("No authenticated user");
@@ -341,13 +315,7 @@ export const getAllTasksFromFirestore = async () => {
 // Get all goals
 export const getAllGoalsFromFirestore = async () => {
   try {
-    if (__DEV__) {
-      await signInWithEmailAndPassword(
-        auth,
-        "admin@gmail.com",
-        "administrator",
-      );
-    }
+    await signIntoAdminAccount();
 
     const user = auth.currentUser;
     if (!user) throw new Error("No authenticated user");

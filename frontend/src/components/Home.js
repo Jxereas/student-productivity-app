@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../styles/Home";
-import FrogLogo from "../../assets/frog-logo.png";
+import AppIcon from "../../assets/TransparentAppIcon.png";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -20,10 +20,7 @@ export default function HomeScreen() {
 
       <SafeAreaView edges={["left", "right", "bottom"]} style={{ flex: 1 }}>
         <View style={styles.container}>
-          <Text style={styles.title}>
-            LOCK <Text style={styles.titleBold}>IN</Text>
-          </Text>
-          <Image source={FrogLogo} style={styles.logo} />
+          <Image source={AppIcon} style={styles.logo} />
           <Text style={styles.subtitle}>Welcome back. Stay focused.</Text>
 
           <TouchableOpacity
