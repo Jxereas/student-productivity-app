@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const { db, auth } = require("./firebase");
+const { db, auth, admin } = require("./firebase");
+const axios = require("axios");
+const ical = require("ical");
 
 if (process.env.NODE_ENV === "development") {
     const path = require("path");
@@ -15,6 +17,8 @@ if (process.env.NODE_ENV === "development") {
         path: path.resolve(__dirname, ".env.production"),
     });
 }
+
+const isValidIcsUrl = (url) => /^https?:\/\/.+\.ics$/.test(url);
 
 const app = express();
 
@@ -92,6 +96,84 @@ app.post("/api/signup", async (req, res) => {
     } catch (error) {
         console.error("Signup error:", error);
         return res.status(500).json({ message: "Failed to create user." });
+    }
+});
+
+app.post("/api/import-ics", async (req, res) => {
+    const authHeader = req.headers.authorization;
+    const { icsUrl } = req.body;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return res.status(401).json({ error: "Unauthorized: Missing token." });
+    }
+
+    const idToken = authHeader.split("Bearer ")[1];
+
+    if (!icsUrl || !icsUrl.endsWith(".ics")) {
+        return res.status(400).json({ error: "Invalid .ics URL." });
+    }
+
+    if (!icsUrl || typeof icsUrl !== "string") {
+        return res.status(400).json({ error: "Missing .ics URL." });
+    }
+
+    const trimmedUrl = icsUrl.trim();
+
+    if (trimmedUrl.length > 2048) {
+        return res.status(400).json({ error: "URL is too long." });
+    }
+
+    if (!isValidIcsUrl(trimmedUrl)) {
+        return res.status(400).json({ error: "Invalid .ics URL format." });
+    }
+
+    try {
+        // Verify the token
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        const uid = decodedToken.uid;
+
+        // Fetch and parse .ics data
+        const response = await axios.get(trimmedUrl);
+        const parsedData = ical.parseICS(response.data);
+
+        // const batch = db.batch(); // Batch write for performance
+        let count = 0;
+
+        for (const k in parsedData) {
+            const event = parsedData[k];
+            if (event.type === "VEVENT" && event.start) {
+                const eventDate = new Date(event.start);
+                const now = new Date();
+
+                if (eventDate < now) {
+                    continue;
+                }
+
+                try {
+                    const newTaskRef = db.collection("tasks").doc();
+
+                    await newTaskRef.set({
+                        id: newTaskRef.id,
+                        userId: uid,
+                        title: event.summary || "Untitled",
+                        dueAt: admin.firestore.Timestamp.fromDate(new Date(event.start)),
+                        priority: "Medium",
+                        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                        imported: true,
+                    });
+                    count++;
+                } catch (err) {
+                    console.error("Failed to add task:", err.message);
+                }
+            }
+        }
+
+        // await batch.commit();
+
+        res.json({ importedCount: count });
+    } catch (err) {
+        console.error("Import ICS error:", err.message);
+        res.status(500).json({ error: "Failed to import .ics data." });
     }
 });
 
