@@ -49,19 +49,22 @@ const GoalsMainScreen = () => {
 
                     goals.sort((a, b) => a.dueAt - b.dueAt);
 
-                    const today = startOfDay(new Date());
+                    const now = new Date();
                     let overdue = 0;
 
                     // Group tasks by date
                     const groups = {};
                     goals.forEach((goal) => {
-                        const dueDate = startOfDay(goal.dueAt);
-
-                        if (dueDate < today) {
+                        if (goal.dueAt < now && !goal.completed) {
                             overdue++;
                             return;
                         }
 
+                        if (goal.dueAt < now && goal.completed) {
+                            return;
+                        }
+
+                        const dueDate = startOfDay(goal.dueAt);
                         let label = format(dueDate, "MMM dd, yyyy");
 
                         if (isToday(dueDate)) label = "Today";

@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Shadow } from "react-native-shadow-2";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { format, startOfDay, isYesterday } from "date-fns";
+import { format, startOfDay, isYesterday, isToday } from "date-fns";
 import {
     getAllTasksFromFirestore,
     getAllGoalsFromFirestore,
@@ -46,16 +46,19 @@ const OverdueGoalsScreen = () => {
                         goal.dueAt = goal.dueAt.toDate();
                     });
 
-                    const today = startOfDay(new Date());
+                    const now = new Date();
+
                     const overdueGoals = goals
-                        .filter((goal) => startOfDay(goal.dueAt) < today)
+                        .filter((goal) => goal.dueAt < now && !goal.completed)
                         .sort((a, b) => b.dueAt - a.dueAt);
 
                     const groups = {};
                     overdueGoals.forEach((goal) => {
                         const dueDate = goal.dueAt;
                         let label = format(dueDate, "MMM dd, yyyy");
-                        if (isYesterday(dueDate)) label = "Yesterday";
+
+                        if (isToday(dueDate)) label = "Today";
+                        else if (isYesterday(dueDate)) label = "Yesterday";
 
                         if (!groups[label]) groups[label] = [];
                         groups[label].push(goal);

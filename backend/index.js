@@ -160,6 +160,7 @@ app.post("/api/import-ics", async (req, res) => {
                         priority: "Medium",
                         createdAt: admin.firestore.FieldValue.serverTimestamp(),
                         imported: true,
+                        completed: false,
                     });
                     count++;
                 } catch (err) {

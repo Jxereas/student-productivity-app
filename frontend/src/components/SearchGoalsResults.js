@@ -107,7 +107,7 @@ const SearchGoalsResults = () => {
                             return false;
                         }
 
-                        if (filters.overdue && dueAt >= now) {
+                        if (filters.overdue && (dueAt >= now || goal.completed)) {
                             return false;
                         }
 

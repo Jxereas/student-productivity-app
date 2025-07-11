@@ -37,19 +37,22 @@ const TasksMainScreen = () => {
 
                     tasks.sort((a, b) => a.dueAt - b.dueAt);
 
-                    const today = startOfDay(new Date());
+                    const now = new Date();
                     let overdue = 0;
 
                     // Group tasks by date
                     const groups = {};
                     tasks.forEach((task) => {
-                        const dueDate = startOfDay(task.dueAt);
-
-                        if (dueDate < today) {
+                        if (task.dueAt < now && !task.completed) {
                             overdue++;
                             return;
                         }
 
+                        if (task.dueAt < now && task.completed) {
+                            return;
+                        }
+
+                        const dueDate = startOfDay(task.dueAt);
                         let label = format(dueDate, "MMM dd, yyyy");
 
                         if (isToday(dueDate)) label = "Today";

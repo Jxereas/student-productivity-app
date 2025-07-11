@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Shadow } from "react-native-shadow-2";
 import Icon from "react-native-vector-icons/Ionicons";
-import { isYesterday, format, startOfDay } from "date-fns";
+import { isYesterday, format, startOfDay, isToday } from "date-fns";
 import { getAllTasksFromFirestore } from "../utility/FirebaseHelpers";
 import styles from "../styles/Tasks";
 import TaskCard from "../components/TaskCard";
@@ -34,10 +34,10 @@ const OverdueTasksScreen = () => {
                         task.dueAt = task.dueAt.toDate();
                     });
 
-                    const today = startOfDay(new Date());
+                    const now = new Date();
 
                     const overdueTasks = allTasks
-                        .filter((task) => startOfDay(task.dueAt) < today)
+                        .filter((task) => task.dueAt < now && !task.completed)
                         .sort((a, b) => b.dueAt - a.dueAt);
 
                     const groups = {};
@@ -45,9 +45,8 @@ const OverdueTasksScreen = () => {
                         const dueDate = task.dueAt;
                         let label = format(dueDate, "MMM dd, yyyy");
 
-                        if (isYesterday(dueDate)) {
-                            label = "Yesterday";
-                        }
+                        if (isToday(dueDate)) label = "Today";
+                        else if (isYesterday(dueDate)) label = "Yesterday";
 
                         if (!groups[label]) groups[label] = [];
                         groups[label].push(task);

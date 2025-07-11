@@ -106,7 +106,7 @@ const SearchTasksResults = () => {
                             return false;
                         }
 
-                        if (filters.overdue && dueAt >= now) {
+                        if (filters.overdue && (dueAt > now || task.completed)) {
                             return false;
                         }
 
