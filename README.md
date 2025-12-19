@@ -4,6 +4,12 @@ A mobile app built with **React Native**, **Firebase**, and **Node.js** to help 
 
 ---
 
+## Overview
+
+This application allows students to create long-term academic goals, break them into tasks, and track progress over time. It supports authentication, real-time data synchronization, and calendar imports to help students manage their workload across platforms.
+
+---
+
 ## Frontend Setup (React Native with Expo)
 
 1. Navigate to the frontend directory:
@@ -94,3 +100,9 @@ The server will run at http://localhost:3001/
     ```bash
     npm run dev
     ```
+
+---
+
+## Notes
+
+This project was originally developed as part of coursework at the University of Virginia.
